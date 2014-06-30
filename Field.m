@@ -9,6 +9,9 @@
 #import "Field.h"
 
 
-@implementation Field
+@implementation Field{
+    CCNode *_board;
+    CCNode *_inventory;
+}
 
 @end

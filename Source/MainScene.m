@@ -8,6 +8,17 @@
 
 #import "MainScene.h"
 
-@implementation MainScene
+@implementation MainScene{
+    CCNode *_scene;
+    CCNode *_p1;
+    CCNode *_p2;
+    CCNode *_p3;
+}
+
+- (void)didLoadFromCCB {
+    CCNode *square = [CCBReader load:@"Shapes/Square"];
+    [_p1 addChild:square];
+
+}
 
 @end
