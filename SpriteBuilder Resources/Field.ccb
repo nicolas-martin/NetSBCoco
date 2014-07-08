@@ -147,7 +147,7 @@
 					</dict>
 				</array>
 				<key>customClass</key>
-				<string></string>
+				<string>Board</string>
 				<key>displayName</key>
 				<string>Board</string>
 				<key>memberVarAssignmentName</key>
@@ -325,7 +325,7 @@
 					</dict>
 				</array>
 				<key>customClass</key>
-				<string></string>
+				<string>Inventory</string>
 				<key>displayName</key>
 				<string>Inventory</string>
 				<key>memberVarAssignmentName</key>
@@ -394,8 +394,6 @@
 						</array>
 					</dict>
 				</array>
-				<key>selected</key>
-				<true/>
 			</dict>
 		</array>
 		<key>customClass</key>

@@ -7,6 +7,9 @@
 	objects = {
 
 /* Begin PBXBuildFile section */
+		7A7A288869E77353B1CF7427 /* Board.m in Sources */ = {isa = PBXBuildFile; fileRef = 7A7A236872462478854AA341 /* Board.m */; };
+		7A7A2C95CE13EF09AEFBBFD7 /* Inventory.m in Sources */ = {isa = PBXBuildFile; fileRef = 7A7A24F1E763D404BF433A67 /* Inventory.m */; };
+		7A7A2F65631850F1E754E45F /* Field.m in Sources */ = {isa = PBXBuildFile; fileRef = 7A7A2697B5AFB30CB4E70B37 /* Field.m */; };
 		8392007A18EE8E3300B6C429 /* GLKit.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 8392007918EE8E3300B6C429 /* GLKit.framework */; };
 		B71F5911188484E7003F4D28 /* iPad-old.png in Resources */ = {isa = PBXBuildFile; fileRef = B71F5907188484E7003F4D28 /* iPad-old.png */; };
 		B71F5912188484E7003F4D28 /* iPad-old@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = B71F5908188484E7003F4D28 /* iPad-old@2x.png */; };
@@ -36,7 +39,6 @@
 		B77F1B3E17B978D7009739AE /* Foundation.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = B77F1B3D17B978D7009739AE /* Foundation.framework */; };
 		B77F1B4017B978D7009739AE /* CoreGraphics.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = B77F1B3F17B978D7009739AE /* CoreGraphics.framework */; };
 		B77F1B4217B978D7009739AE /* CoreText.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = B77F1B4117B978D7009739AE /* CoreText.framework */; };
-		EDEC6678196111E300C80BB3 /* Field.m in Sources */ = {isa = PBXBuildFile; fileRef = EDEC6677196111E200C80BB3 /* Field.m */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXContainerItemProxy section */
@@ -57,6 +59,12 @@
 /* End PBXContainerItemProxy section */
 
 /* Begin PBXFileReference section */
+		7A7A201FC819AD38635BAFB8 /* Board.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = Board.h; path = Source/Board.h; sourceTree = "<group>"; };
+		7A7A2143B8F09AE55F1486AE /* Inventory.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = Inventory.h; path = Source/Inventory.h; sourceTree = "<group>"; };
+		7A7A236872462478854AA341 /* Board.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = Board.m; path = Source/Board.m; sourceTree = "<group>"; };
+		7A7A24F1E763D404BF433A67 /* Inventory.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = Inventory.m; path = Source/Inventory.m; sourceTree = "<group>"; };
+		7A7A2697B5AFB30CB4E70B37 /* Field.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = Field.m; path = Source/Field.m; sourceTree = "<group>"; };
+		7A7A29824D3349F4161E7AD0 /* Field.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = Field.h; path = Source/Field.h; sourceTree = "<group>"; };
 		8392007918EE8E3300B6C429 /* GLKit.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = GLKit.framework; path = System/Library/Frameworks/GLKit.framework; sourceTree = SDKROOT; };
 		B71F5907188484E7003F4D28 /* iPad-old.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; name = "iPad-old.png"; path = "Icons/iPad-old.png"; sourceTree = "<group>"; };
 		B71F5908188484E7003F4D28 /* iPad-old@2x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; name = "iPad-old@2x.png"; path = "Icons/iPad-old@2x.png"; sourceTree = "<group>"; };
@@ -91,8 +99,6 @@
 		B77F1B3F17B978D7009739AE /* CoreGraphics.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = CoreGraphics.framework; path = System/Library/Frameworks/CoreGraphics.framework; sourceTree = SDKROOT; };
 		B77F1B4117B978D7009739AE /* CoreText.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = CoreText.framework; path = System/Library/Frameworks/CoreText.framework; sourceTree = SDKROOT; };
 		B7B3713D180358F1007369CC /* libObjectiveChipmunk.a */ = {isa = PBXFileReference; lastKnownFileType = archive.ar; name = libObjectiveChipmunk.a; path = "../libs/cocos2d-iphone/external/Chipmunk/xcode/build/Debug-iphoneos/libObjectiveChipmunk.a"; sourceTree = "<group>"; };
-		EDEC6676196111E200C80BB3 /* Field.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = Field.h; sourceTree = "<group>"; };
-		EDEC6677196111E200C80BB3 /* Field.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = Field.m; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -128,12 +134,16 @@
 		B737893C1807616C0076A88C /* Source */ = {
 			isa = PBXGroup;
 			children = (
-				EDEC6676196111E200C80BB3 /* Field.h */,
-				EDEC6677196111E200C80BB3 /* Field.m */,
 				B737893D1807617C0076A88C /* AppDelegate.h */,
 				B737893E1807617C0076A88C /* AppDelegate.m */,
 				B7378992180767190076A88C /* MainScene.h */,
 				B7378993180767190076A88C /* MainScene.m */,
+				7A7A2143B8F09AE55F1486AE /* Inventory.h */,
+				7A7A24F1E763D404BF433A67 /* Inventory.m */,
+				7A7A29824D3349F4161E7AD0 /* Field.h */,
+				7A7A2697B5AFB30CB4E70B37 /* Field.m */,
+				7A7A236872462478854AA341 /* Board.m */,
+				7A7A201FC819AD38635BAFB8 /* Board.h */,
 			);
 			name = Source;
 			sourceTree = "<group>";
@@ -348,7 +358,9 @@
 				B737893F1807617C0076A88C /* AppDelegate.m in Sources */,
 				B7378994180767190076A88C /* MainScene.m in Sources */,
 				B73789871807631A0076A88C /* main.m in Sources */,
-				EDEC6678196111E300C80BB3 /* Field.m in Sources */,
+				7A7A2C95CE13EF09AEFBBFD7 /* Inventory.m in Sources */,
+				7A7A2F65631850F1E754E45F /* Field.m in Sources */,
+				7A7A288869E77353B1CF7427 /* Board.m in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
