@@ -35,6 +35,9 @@ xcuserdata
 #
 # Pods/
 
+# AppCode
+workspace.xml
+
 
 # Misc
 *.sconsign.dblite
