@@ -7,12 +7,13 @@
 //
 
 #import "MainScene.h"
+#import "Field.h"
 
 @implementation MainScene{
     CCNode *_scene;
-    CCNode *_p1;
-    CCNode *_p2;
-    CCNode *_p3;
+    Field *_p1;
+    Field *_p2;
+    Field *_p3;
 }
 
 - (void)didLoadFromCCB {
