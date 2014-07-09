@@ -37,7 +37,7 @@ xcuserdata
 
 # AppCode
 workspace.xml
-
+.idea/
 
 # Misc
 *.sconsign.dblite
