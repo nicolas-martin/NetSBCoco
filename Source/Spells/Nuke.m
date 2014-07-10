@@ -32,5 +32,5 @@
 
 - (NSString *)LogSpell:(Field *)targetField {
     return [NSString stringWithFormat:@"%@ was casted on %@", _spellName, targetField.Name];
-
+}
 @end

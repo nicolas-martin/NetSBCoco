@@ -4,6 +4,7 @@
 //
 
 #import "Board.h"
+#import "IBlock.h"
 
 
 @implementation Board {
@@ -58,7 +59,7 @@
     for (NSUInteger x = 0; x < self.Nbx; x++)    {
         for (NSUInteger y = 0; y < self.Nby; y++)
         {
-            Block *block = [self getBlockAt:ccp(x, y)];
+            id<IBlock> block = [self getBlockAt:ccp(x, y)];
             if(block != nil && block.stuck) {
                 [blocksInBoard addObject:block];
             }
@@ -69,7 +70,7 @@
     return blocksInBoard;
 }
 
-- (Block *)getBlockAt:(CGPoint)point {
+- (id<IBlock>) getBlockAt:(CGPoint)point {
 
     NSUInteger x = (NSUInteger) point.x;
     NSUInteger y = (NSUInteger) point.y;
@@ -82,7 +83,7 @@
     }
 }
 
-- (void)insertBlockAt:(Block *)block at:(CGPoint)point {
+- (void)insertBlockAt:(id<IBlock> )block at:(CGPoint)point {
     NSUInteger x = (NSUInteger) point.x;
     NSUInteger y = (NSUInteger) point.y;
 
@@ -91,7 +92,7 @@
 
 - (void)DeleteBlockFromBoard:(NSMutableArray *)blocks {
 
-    for (Block *block in blocks) {
+    for (id<IBlock> block in blocks) {
         [[_array objectAtIndex:(NSUInteger) block.boardX] replaceObjectAtIndex:(NSUInteger) block.boardY withObject:[NSNumber numberWithInt:0]];
     }
 
@@ -99,7 +100,7 @@
 
 - (void)DeleteBlockFromBoardAndSprite:(NSMutableArray *)blocks {
 
-    for (Block *block in blocks) {
+    for (id<IBlock> block in blocks) {
         [[_array objectAtIndex:(NSUInteger) block.boardX] replaceObjectAtIndex:(NSUInteger) block.boardY withObject:[NSNumber numberWithInt:0]];
         [block removeFromParentAndCleanup:YES];
     }
@@ -109,7 +110,7 @@
 - (void)MoveTetromino:(Tetromino *)FromTetromino to:(Tetromino *)ToTetromino {
 
     //delete
-    for (Block *block in FromTetromino.children) {
+    for (id<IBlock> block in FromTetromino.children) {
         [[_array objectAtIndex:block.boardX] replaceObjectAtIndex:block.boardY withObject:[NSNumber numberWithInt:0]];
     }
     //insert
@@ -117,7 +118,7 @@
 
 }
 
-- (void)MoveBlock:(Block *)block to:(CGPoint)after {
+- (void)MoveBlock:(id<IBlock>) block to:(CGPoint)after {
     NSUInteger x = (NSUInteger) [block boardX];
     NSUInteger y = (NSUInteger) [block boardY];
 
@@ -157,7 +158,7 @@
 
     for (NSUInteger x = 0; x < _Nbx; x++) {
 
-        Block *block = [self getBlockAt:ccp(x, y)];
+        id<IBlock> block = [self getBlockAt:ccp(x, y)];
 
         if (block.spell != Nil)
         {
@@ -178,12 +179,12 @@
 
     for (y; y > 0; y--) {
         for (NSUInteger x = 0; x < _Nbx; x++) {
-            Block *current = [self getBlockAt:ccp(x, y)];
+            id<IBlock> current = [self getBlockAt:ccp(x, y)];
             if (current != nil) {
 
                 [self MoveBlock:current to:ccp(x, y + 1)];
 
-                [current moveDown];
+                current.boardY--;
 
                 [blocksToSetPosition addObject:current];
 
@@ -195,7 +196,7 @@
 
 - (void)addTetrominoToBoard:(NSMutableArray *)blocksToAdd {
 
-    for (Block *block in blocksToAdd) {
+    for (id<IBlock> block in blocksToAdd) {
         [self insertBlockAt:block at:ccp(block.boardX, block.boardY)];
     }
 

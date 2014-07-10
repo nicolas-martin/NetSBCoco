@@ -20,11 +20,11 @@
 
 - (NSMutableArray *)getAllInvertedBlocksInBoard;
 
-- (id)getBlockAt:(CGPoint)point;
+- (id <IBlock>)getBlockAt:(CGPoint)point;
 - (void)DeleteBlockFromBoard:(NSMutableArray *)blocks;
 - (void)DeleteBlockFromBoardAndSprite:(NSMutableArray *)blocks;
 - (void)MoveTetromino:(Tetromino *)FromTetromino to:(Tetromino *)ToTetromino;
-- (void)MoveBlock:(Block *)block to:(CGPoint)after;
+- (void)MoveBlock:(id <IBlock>)block to:(CGPoint)after;
 - (BOOL)boardRowFull:(NSUInteger)y;
 - (NSMutableArray *)DeleteRow:(NSUInteger)y;
 - (NSMutableArray *)MoveBoardDown:(NSUInteger)y;

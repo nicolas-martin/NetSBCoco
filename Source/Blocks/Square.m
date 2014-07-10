@@ -10,16 +10,9 @@
 @implementation Square {
 
 }
-- (NSUInteger)boardX {
-    return 0;
-}
 
 - (void)setBoardX:(NSUInteger)boardX {
 
-}
-
-- (NSUInteger)boardY {
-    return 0;
 }
 
 - (void)setBoardY:(NSUInteger)boardY {
@@ -31,14 +24,6 @@
 }
 
 - (void)setSpell:(id <ICastable>)spell {
-
-}
-
-- (BOOL)stuck {
-    return NO;
-}
-
-- (void)setStuck:(BOOL)stuck {
 
 }
 

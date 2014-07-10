@@ -4,6 +4,7 @@
 //
 
 #import "Inventory.h"
+#import "ICastable.h"
 
 
 @implementation Inventory {
@@ -14,6 +15,7 @@
     NSLog(@"Inventory loaded");
 }
 
+/*
 - (void)addSpell:(<ICastable>)spell {
 
     if(_Inventory.count < 10)
@@ -108,16 +110,10 @@
         }
     }
     if (newSprite != selSprite) {
-        /*[selSprite stopAllActions];
-        [selSprite runAction:[CCRotateTo actionWithDuration:0.1 angle:0]];
-        CCRotateTo * rotLeft = [CCRotateBy actionWithDuration:0.1 angle:-4.0];
-        CCRotateTo * rotCenter = [CCRotateBy actionWithDuration:0.1 angle:0.0];
-        CCRotateTo * rotRight = [CCRotateBy actionWithDuration:0.1 angle:4.0];
-        CCSequence * rotSeq = [CCSequence actions:rotLeft, rotCenter, rotRight, rotCenter, nil];
-        [newSprite runAction:[CCRepeatForever actionWithAction:rotSeq]];*/
+
         selSprite = newSprite;
     }
 }
-
+*/
 
 @end

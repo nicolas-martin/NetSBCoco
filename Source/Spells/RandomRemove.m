@@ -23,7 +23,7 @@
     return self;
 }
 
-
+/*
 - (void)CastSpell:(Field *)targetField {
     Board *board = targetField.board;
     NSMutableArray *allBlockInBoard = [board getAllBlocksInBoard];
@@ -56,5 +56,5 @@
 - (NSString *)LogSpell:(Field *)targetField {
     return [NSString stringWithFormat:@"%@ was casted on %@", _spellName, targetField.Name];
 }
-
+*/
 @end

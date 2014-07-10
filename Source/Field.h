@@ -10,8 +10,6 @@
 
 @interface Field : CCNode
 
-@property Board *board;
-@property NSObject *Name;
 @property NSMutableArray *spellArray;
 
 - (BOOL)randomBoolWithPercentage:(NSUInteger)percentage;

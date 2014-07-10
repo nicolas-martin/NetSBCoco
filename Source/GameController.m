@@ -4,6 +4,7 @@
 //
 
 #import "GameController.h"
+#import "IBlock.h"
 
 
 @implementation GameController {
@@ -31,15 +32,6 @@
             [_field.board printCurrentBoardStatus:YES];
         }
 
-//        RandomRemove *s = [RandomRemove init];
-//        Nuke *n = [Nuke init];
-        Gravity *a = [Gravity init];
-        NSMutableArray *array = [NSMutableArray array];
-//        [array addObject:s];
-//        [array addObject:n];
-        [array addObject:a];
-        [self addSpellsToInventory:array];
-
         NSUInteger nbLinesCleared = [self checkForRowsToClear:userTetromino.children];
         if(nbLinesCleared > 0)
         {
@@ -50,15 +42,11 @@
     }
 }
 
-- (void)encodeWithCoder:(NSCoder *)coder {
-    [coder encodeObject:self.listObservers forKey:@"self.listObservers"];
-}
-
 - (void)VerifyNewBlockCollision:(Tetromino *)new{
 
     BOOL collision = NO;
 
-    for (Block *block in new.children)
+    for (id<IBlock> block in new.children)
     {
         if ([self.field.board isBlockAt:ccp(block.boardX, block.boardY)])
         {
@@ -81,7 +69,7 @@
     NSUInteger nbLinesToDelete = 0;
 
     NSUInteger deletedRow = (NSUInteger) nil;
-    for (Block *block in blocksToCheck) {
+    for (id<IBlock> block in blocksToCheck) {
 
         //Skip row already processed
         if ([block boardY] == (NSUInteger) deletedRow) {
@@ -132,12 +120,13 @@
 }
 
 - (void)gameOver:(BOOL)won{
+    /*
     CCScene *gameOverScene = [GameOverLayer sceneWithWon:won];
     [[CCDirector sharedDirector] replaceScene:gameOverScene];
+    */
 }
 
 - (void)createNewTetromino {
-
 
     Tetromino *tempTetromino = [Tetromino randomBlockUsingBlockFrequency:_isMain ];
 
@@ -207,31 +196,7 @@
 
     }
 }
-
--(void)UpdatesNewTetromino:(Tetromino*) ToTetromino {
-    [self.field setPositionUsingFieldValue:ToTetromino.children];
-
-    [self.field.board addTetrominoToBoard:ToTetromino.children];
-
-    [self notifyTretrominoPosition:ToTetromino];
-}
-
-- (void)notifyTretrominoPosition:(Tetromino *)tetromino {
-    for (id<GameControllerObserver> observer in _listObservers) {
-        if ([observer respondsToSelector:@selector(updateTetrominoPosition:)]) {
-            [observer updateTetrominoPosition:tetromino];
-        }
-    }
-}
-
-- (void)newTetromino:(Tetromino *)tetromino {
-    for (id<GameControllerObserver> observer in _listObservers) {
-        if ([observer respondsToSelector:@selector(newTetromino:)]) {
-            //[observer newTetromino:tetromino];
-        }
-    }
-}
-
+/*
 - (void)viewTap:(CGPoint)location {
 
     CGFloat leftMostX = 0;
@@ -292,5 +257,5 @@
     }
 
 }
-
+*/
 @end

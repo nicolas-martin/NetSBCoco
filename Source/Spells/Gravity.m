@@ -22,7 +22,7 @@
     return self;
 }
 
-
+/*
 - (void)CastSpell:(Field *)targetField {
     NSEnumerator *enumerator;
     NSMutableArray *blocksToSetPosition = [NSMutableArray array];
@@ -56,5 +56,6 @@
 - (NSString *)LogSpell:(Field *)targetField {
     return [NSString stringWithFormat:@"%@ was casted on %@", _spellName, targetField.Name];
 }
+*/
 
 @end
