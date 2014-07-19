@@ -12,7 +12,7 @@
 }
 
 - (void)didLoadFromCCB {
-    NSLog(@"Inventory loaded");
+
 }
 
 /*

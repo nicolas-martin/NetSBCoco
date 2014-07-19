@@ -6,6 +6,7 @@
 #import <Foundation/Foundation.h>
 
 @class Board;
+@class Tetromino;
 
 
 @interface Field : CCNode
@@ -22,4 +23,7 @@
 - (void)setPositionUsingFieldValue:(NSMutableArray *)arrayOfBlocks;
 
 
+- (void)moveDownOrCreate;
+
+- (void)createNewTetromino;
 @end

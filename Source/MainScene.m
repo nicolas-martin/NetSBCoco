@@ -9,7 +9,6 @@
 #import "MainScene.h"
 #import "Field.h"
 #import "Tetromino.h"
-#import "GameController.h"
 
 @implementation MainScene{
     CCNode *_scene;
@@ -19,9 +18,17 @@
 }
 
 - (void)didLoadFromCCB {
-    GameController *gc1 = [GameController initWithField _p1];
+
+    [_p1 createNewTetromino];
 
 
+
+}
+- (void)onEnter {
+    [self schedule:@selector(scrollBackground:) interval:1];
+}
+- (void)scrollBackground:(CCTime)delta {
+    [_p1 moveDownOrCreate];
 }
 
 @end

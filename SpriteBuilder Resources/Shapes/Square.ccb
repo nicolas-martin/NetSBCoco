@@ -48,6 +48,29 @@
 				<array/>
 				<key>customClass</key>
 				<string></string>
+				<key>customProperties</key>
+				<array>
+					<dict>
+						<key>name</key>
+						<string>boardX</string>
+						<key>optimized</key>
+						<false/>
+						<key>type</key>
+						<integer>0</integer>
+						<key>value</key>
+						<string>0</string>
+					</dict>
+					<dict>
+						<key>name</key>
+						<string>boardY</string>
+						<key>optimized</key>
+						<false/>
+						<key>type</key>
+						<integer>0</integer>
+						<key>value</key>
+						<string>0</string>
+					</dict>
+				</array>
 				<key>displayName</key>
 				<string>CCBFile</string>
 				<key>memberVarAssignmentName</key>
@@ -100,8 +123,6 @@
 						<string>Blocks/Green.ccb</string>
 					</dict>
 				</array>
-				<key>selected</key>
-				<true/>
 			</dict>
 			<dict>
 				<key>UUID</key>
@@ -112,6 +133,29 @@
 				<array/>
 				<key>customClass</key>
 				<string></string>
+				<key>customProperties</key>
+				<array>
+					<dict>
+						<key>name</key>
+						<string>boardX</string>
+						<key>optimized</key>
+						<false/>
+						<key>type</key>
+						<integer>0</integer>
+						<key>value</key>
+						<string>0</string>
+					</dict>
+					<dict>
+						<key>name</key>
+						<string>boardY</string>
+						<key>optimized</key>
+						<false/>
+						<key>type</key>
+						<integer>0</integer>
+						<key>value</key>
+						<string>0</string>
+					</dict>
+				</array>
 				<key>displayName</key>
 				<string>CCBFile</string>
 				<key>memberVarAssignmentName</key>
@@ -174,6 +218,29 @@
 				<array/>
 				<key>customClass</key>
 				<string></string>
+				<key>customProperties</key>
+				<array>
+					<dict>
+						<key>name</key>
+						<string>boardX</string>
+						<key>optimized</key>
+						<false/>
+						<key>type</key>
+						<integer>0</integer>
+						<key>value</key>
+						<string>0</string>
+					</dict>
+					<dict>
+						<key>name</key>
+						<string>boardY</string>
+						<key>optimized</key>
+						<false/>
+						<key>type</key>
+						<integer>0</integer>
+						<key>value</key>
+						<string>0</string>
+					</dict>
+				</array>
 				<key>displayName</key>
 				<string>CCBFile</string>
 				<key>memberVarAssignmentName</key>
@@ -236,6 +303,29 @@
 				<array/>
 				<key>customClass</key>
 				<string></string>
+				<key>customProperties</key>
+				<array>
+					<dict>
+						<key>name</key>
+						<string>boardX</string>
+						<key>optimized</key>
+						<false/>
+						<key>type</key>
+						<integer>0</integer>
+						<key>value</key>
+						<string>0</string>
+					</dict>
+					<dict>
+						<key>name</key>
+						<string>boardY</string>
+						<key>optimized</key>
+						<false/>
+						<key>type</key>
+						<integer>0</integer>
+						<key>value</key>
+						<string>0</string>
+					</dict>
+				</array>
 				<key>displayName</key>
 				<string>CCBFile</string>
 				<key>memberVarAssignmentName</key>
@@ -329,8 +419,8 @@
 				<string>Size</string>
 				<key>value</key>
 				<array>
-					<real>0.0</real>
-					<real>0.0</real>
+					<real>24</real>
+					<real>24</real>
 					<integer>0</integer>
 					<integer>0</integer>
 				</array>
@@ -343,7 +433,7 @@
 				<key>value</key>
 				<array>
 					<real>0.0</real>
-					<real>0.0</real>
+					<real>1</real>
 				</array>
 			</dict>
 			<dict>

@@ -23,14 +23,14 @@
 }
 
 
-- (void)CastSpell:(Field *)targetField {
-    Board *board = targetField.board;
-
-    [board DeleteBlockFromBoardAndSprite:[board getAllBlocksInBoard]];
-
-}
-
-- (NSString *)LogSpell:(Field *)targetField {
-    return [NSString stringWithFormat:@"%@ was casted on %@", _spellName, targetField.Name];
-}
+//- (void)CastSpell:(Field *)targetField {
+//    Board *board = targetField.board;
+//
+//    [board DeleteBlockFromBoardAndSprite:[board getAllBlocksInBoard]];
+//
+//}
+//
+//- (NSString *)LogSpell:(Field *)targetField {
+//    return [NSString stringWithFormat:@"%@ was casted on %@", _spellName, targetField.Name];
+//}
 @end

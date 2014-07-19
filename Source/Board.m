@@ -25,7 +25,7 @@
 }
 
 - (void)didLoadFromCCB {
-    NSLog(@"Board loaded");
+
 }
 
 - (NSMutableArray *)get20x10Array {

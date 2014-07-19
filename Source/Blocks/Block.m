@@ -9,6 +9,7 @@
 
 @implementation Block {
 
+
 }
 - (void)addSpellToBlock:(<ICastable>)spell {
 
