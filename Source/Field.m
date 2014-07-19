@@ -277,7 +277,7 @@
 - (void)createNewTetromino {
 
     //Tetromino *tempTetromino = [Tetromino randomBlockUsingBlockFrequency:_isMain ];
-    Tetromino *tempTetromino = (Tetromino *) [CCBReader load:@"Shapes/Z"];
+    Tetromino *tempTetromino = (Tetromino *) [CCBReader load:@"Shapes/I"];
 
     [self VerifyNewBlockCollision:tempTetromino];
 
