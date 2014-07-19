@@ -59,7 +59,7 @@
 - (void)redrawPositionOnBoard
 {
     //compute
-    self.position = ccp(_boardX, _boardY);
+    //self.position = ccp(_boardX * self.contentSize.width, -_boardY * self.contentSize.height);
 }
 
 

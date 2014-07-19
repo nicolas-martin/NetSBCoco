@@ -148,7 +148,6 @@
 
 - (void)setPositionUsingFieldValue:(NSMutableArray *) arrayOfBlocks
 {
-    //CGPoint fieldPositionInView = [self position];
 
     for (Block * block in arrayOfBlocks)
     {
@@ -159,7 +158,7 @@
 //        NSInteger x = (boardX * (NSInteger) (boardY * block.contentSize.width));// + fieldPositionInView.x);
 //        NSInteger y = (NSInteger) (-boardYTimeSize + self.contentSize.height);// + fieldPositionInView.y);
         NSInteger x = (NSInteger) (boardX * block.contentSize.width);// + fieldPositionInView.x);
-        NSInteger y = (NSInteger) ((boardY * block.contentSize.height)+ _board.contentSize.height);// + fieldPositionInView.y);
+        NSInteger y = (NSInteger) ((-boardY * block.contentSize.height)+ _board.contentSize.height);// + fieldPositionInView.y);
         [block setPosition:ccp(x, y)];
     }
 
@@ -188,6 +187,7 @@
             [self addSpellToField];
         }
     }
+    [_board printCurrentBoardStatus:NO];
 }
 
 - (void)VerifyNewBlockCollision:(Tetromino *)new{
@@ -278,14 +278,6 @@
 
     //Tetromino *tempTetromino = [Tetromino randomBlockUsingBlockFrequency:_isMain ];
     Tetromino *tempTetromino = (Tetromino *) [CCBReader load:@"Shapes/Square"];
-    Block *block0 = [tempTetromino.children objectAtIndex:0];
-    block0.boardX = 0;block0.boardY = 0;
-    Block *block1 = [tempTetromino.children objectAtIndex:1];
-    block1.boardX = 1;block1.boardY = 0;
-    Block *block2 = [tempTetromino.children objectAtIndex:2];
-    block2.boardX = 0;block2.boardY = 1;
-    Block *block3 = [tempTetromino.children objectAtIndex:3];
-    block3.boardX = 1;block3.boardY = 1;
 
     [self VerifyNewBlockCollision:tempTetromino];
 
@@ -305,7 +297,18 @@
 
     [userTetromino moveTetrominoDown];
 
+    [self UpdatesNewTetromino:userTetromino];
+
 }
+
+-(void)UpdatesNewTetromino:(Tetromino*) ToTetromino
+{
+    [self setPositionUsingFieldValue:ToTetromino.children];
+
+    [_board addTetrominoToBoard:ToTetromino.children];
+
+}
+
 
 - (void)moveTetrominoLeft{
 
@@ -316,7 +319,11 @@
 
         [userTetromino moveTetrominoInDirection:userTetromino inDirection:moveLeft];
 
+        [self UpdatesNewTetromino:userTetromino];
+
     }
+
+
 }
 
 - (void)moveTetrominoRight{
@@ -326,6 +333,8 @@
         [_board DeleteBlockFromBoard:userTetromino.children];
 
         [userTetromino moveTetrominoInDirection:userTetromino inDirection:moveRight];
+
+        [self UpdatesNewTetromino:userTetromino];
 
     }
 }
@@ -340,6 +349,8 @@
 
         [userTetromino MoveBoardPosition:rotated];
         [userTetromino setOrientation:rotated.orientation];
+
+        [self UpdatesNewTetromino:userTetromino];
 
     }
 }

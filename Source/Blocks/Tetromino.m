@@ -65,6 +65,61 @@
 
     self.anchorY += 1;
 }
+
+- (CGPoint)leftMostPosition
+{
+
+    CGPoint	myLeftPosition = ccp(999,999);
+    for (Block *currentBlock in self.children) {
+        if ( myLeftPosition.x > currentBlock.boardX) {
+            myLeftPosition = ccp(currentBlock.boardX, currentBlock.boardY);
+        }
+    }
+    [self setLeftMostPosition:myLeftPosition];
+    return myLeftPosition;
+
+}
+
+- (CGPoint)rightMostPosition
+{
+    CGPoint myRightPosition = ccp(-1, -1);
+    for (Block *currentBlock in self.children) {
+        if (myRightPosition.x < currentBlock.boardX) {
+            myRightPosition = ccp(currentBlock.boardX, currentBlock.boardY);
+        }
+    }
+    [self setRightMostPosition:myRightPosition];
+    return myRightPosition;
+}
+
+- (CGPoint)highestPosition
+{
+
+    CGPoint	myLeftPosition = ccp(999,999);
+    for (Block *currentBlock in self.children) {
+        if ( myLeftPosition.y > currentBlock.boardY) {
+            myLeftPosition = ccp(currentBlock.boardX, currentBlock.boardY);
+
+        }
+    }
+    [self setHighestPosition:myLeftPosition];
+    return myLeftPosition;
+
+}
+
+- (CGPoint)lowestPosition
+{
+    CGPoint myRightPosition = ccp(-1, -1);
+    for (Block *currentBlock in self.children) {
+        if (myRightPosition.y < currentBlock.boardY) {
+            myRightPosition = ccp(currentBlock.boardX, currentBlock.boardY);
+        }
+    }
+    [self setLowestPosition:myRightPosition];
+    return myRightPosition;
+}
+
+
 - (NSString *)description {
     NSMutableString *description = [NSMutableString string];
     [description appendFormat:@"self.type=%d", self.type];
