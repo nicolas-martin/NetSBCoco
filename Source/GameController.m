@@ -4,11 +4,28 @@
 //
 
 #import "GameController.h"
-#import "IBlock.h"
+#import "Tetromino.h"
+#import "Block.h"
+#import "Field.h"
 
 
 @implementation GameController {
+    Field *_field;
+    Tetromino *userTetromino;
+}
+- (instancetype)initWithField:(Field *)field {
+    self = [super init];
+    if (self) {
+        _field = field;
+        Tetromino *square = (Tetromino *) [CCBReader load:@"Shapes/Square"];
+        [_field addChild:square];
+    }
 
+    return self;
+}
+
++ (instancetype)controllerWithField:(Field *)field {
+    return [[self alloc] initWithField:field];
 }
 
 - (void)moveDownOrCreate {
@@ -18,7 +35,7 @@
     {
         [self createNewTetromino];
     }
-    else if(userTetromino.lowestPosition.y != 19 && [self.field canMoveTetrominoByYTetromino:userTetromino offSetY:1])
+    else if(userTetromino.lowestPosition.y != 19 && [_field canMoveTetrominoByYTetromino:userTetromino offSetY:1])
     {
         [self moveTetrominoDown];
         userTetromino.stuck = NO;
@@ -27,16 +44,11 @@
     {
         userTetromino.stuck = YES;
 
-        if([_field.Name isEqual:@"MainField"])
-        {
-            [_field.board printCurrentBoardStatus:YES];
-        }
-
         NSUInteger nbLinesCleared = [self checkForRowsToClear:userTetromino.children];
         if(nbLinesCleared > 0)
         {
-            self.numRowCleared + nbLinesCleared;
-            [_hudLayer numRowClearedChanged:_numRowCleared];
+//            self.numRowCleared + nbLinesCleared;
+//            [_hudLayer numRowClearedChanged:_numRowCleared];
             [_field addSpellToField];
         }
     }
@@ -46,9 +58,9 @@
 
     BOOL collision = NO;
 
-    for (id<IBlock> block in new.children)
+    for (Block * block in new.children)
     {
-        if ([self.field.board isBlockAt:ccp(block.boardX, block.boardY)])
+        if ([_field.board isBlockAt:ccp(block.boardX, block.boardY)])
         {
             collision = YES;
             continue;
@@ -69,7 +81,7 @@
     NSUInteger nbLinesToDelete = 0;
 
     NSUInteger deletedRow = (NSUInteger) nil;
-    for (id<IBlock> block in blocksToCheck) {
+    for (Block *block in blocksToCheck) {
 
         //Skip row already processed
         if ([block boardY] == (NSUInteger) deletedRow) {
@@ -97,7 +109,7 @@
             NSMutableArray *spellsToAdd = [_field.board DeleteRow:(NSUInteger)deletedRow];
             if(spellsToAdd.count > 0)
             {
-                [self addSpellsToInventory:spellsToAdd];
+                //[self addSpellsToInventory:spellsToAdd];
             }
 
             [_field setPositionUsingFieldValue:[_field.board MoveBoardDown:(NSUInteger) (deletedRow - 1)]];
@@ -112,12 +124,12 @@
 
 }
 
--(void) addSpellsToInventory:(NSMutableArray *)spellsToAdd{
-    for (id <ICastable> spell in spellsToAdd)
-    {
-        [_inventory addSpell:spell];
-    }
-}
+//-(void) addSpellsToInventory:(NSMutableArray *)spellsToAdd{
+//    for (id <ICastable> spell in spellsToAdd)
+//    {
+//        [_inventory addSpell:spell];
+//    }
+//}
 
 - (void)gameOver:(BOOL)won{
     /*
@@ -132,13 +144,11 @@
 
     [self VerifyNewBlockCollision:tempTetromino];
 
-    [self.field.board addTetrominoToBoard:tempTetromino.children];
+    [_field.board addTetrominoToBoard:tempTetromino.children];
 
-    [self.field setPositionUsingFieldValue:tempTetromino.children];
+    [_field setPositionUsingFieldValue:tempTetromino.children];
 
-    [self.field addChild:tempTetromino];
-
-    [self newTetromino:tempTetromino];
+    [_field addChild:tempTetromino];
 
     userTetromino = tempTetromino;
 
@@ -146,36 +156,31 @@
 
 - (void)moveTetrominoDown{
 
-    [self.field.board DeleteBlockFromBoard:userTetromino.children];
+    [_field.board DeleteBlockFromBoard:userTetromino.children];
 
     [userTetromino moveTetrominoDown];
 
-    [self UpdatesNewTetromino:userTetromino];
 }
 
 - (void)moveTetrominoLeft{
 
-    if ([self.field canMoveTetrominoByXTetromino:userTetromino offSetX:-1])
+    if ([_field canMoveTetrominoByXTetromino:userTetromino offSetX:-1])
     {
 
-        [self.field.board DeleteBlockFromBoard:userTetromino.children];
+        [_field.board DeleteBlockFromBoard:userTetromino.children];
 
         [userTetromino moveTetrominoInDirection:userTetromino inDirection:moveLeft];
-
-        [self UpdatesNewTetromino:userTetromino];
 
     }
 }
 
 - (void)moveTetrominoRight{
 
-    if ([self.field canMoveTetrominoByXTetromino:userTetromino offSetX:1])
+    if ([_field canMoveTetrominoByXTetromino:userTetromino offSetX:1])
     {
-        [self.field.board DeleteBlockFromBoard:userTetromino.children];
+        [_field.board DeleteBlockFromBoard:userTetromino.children];
 
         [userTetromino moveTetrominoInDirection:userTetromino inDirection:moveRight];
-
-        [self UpdatesNewTetromino:userTetromino];
 
     }
 }
@@ -184,15 +189,12 @@
 
     Tetromino *rotated = [Tetromino rotateTetromino:userTetromino in:direction];
 
-    if([self.field isTetrominoInBounds:rotated noCollisionWith:userTetromino])
+    if([_field isTetrominoInBounds:rotated noCollisionWith:userTetromino])
     {
-        [self.field.board DeleteBlockFromBoard:userTetromino.children];
+        [_field.board DeleteBlockFromBoard:userTetromino.children];
 
         [userTetromino MoveBoardPosition:rotated];
         [userTetromino setOrientation:rotated.orientation];
-
-        [self UpdatesNewTetromino:userTetromino];
-
 
     }
 }

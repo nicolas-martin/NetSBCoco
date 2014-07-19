@@ -7,9 +7,10 @@
 	objects = {
 
 /* Begin PBXBuildFile section */
+		1AA82D6A2E2D79DEF384B3B6 /* Block.m in Sources */ = {isa = PBXBuildFile; fileRef = 1AA82D0472805880B730EEDB /* Block.m */; };
+		1AA82E43FC3929A4A863A1EE /* Tetromino.m in Sources */ = {isa = PBXBuildFile; fileRef = 1AA827C0EA61DC4E95669794 /* Tetromino.m */; };
 		7A7A2303CBE96D656256F097 /* AddLine.m in Sources */ = {isa = PBXBuildFile; fileRef = 7A7A28F768AE660411EFCFE6 /* AddLine.m */; };
 		7A7A24E2AB2ABDD71BD6341E /* GameController.m in Sources */ = {isa = PBXBuildFile; fileRef = 7A7A27F14E33AC860232CFCC /* GameController.m */; };
-		7A7A273A231EC8EE48305D31 /* Square.m in Sources */ = {isa = PBXBuildFile; fileRef = 7A7A2AE7073BCB20C3E83872 /* Square.m */; };
 		7A7A27ED81838EA5C9A4BDF4 /* Nuke.m in Sources */ = {isa = PBXBuildFile; fileRef = 7A7A20C36F1D1AECAF7FEB29 /* Nuke.m */; };
 		7A7A2B4A967F06D9AA427CB4 /* RandomRemove.m in Sources */ = {isa = PBXBuildFile; fileRef = 7A7A240BD3C56381C666095F /* RandomRemove.m */; };
 		7A7A2C385F87119BE0F60C71 /* Board.m in Sources */ = {isa = PBXBuildFile; fileRef = 7A7A2C48D0D85B5FECD3EEC7 /* Board.m */; };
@@ -65,6 +66,10 @@
 /* End PBXContainerItemProxy section */
 
 /* Begin PBXFileReference section */
+		1AA8202B9CEA5233E788263D /* Block.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = Block.h; sourceTree = "<group>"; };
+		1AA8239D47AEF45CF93B958E /* Tetromino.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = Tetromino.h; sourceTree = "<group>"; };
+		1AA827C0EA61DC4E95669794 /* Tetromino.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = Tetromino.m; sourceTree = "<group>"; };
+		1AA82D0472805880B730EEDB /* Block.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = Block.m; sourceTree = "<group>"; };
 		7A7A20C36F1D1AECAF7FEB29 /* Nuke.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = Nuke.m; sourceTree = "<group>"; };
 		7A7A20C84071DB6970BDD4C5 /* Gravity.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = Gravity.h; sourceTree = "<group>"; };
 		7A7A2143B8F09AE55F1486AE /* Inventory.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = Inventory.h; path = Source/Inventory.h; sourceTree = "<group>"; };
@@ -72,7 +77,6 @@
 		7A7A240BD3C56381C666095F /* RandomRemove.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = RandomRemove.m; sourceTree = "<group>"; };
 		7A7A24279D680558095AE7EC /* ICastable.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = ICastable.h; sourceTree = "<group>"; };
 		7A7A24F1E763D404BF433A67 /* Inventory.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = Inventory.m; path = Source/Inventory.m; sourceTree = "<group>"; };
-		7A7A257E26368F81E3583D5F /* IBlock.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = IBlock.h; sourceTree = "<group>"; };
 		7A7A25D240F0B6E687AB3BEC /* Gravity.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = Gravity.m; sourceTree = "<group>"; };
 		7A7A2697B5AFB30CB4E70B37 /* Field.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = Field.m; path = Source/Field.m; sourceTree = "<group>"; };
 		7A7A27F14E33AC860232CFCC /* GameController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = GameController.m; path = Source/GameController.m; sourceTree = "<group>"; };
@@ -81,9 +85,7 @@
 		7A7A29E85F5D6CFA8591619D /* GameController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = GameController.h; path = Source/GameController.h; sourceTree = "<group>"; };
 		7A7A2A142F42F3D85C91E884 /* AddLine.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = AddLine.h; sourceTree = "<group>"; };
 		7A7A2A6D809E74A0A68FABD9 /* Nuke.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = Nuke.h; sourceTree = "<group>"; };
-		7A7A2AE7073BCB20C3E83872 /* Square.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = Square.m; sourceTree = "<group>"; };
 		7A7A2C48D0D85B5FECD3EEC7 /* Board.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = Board.m; path = Source/Board.m; sourceTree = "<group>"; };
-		7A7A2CD9206BF76A3BEF7C9A /* Square.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = Square.h; sourceTree = "<group>"; };
 		7A7A2E931E59367D9F216D0F /* Board.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = Board.h; path = Source/Board.h; sourceTree = "<group>"; };
 		8392007918EE8E3300B6C429 /* GLKit.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = GLKit.framework; path = System/Library/Frameworks/GLKit.framework; sourceTree = SDKROOT; };
 		B71F5907188484E7003F4D28 /* iPad-old.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; name = "iPad-old.png"; path = "Icons/iPad-old.png"; sourceTree = "<group>"; };
@@ -146,9 +148,10 @@
 		7A7A21594481A92AAF3BAEEF /* Blocks */ = {
 			isa = PBXGroup;
 			children = (
-				7A7A257E26368F81E3583D5F /* IBlock.h */,
-				7A7A2AE7073BCB20C3E83872 /* Square.m */,
-				7A7A2CD9206BF76A3BEF7C9A /* Square.h */,
+				1AA827C0EA61DC4E95669794 /* Tetromino.m */,
+				1AA8239D47AEF45CF93B958E /* Tetromino.h */,
+				1AA82D0472805880B730EEDB /* Block.m */,
+				1AA8202B9CEA5233E788263D /* Block.h */,
 			);
 			name = Blocks;
 			path = Source/Blocks;
@@ -417,8 +420,9 @@
 				7A7A2E3418B760A043E37345 /* Gravity.m in Sources */,
 				7A7A27ED81838EA5C9A4BDF4 /* Nuke.m in Sources */,
 				7A7A2B4A967F06D9AA427CB4 /* RandomRemove.m in Sources */,
-				7A7A273A231EC8EE48305D31 /* Square.m in Sources */,
 				7A7A2C385F87119BE0F60C71 /* Board.m in Sources */,
+				1AA82E43FC3929A4A863A1EE /* Tetromino.m in Sources */,
+				1AA82D6A2E2D79DEF384B3B6 /* Block.m in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};

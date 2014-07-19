@@ -8,6 +8,8 @@
 
 #import "MainScene.h"
 #import "Field.h"
+#import "Tetromino.h"
+#import "GameController.h"
 
 @implementation MainScene{
     CCNode *_scene;
@@ -17,8 +19,8 @@
 }
 
 - (void)didLoadFromCCB {
-    CCNode *square = [CCBReader load:@"Shapes/Square"];
-    [_p1 addChild:square];
+    GameController *gc1 = [GameController initWithField _p1];
+
 
 }
 

@@ -5,12 +5,15 @@
 
 #import <Foundation/Foundation.h>
 
+@class Field;
+
 
 @interface GameController : NSObject {
 
 }
+- (instancetype)initWithField:(Field *)field;
 
-
++ (instancetype)controllerWithField:(Field *)field;
 
 
 @end

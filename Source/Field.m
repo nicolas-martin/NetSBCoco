@@ -6,7 +6,8 @@
 #import "Field.h"
 #import "Inventory.h"
 #import "Board.h"
-#import "IBlock.h"
+#import "Tetromino.h"
+#import "Block.h"
 
 
 @implementation Field {
@@ -49,13 +50,14 @@
 {
 
     // Sort blocks by x value if moving left, reverse order if moving right
-    CCArray *reversedChildren = [[CCArray alloc] initWithArray:userTetromino.children];
+    NSMutableArray *reversedChildren = [[NSMutableArray alloc] initWithArray:userTetromino.children];
+    NSEnumerator *enumerator;
 
     if (offSetY > 0) {
-        [reversedChildren reverseObjects];
+        enumerator = [reversedChildren reverseObjectEnumerator];
     }
 
-    for (id<IBlock> currentBlock in reversedChildren) {
+    for (Block * currentBlock in enumerator) {
         //dont compare yourself
         if (!([userTetromino isBlockInTetromino:[_board getBlockAt:ccp(currentBlock.boardX, currentBlock.boardY + offSetY)]])) {
             //if there's another block at the position you're looking at, you can't move
@@ -73,13 +75,14 @@
 {
 
     // Sort blocks by x value if moving left, reverse order if moving right
-    CCArray *reversedChildren = [[CCArray alloc] initWithArray:userTetromino.children];
+    NSMutableArray *reversedChildren = [[NSMutableArray alloc] initWithArray:userTetromino.children];
+    NSEnumerator *enumerator;
 
     if (offSetX > 0) {
-        [reversedChildren reverseObjects];
+        enumerator = [reversedChildren reverseObjectEnumerator];
     }
 
-    for (id<IBlock> currentBlock in reversedChildren) {
+    for (Block * currentBlock in enumerator) {
         //dont compare yourself
         if (!([userTetromino isBlockInTetromino:[_board getBlockAt:ccp(currentBlock.boardX + offSetX, currentBlock.boardY)]])) {
             //if there's another block at the position you're looking at, you can't move
@@ -95,16 +98,16 @@
 - (BOOL)isTetrominoInBounds:(Tetromino *)tetromino noCollisionWith:(Tetromino *)with
 {
 
-    for (id<IBlock> currentBlock in tetromino.children) {
+    for (Block * currentBlock in tetromino.children) {
         //check if the new block is within the bounds and
-        if (currentBlock.boardX < 0 || currentBlock.boardX >= [self.board Nbx]
-                || currentBlock.boardY < 0 || currentBlock.boardY >= [self.board Nby]) {
+        if (currentBlock.boardX < 0 || currentBlock.boardX >= [_board Nbx]
+                || currentBlock.boardY < 0 || currentBlock.boardY >= [_board Nby]) {
             NSLog(@"DENIED - OUT OF BOUNDS");
             return NO;
 
         }
 
-        for (id<IBlock> old in with.children) {
+        for (Block * old in with.children) {
             if (!([old boardX] == [currentBlock boardX]) && ![old boardY] == [currentBlock boardY]) {
                 if ([_board isBlockAt:ccp(currentBlock.boardX, currentBlock.boardY)]) {
                     NSLog(@"DENIED - COLLISION");
@@ -129,11 +132,11 @@
 - (void)addBlocks:(NSMutableArray *)blocksToAdd
 {
 
-    [self.board addTetrominoToBoard:blocksToAdd];
+    [_board addTetrominoToBoard:blocksToAdd];
 
     [self setPositionUsingFieldValue:blocksToAdd];
 
-    for (id<IBlock> blocks in blocksToAdd)
+    for (Block *blocks in blocksToAdd)
     {
         [self addChild:blocks];
     }
@@ -146,14 +149,14 @@
 {
     //CGPoint fieldPositionInView = [self position];
 
-    for (id<IBlock> block in arrayOfBlocks)
+    for (Block * block in arrayOfBlocks)
     {
         NSInteger boardX = [block boardX];
         NSInteger boardY = [block boardY];
-        NSInteger boardYTimeSize = boardY * _TileSize;
+        NSInteger boardYTimeSize = (NSInteger) (boardY * block.contentSize.height);
 
-        NSInteger x = (boardX * _TileSize);// + fieldPositionInView.x);
-        NSInteger y = (-boardYTimeSize + _Height);// + fieldPositionInView.y);
+        NSInteger x = (boardX * (NSInteger) (boardY * block.contentSize.width););// + fieldPositionInView.x);
+        NSInteger y = (-boardYTimeSize + self.contentSize.height);// + fieldPositionInView.y);
         [block setPosition:ccp(x, y)];
     }
 
