@@ -13,6 +13,8 @@
     Tetromino *userTetromino;
 }
 
+@synthesize rowCleared;
+
 - (id)init {
     self = [super init];
     if (self) {
@@ -25,6 +27,30 @@
     }
 
     return self;
+}
+- (void) addSpellToField{
+    /*
+    NSMutableArray *allBlocksInBoard = [_board getAllBlocksInBoard];
+    NSUInteger nbBlocksInBoard = allBlocksInBoard.count;
+    NSUInteger nbSpellToAdd = 0;
+
+    for (NSUInteger i = 0; i < nbBlocksInBoard; i++)
+    {
+        if([self randomBoolWithPercentage:55])
+        {
+            nbSpellToAdd++;
+        }
+    }
+
+    for (NSUInteger i = 0; i < nbSpellToAdd; i++)
+    {
+        NSUInteger posOfSpell = arc4random() % nbBlocksInBoard;
+        id<IBlock> block = [allBlocksInBoard objectAtIndex:posOfSpell];
+        if (block.spell == nil)
+        {
+            [block addSpellToBlock:[SpellFactory getSpellUsingFrequency]];
+        }
+    }*/
 }
 
 - (void)initSomeBlocks{
@@ -89,6 +115,7 @@
         {
             [self moveDownOrCreate];
         }
+
     }
 
 
@@ -264,7 +291,7 @@
 
                 [self MoveBlock:current to:ccp(x, y + 1)];
 
-                current.boardY--;
+                current.boardY++;
 
                 [blocksToSetPosition addObject:current];
 
@@ -421,7 +448,7 @@
 
 }
 
-- (NSUInteger)moveDownOrCreate {
+- (void)moveDownOrCreate {
     //Perhaps set all tetromino to stuck by default?
     //[userTetromino getLowestPosition];
     NSUInteger nbLinesCleared = 0;
@@ -443,7 +470,7 @@
     }
     [self printCurrentBoardStatus:NO];
 
-    return nbLinesCleared;
+    rowCleared = rowCleared + nbLinesCleared;
 }
 
 - (void)VerifyNewBlockCollision:(Tetromino *)new{
@@ -501,6 +528,8 @@
 
             [rowToDelete addObject:[NSNumber numberWithInt:deletedRow]];
 
+            [self addSpellToField];
+
 
 
         }
@@ -513,6 +542,7 @@
         NSMutableArray *spellsToAdd = [self DeleteRow:[row unsignedIntegerValue]];
         if(spellsToAdd.count > 0)
         {
+            //TODO: Use a NSArrayMutableArray property and check it in the field.
             //[self addSpellsToInventory:spellsToAdd];
         }
 
@@ -524,12 +554,7 @@
 
 }
 
--(void) addSpellsToInventory:(NSMutableArray *)spellsToAdd{
-//    for (id <ICastable> spell in spellsToAdd)
-//    {
-//        [_inventory addSpell:spell];
-//    }
-}
+
 
 - (void)gameOver:(BOOL)won{
     /*

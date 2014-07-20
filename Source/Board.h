@@ -14,6 +14,7 @@
 @property int NbBlocks;
 @property NSUInteger Nby;
 @property NSUInteger Nbx;
+@property NSUInteger rowCleared;
 
 - (id)init;
 + (id)initBoard;

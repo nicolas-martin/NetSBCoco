@@ -13,47 +13,27 @@
 @implementation Field {
     Inventory *_inventory;
     Board *_board;
-    Tetromino *userTetromino;
+    CCLabelTTF *_nbRowCleared;
+
 
 }
 
-- (void)didLoadFromCCB {
+- (void) didLoadFromCCB {
 
 }
 
-- (void) addSpellToField{
-    /*
-    NSMutableArray *allBlocksInBoard = [_board getAllBlocksInBoard];
-    NSUInteger nbBlocksInBoard = allBlocksInBoard.count;
-    NSUInteger nbSpellToAdd = 0;
-
-    for (NSUInteger i = 0; i < nbBlocksInBoard; i++)
-    {
-        if([self randomBoolWithPercentage:55])
-        {
-            nbSpellToAdd++;
-        }
-    }
-
-    for (NSUInteger i = 0; i < nbSpellToAdd; i++)
-    {
-        NSUInteger posOfSpell = arc4random() % nbBlocksInBoard;
-        id<IBlock> block = [allBlocksInBoard objectAtIndex:posOfSpell];
-        if (block.spell == nil)
-        {
-            [block addSpellToBlock:[SpellFactory getSpellUsingFrequency]];
-        }
-    }*/
+-(void) addSpellsToInventory:(NSMutableArray *)spellsToAdd{
+//    for (id <ICastable> spell in spellsToAdd)
+//    {
+//        [_inventory addSpell:spell];
+//    }
 }
 
-- (void)moveDownOrCreate {
+- (void) moveDownOrCreate {
 
-    if(_board.moveDownOrCreate > 0)
-    {
-//            self.numRowCleared + nbLinesCleared;
-//            [_hudLayer numRowClearedChanged:_numRowCleared];
-        [self addSpellToField];
-    }
+    _board.moveDownOrCreate;
+    _nbRowCleared.string = [NSString stringWithFormat:@"%d", (int) _board.rowCleared];
+
 }
 
 
