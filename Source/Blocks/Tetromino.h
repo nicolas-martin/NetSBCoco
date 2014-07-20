@@ -57,7 +57,7 @@ typedef enum
 
 - (BOOL)isBlockInTetromino:(id)block;
 
-- (void)moveTetrominoInDirection:(Tetromino *)tetromino inDirection:(MoveDirection)direction;
+- (void)moveTetrominoInDirection:(MoveDirection)direction;
 
 + (Tetromino *)rotateTetromino:(Tetromino *)userTetromino in:(RotationDirection)direction;
 

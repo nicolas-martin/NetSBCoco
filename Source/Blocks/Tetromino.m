@@ -37,14 +37,14 @@
     }
     return NO;
 }
-- (void)moveTetrominoInDirection:(Tetromino *)tetromino inDirection:(MoveDirection)direction
+- (void)moveTetrominoInDirection:(MoveDirection)direction
 {
-    for (Block* currentBlock in tetromino.children)
+    for (Block* currentBlock in self.children)
     {
         [currentBlock moveByX:direction];
     }
 
-    tetromino.anchorX += direction;
+    self.anchorX += direction;
 }
 
 + (Tetromino *)rotateTetromino:(Tetromino *)userTetromino in:(RotationDirection)direction {

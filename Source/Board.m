@@ -10,6 +10,7 @@
 
 @implementation Board {
     NSMutableArray *_array;
+    Tetromino *userTetromino;
 }
 
 - (id)init {
@@ -18,10 +19,24 @@
         self.Nbx = 10;
         self.Nby = 20;
         _array = self.get20x10Array;
+        self.userInteractionEnabled = YES;
 
     }
 
     return self;
+}
+
+- (void)onEnter {
+    //doesn't work?
+}
+
+- (void)touchBegan:(UITouch *)touch withEvent:(UIEvent *)event{
+    //[self viewTap:[self tileCoordForPosition:location]];
+    CGPoint pos = [touch locationInNode:self];
+
+    [self moveTetrominoRight];
+
+
 }
 
 - (void)didLoadFromCCB {
@@ -229,6 +244,304 @@
         }
 
         NSLog(@"%@", row);
+
+    }
+}
+
+- (BOOL)canMoveTetrominoByYTetromino:(Tetromino *)userTetromino offSetY:(NSUInteger)offSetY{
+
+    // Sort blocks by x value if moving left, reverse order if moving right
+    NSMutableArray *reversedChildren = [[NSMutableArray alloc] initWithArray:userTetromino.children];
+    NSEnumerator *enumerator;
+
+    if (offSetY > 0) {
+        enumerator = [reversedChildren reverseObjectEnumerator];
+    }
+
+    for (Block * currentBlock in enumerator) {
+        //dont compare yourself
+        if (!([userTetromino isBlockInTetromino:[self getBlockAt:ccp(currentBlock.boardX, currentBlock.boardY + offSetY)]])) {
+            //if there's another block at the position you're looking at, you can't move
+            if ([self isBlockAt:ccp(currentBlock.boardX, currentBlock.boardY + offSetY)]) {
+                return NO;
+            }
+        }
+    }
+    return YES;
+
+}
+
+- (BOOL)canMoveTetrominoByXTetromino:(Tetromino *)userTetromino offSetX:(NSUInteger)offSetX{
+
+    // Sort blocks by x value if moving left, reverse order if moving right
+    NSMutableArray *reversedChildren = [[NSMutableArray alloc] initWithArray:userTetromino.children];
+    NSEnumerator *enumerator;
+
+    if (offSetX > 0) {
+        enumerator = [reversedChildren reverseObjectEnumerator];
+    }
+
+    for (Block * currentBlock in enumerator) {
+        //dont compare yourself
+        if (!([userTetromino isBlockInTetromino:[self getBlockAt:ccp(currentBlock.boardX + offSetX, currentBlock.boardY)]])) {
+            //if there's another block at the position you're looking at, you can't move
+            if ([self isBlockAt:ccp(currentBlock.boardX + offSetX, currentBlock.boardY)]) {
+                return NO;
+            }
+        }
+    }
+    return YES;
+
+}
+
+- (BOOL)isTetrominoInBounds:(Tetromino *)tetromino noCollisionWith:(Tetromino *)with{
+
+    for (Block * currentBlock in tetromino.children) {
+        //check if the new block is within the bounds and
+        if (currentBlock.boardX < 0 || currentBlock.boardX >= [self Nbx]
+                || currentBlock.boardY < 0 || currentBlock.boardY >= [self Nby]) {
+            NSLog(@"DENIED - OUT OF BOUNDS");
+            return NO;
+
+        }
+
+        for (Block * old in with.children) {
+            if (!([old boardX] == [currentBlock boardX]) && ![old boardY] == [currentBlock boardY]) {
+                if ([self isBlockAt:ccp(currentBlock.boardX, currentBlock.boardY)]) {
+                    NSLog(@"DENIED - COLLISION");
+                    return NO;
+                }
+            }
+        }
+
+
+        //}
+    }
+    return YES;
+}
+
+- (BOOL)boardRowEmpty:(NSUInteger)y{
+
+    return [self boardRowFull:y];
+
+}
+
+- (void)addBlocks:(NSMutableArray *)blocksToAdd{
+
+    [self addTetrominoToBoard:blocksToAdd];
+
+    [self setPositionUsingFieldValue:blocksToAdd];
+
+    for (Block *blocks in blocksToAdd)
+    {
+        [self addChild:blocks];
+    }
+
+    //[self newTetromino:blocksToAdd];
+
+}
+
+- (void)setPositionUsingFieldValue:(NSMutableArray *) arrayOfBlocks{
+
+    for (Block * block in arrayOfBlocks)
+    {
+        NSInteger boardX = [block boardX];
+        NSInteger boardY = [block boardY];
+//        NSInteger boardYTimeSize = (NSInteger) (boardY * block.contentSize.height);
+//
+//        NSInteger x = (boardX * (NSInteger) (boardY * block.contentSize.width));// + fieldPositionInView.x);
+//        NSInteger y = (NSInteger) (-boardYTimeSize + self.contentSize.height);// + fieldPositionInView.y);
+        NSInteger x = (NSInteger) (boardX * block.contentSize.width);// + fieldPositionInView.x);
+        NSInteger y = (NSInteger) ((-boardY * block.contentSize.height)+ self.contentSize.height);// + fieldPositionInView.y);
+        [block setPosition:ccp(x, y)];
+    }
+
+}
+
+- (NSUInteger)moveDownOrCreate {
+    //Perhaps set all tetromino to stuck by default?
+    //[userTetromino getLowestPosition];
+    NSUInteger nbLinesCleared = 0;
+    if(userTetromino.stuck || userTetromino == NULL)
+    {
+        [self createNewTetromino];
+    }
+    else if(userTetromino.lowestPosition.y != 19 && [self canMoveTetrominoByYTetromino:userTetromino offSetY:1])
+    {
+        [self moveTetrominoDown];
+        userTetromino.stuck = NO;
+    }
+    else
+    {
+        userTetromino.stuck = YES;
+
+        nbLinesCleared = [self checkForRowsToClear:userTetromino.children];
+
+    }
+    [self printCurrentBoardStatus:NO];
+
+    return nbLinesCleared;
+}
+
+- (void)VerifyNewBlockCollision:(Tetromino *)new{
+
+    BOOL collision = NO;
+
+    for (Block * block in new.children)
+    {
+        if ([self isBlockAt:ccp(block.boardX, block.boardY)])
+        {
+            collision = YES;
+            continue;
+        }
+    }
+
+    if (collision)
+    {
+        [self gameOver:NO];
+    }
+
+
+}
+
+- (NSUInteger)checkForRowsToClear:(NSMutableArray *)blocksToCheck {
+
+    BOOL occupied = NO;
+    NSUInteger nbLinesToDelete = 0;
+
+    NSUInteger deletedRow = (NSUInteger) nil;
+    for (Block *block in blocksToCheck) {
+
+        //Skip row already processed
+        if ([block boardY] == (NSUInteger) deletedRow) {
+            continue;
+        }
+
+        for (int x = 0; x < [self Nbx]; x++) {
+
+            if (![self isBlockAt:ccp(x, block.boardY)]) {
+                occupied = NO;
+                //Since there's an empty block on this column there's no need to look at the others
+                //Exits both loops and get the next row
+                break;
+
+            }
+            else {
+                occupied = YES;
+            }
+        }
+
+        if (occupied) {
+
+            deletedRow = [block boardY];
+
+            NSMutableArray *spellsToAdd = [self DeleteRow:(NSUInteger)deletedRow];
+            if(spellsToAdd.count > 0)
+            {
+                //[self addSpellsToInventory:spellsToAdd];
+            }
+
+            [self setPositionUsingFieldValue:[self MoveBoardDown:(NSUInteger) (deletedRow - 1)]];
+            nbLinesToDelete++;
+
+        }
+        else {
+            continue;
+        }
+    }
+    return nbLinesToDelete;
+
+}
+
+-(void) addSpellsToInventory:(NSMutableArray *)spellsToAdd{
+//    for (id <ICastable> spell in spellsToAdd)
+//    {
+//        [_inventory addSpell:spell];
+//    }
+}
+
+- (void)gameOver:(BOOL)won{
+    /*
+    CCScene *gameOverScene = [GameOverLayer sceneWithWon:won];
+    [[CCDirector sharedDirector] replaceScene:gameOverScene];
+    */
+}
+
+- (void)createNewTetromino {
+
+    //Tetromino *tempTetromino = [Tetromino randomBlockUsingBlockFrequency:_isMain ];
+    Tetromino *tempTetromino = (Tetromino *) [CCBReader load:@"Shapes/I"];
+
+    [self VerifyNewBlockCollision:tempTetromino];
+
+    [self addTetrominoToBoard:tempTetromino.children];
+
+    [self setPositionUsingFieldValue:tempTetromino.children];
+
+    [self addChild:tempTetromino];
+
+    userTetromino = tempTetromino;
+
+}
+
+- (void)moveTetrominoDown{
+
+    [self DeleteBlockFromBoard:userTetromino.children];
+
+    [userTetromino moveTetrominoDown];
+
+    [self UpdatesNewTetromino:userTetromino];
+
+}
+
+- (void)UpdatesNewTetromino:(Tetromino*) ToTetromino{
+    [self setPositionUsingFieldValue:ToTetromino.children];
+
+    [self addTetrominoToBoard:ToTetromino.children];
+
+}
+
+- (void)moveTetrominoLeft{
+
+    if ([self canMoveTetrominoByXTetromino:userTetromino offSetX:-1])
+    {
+
+        [self DeleteBlockFromBoard:userTetromino.children];
+
+        [userTetromino moveTetrominoInDirection:moveLeft];
+
+        [self UpdatesNewTetromino:userTetromino];
+
+    }
+
+
+}
+
+- (void)moveTetrominoRight{
+
+    if ([self canMoveTetrominoByXTetromino:userTetromino offSetX:1])
+    {
+        [self DeleteBlockFromBoard:userTetromino.children];
+
+        [userTetromino moveTetrominoInDirection:moveRight];
+
+        [self UpdatesNewTetromino:userTetromino];
+
+    }
+}
+
+- (void)rotateTetromino:(RotationDirection)direction {
+
+    Tetromino *rotated = [Tetromino rotateTetromino:userTetromino in:direction];
+
+    if([self isTetrominoInBounds:rotated noCollisionWith:userTetromino])
+    {
+        [self DeleteBlockFromBoard:userTetromino.children];
+
+        [userTetromino MoveBoardPosition:rotated];
+        [userTetromino setOrientation:rotated.orientation];
+
+        [self UpdatesNewTetromino:userTetromino];
 
     }
 }
