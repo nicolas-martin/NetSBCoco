@@ -6,6 +6,7 @@
 #import "Board.h"
 #import "Block.h"
 #import "Tetromino.h"
+#import "SpellFactory.h"
 
 
 @implementation Board {
@@ -28,14 +29,16 @@
 
     return self;
 }
+
 - (void) addSpellToField{
-    /*
-    NSMutableArray *allBlocksInBoard = [_board getAllBlocksInBoard];
+
+    NSMutableArray *allBlocksInBoard = [self getAllBlocksInBoard];
     NSUInteger nbBlocksInBoard = allBlocksInBoard.count;
     NSUInteger nbSpellToAdd = 0;
 
     for (NSUInteger i = 0; i < nbBlocksInBoard; i++)
     {
+        //55% of the blocks will have a spell
         if([self randomBoolWithPercentage:55])
         {
             nbSpellToAdd++;
@@ -45,13 +48,19 @@
     for (NSUInteger i = 0; i < nbSpellToAdd; i++)
     {
         NSUInteger posOfSpell = arc4random() % nbBlocksInBoard;
-        id<IBlock> block = [allBlocksInBoard objectAtIndex:posOfSpell];
+        Block *block = [allBlocksInBoard objectAtIndex:posOfSpell];
         if (block.spell == nil)
         {
             [block addSpellToBlock:[SpellFactory getSpellUsingFrequency]];
         }
-    }*/
+    }
 }
+
+- (BOOL)randomBoolWithPercentage:(NSUInteger)percentage
+{
+    return (arc4random() % 100) < percentage;
+}
+
 
 - (void)initSomeBlocks{
 //    NSMutableArray *bArray = [NSMutableArray array];
@@ -153,12 +162,7 @@
     }
     NSMutableArray *inner = [_array objectAtIndex:(NSUInteger) point.x];
 
-    if ([inner objectAtIndex:(NSUInteger) point.y] != [NSNumber numberWithChar:0]) {
-        return YES;
-    }
-    else {
-        return NO;
-    }
+    return [inner objectAtIndex:(NSUInteger) point.y] != [NSNumber numberWithChar:0];
 }
 
 - (NSMutableArray *)getAllBlocksInBoard{
@@ -399,7 +403,7 @@
         }
 
         for (Block * old in with.children) {
-            if (!([old boardX] == [currentBlock boardX]) && ![old boardY] == [currentBlock boardY]) {
+            if ([old boardX] != [currentBlock boardX] && ![old boardY] == [currentBlock boardY]) {
                 if ([self isBlockAt:ccp(currentBlock.boardX, currentBlock.boardY)]) {
                     NSLog(@"DENIED - COLLISION");
                     return NO;

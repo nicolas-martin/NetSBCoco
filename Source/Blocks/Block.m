@@ -12,6 +12,9 @@
 
 }
 - (void)addSpellToBlock:(<ICastable>)spell {
+    _spell = spell;
+
+    //TODO: Change the block's texture for the new spell.
 
 }
 
