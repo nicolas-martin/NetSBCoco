@@ -15,7 +15,6 @@
     Board *_board;
     CCLabelTTF *_nbRowCleared;
 
-
 }
 
 - (void) didLoadFromCCB {
@@ -23,16 +22,19 @@
 }
 
 -(void) addSpellsToInventory:(NSMutableArray *)spellsToAdd{
-//    for (id <ICastable> spell in spellsToAdd)
-//    {
-//        [_inventory addSpell:spell];
-//    }
+    for (id <ICastable> spell in spellsToAdd)
+    {
+        [_inventory addSpell:spell];
+    }
 }
 
 - (void) moveDownOrCreate {
 
     _board.moveDownOrCreate;
-    _nbRowCleared.string = [NSString stringWithFormat:@"%d", (int) _board.rowCleared];
+    NSMutableArray *rows = _board.checkForRowsToClear;
+    NSMutableArray *spellsToAdd = [_board deleteRowsAndReturnSpells:rows];
+    [self addSpellsToInventory:spellsToAdd];
+    _nbRowCleared.string = [NSString stringWithFormat:@"%d", (int) _nbRowCleared.string.integerValue + rows.count];
 
 }
 

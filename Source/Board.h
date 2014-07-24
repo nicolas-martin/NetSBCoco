@@ -14,7 +14,6 @@
 @property int NbBlocks;
 @property NSUInteger Nby;
 @property NSUInteger Nbx;
-@property NSUInteger rowCleared;
 
 - (id)init;
 + (id)initBoard;
@@ -36,4 +35,8 @@
 - (void)printCurrentBoardStatus:(BOOL)withPosition;
 
 - (void)moveDownOrCreate;
+
+- (NSMutableArray *)checkForRowsToClear;
+
+- (NSMutableArray *)deleteRowsAndReturnSpells:(NSMutableArray *)rowsToDelete;
 @end

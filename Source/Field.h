@@ -11,19 +11,8 @@
 
 @interface Field : CCNode
 
-@property NSMutableArray *spellArray;
-
-- (BOOL)randomBoolWithPercentage:(NSUInteger)percentage;
-- (void)addSpellToField;
-- (BOOL)canMoveTetrominoByYTetromino:(Tetromino *)userTetromino offSetY:(NSUInteger)offSetY;
-- (BOOL)canMoveTetrominoByXTetromino:(Tetromino *)userTetromino offSetX:(NSUInteger)offSetX;
-- (BOOL)isTetrominoInBounds:(Tetromino *)tetromino noCollisionWith:(Tetromino *)with;
-- (BOOL)boardRowEmpty:(NSUInteger)x;
-- (void)addBlocks:(NSMutableArray *)blocksToAdd;
-- (void)setPositionUsingFieldValue:(NSMutableArray *)arrayOfBlocks;
-
+- (void)addSpellsToInventory:(NSMutableArray *)spellsToAdd;
 
 - (void)moveDownOrCreate;
 
-- (void)createNewTetromino;
 @end

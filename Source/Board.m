@@ -14,8 +14,6 @@
     Tetromino *userTetromino;
 }
 
-@synthesize rowCleared;
-
 - (id)init {
     self = [super init];
     if (self) {
@@ -469,12 +467,13 @@
     {
         userTetromino.stuck = YES;
 
-        nbLinesCleared = [self checkForRowsToClear:userTetromino.children];
+        // TODO: Move this in field so you have more control. Check all lines instead of just the ones added by the block.
+
+        [self checkForRowsToClear];
 
     }
     [self printCurrentBoardStatus:NO];
 
-    rowCleared = rowCleared + nbLinesCleared;
 }
 
 - (void)VerifyNewBlockCollision:(Tetromino *)new{
@@ -498,23 +497,24 @@
 
 }
 
-- (NSUInteger)checkForRowsToClear:(NSMutableArray *)blocksToCheck {
+//TODO: Return spells to add
+- (NSMutableArray *)checkForRowsToClear {
 
     NSMutableArray *rowToDelete = [[NSMutableArray alloc]init];
     BOOL occupied = NO;
-    NSUInteger nbLinesToDelete = 0;
 
     NSUInteger deletedRow = (NSUInteger) nil;
-    for (Block *block in blocksToCheck) {
+    for (int y = 0; y < [self Nby]; y++) {
 
         //Skip row already processed
-        if ([block boardY] == (NSUInteger) deletedRow) {
+
+        if (y == (NSUInteger) deletedRow) {
             continue;
         }
 
         for (int x = 0; x < [self Nbx]; x++) {
 
-            if (![self isBlockAt:ccp(x, block.boardY)]) {
+            if (![self isBlockAt:ccp(x, y)]) {
                 occupied = NO;
                 //Since there's an empty block on this column there's no need to look at the others
                 //Exits both loops and get the next row
@@ -528,13 +528,11 @@
 
         if (occupied) {
 
-            deletedRow = [block boardY];
+            deletedRow = (NSUInteger) y;
 
             [rowToDelete addObject:[NSNumber numberWithInt:deletedRow]];
 
             [self addSpellToField];
-
-
 
         }
         else {
@@ -542,20 +540,21 @@
         }
     }
 
-    for (NSNumber *row in rowToDelete){
-        NSMutableArray *spellsToAdd = [self DeleteRow:[row unsignedIntegerValue]];
-        if(spellsToAdd.count > 0)
-        {
-            //TODO: Use a NSArrayMutableArray property and check it in the field.
-            //[self addSpellsToInventory:spellsToAdd];
-        }
+    return rowToDelete;
 
-        [self setPositionUsingFieldValue:[self MoveBoardDown:(NSUInteger) (deletedRow - 1)]];
-        nbLinesToDelete++;
+}
+
+- (NSMutableArray *)deleteRowsAndReturnSpells: (NSMutableArray *)rowsToDelete{
+    NSMutableArray *spellsToAdd = [[NSMutableArray alloc] init];
+
+    for (NSNumber *row in rowsToDelete){
+        [spellsToAdd addObjectsFromArray:[self DeleteRow:[row unsignedIntegerValue]]];
+
+        [self setPositionUsingFieldValue:[self MoveBoardDown:([row unsignedIntegerValue]-1)]];
 
     }
-    return nbLinesToDelete;
 
+    return spellsToAdd;
 }
 
 

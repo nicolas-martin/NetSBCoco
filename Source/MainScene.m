@@ -31,10 +31,10 @@
 }
 
 - (void)onEnter {
-    [self schedule:@selector(scrollBackground:) interval:1];
+    [self schedule:@selector(gameLoop:) interval:1];
 }
 
-- (void)scrollBackground:(CCTime)delta {
+- (void)gameLoop:(CCTime)delta {
     [_p1 moveDownOrCreate];
 }
 
