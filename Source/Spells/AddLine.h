@@ -7,11 +7,13 @@
 #import "ICastable.h"
 
 @class Field;
+@class Board;
 
 
 @interface AddLine : NSObject <ICastable>
 
-- (void)CastSpell:(Field *)targetField;
-- (NSString *)LogSpell:(Field *)targetField;
 
+- (void)CastSpell:(Board *)targetBoard;
+
+- (NSString *)LogSpell:(Board *)targetBoard;
 @end

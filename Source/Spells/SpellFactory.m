@@ -82,6 +82,9 @@
 //    {
 //        spell = [Gravity init];
 //    }
+    spell = [[Gravity alloc] init];
+
+
     return spell;
 }
 

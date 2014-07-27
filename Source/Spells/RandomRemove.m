@@ -23,6 +23,15 @@
     return self;
 }
 
+- (NSString *)LogSpell:(Board *)targetBoard {
+    return nil;
+}
+
+- (void)CastSpell:(Board *)targetBoard {
+
+}
+
+
 /*
 - (void)CastSpell:(Field *)targetField {
     Board *board = targetField.board;

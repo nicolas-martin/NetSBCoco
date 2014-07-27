@@ -5,14 +5,14 @@
 
 #import <Foundation/Foundation.h>
 
-@class Field;
+@class Board;
 
 @protocol ICastable <NSObject>
 
 @property NSString *spellName;
 @property NSString *spriteFileName;
 
-- (void)CastSpell:(Field *)targetField;
-- (NSString *)LogSpell:(Field *)targetField;
+- (void)CastSpell:(Board *)targetBoard;
+- (NSString *)LogSpell:(Board *)targetBoard;
 
 @end

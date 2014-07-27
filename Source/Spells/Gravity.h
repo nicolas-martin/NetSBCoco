@@ -6,10 +6,15 @@
 #import <Foundation/Foundation.h>
 #import "ICastable.h"
 
+@class Board;
+
 
 @interface Gravity : NSObject <ICastable>
 
-- (void)CastSpell:(Field *)targetField;
-- (NSString *)LogSpell:(Field *)targetField;
 
+- (id)init;
+
+- (void)CastSpell:(Board *)targetBoard;
+
+- (NSString *)LogSpell:(Board *)targetBoard;
 @end

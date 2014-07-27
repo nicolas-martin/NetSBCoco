@@ -11,16 +11,16 @@
 
 
 }
+
+
 - (void)addSpellToBlock:(<ICastable>)spell {
+
     _spell = spell;
 
-    //TODO: Change the block's texture for the new spell.
+    //self.spriteFrame = [CCSpriteFrame frameWithImageNamed:@"gravity.png"];
 
 }
 
-- (NSString *)description {
-    return nil;
-}
 - (void)moveUp
 {
     _boardY -= 1;

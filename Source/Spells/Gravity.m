@@ -6,6 +6,7 @@
 #import "Gravity.h"
 #import "Field.h"
 #import "Board.h"
+#import "Block.h"
 
 
 @implementation Gravity {
@@ -22,21 +23,18 @@
     return self;
 }
 
-/*
-- (void)CastSpell:(Field *)targetField {
+- (void)CastSpell:(Board *)targetBoard {
     NSEnumerator *enumerator;
     NSMutableArray *blocksToSetPosition = [NSMutableArray array];
 
-    Board *board = targetField.board;
-
-    enumerator = [board.getAllBlocksInBoard reverseObjectEnumerator];
+    enumerator = [targetBoard.getAllBlocksInBoard reverseObjectEnumerator];
 
     for(Block *block in enumerator)
     {
-        while(block.boardY+1 < 20 && ![board isBlockAt:ccp(block.boardX, block.boardY+1)]) {
+        while(block.boardY+1 < 20 && ![targetBoard isBlockAt:ccp(block.boardX, block.boardY+1)]) {
 
 //            NSLog(@"Moving block from (%d, %d) to (%d, %d)", block.boardX, block.boardY,block.boardX,block.boardY+1);
-            [board MoveBlock:block to:ccp(block.boardX, block.boardY+1)];
+            [targetBoard MoveBlock:block to:ccp(block.boardX, block.boardY+1)];
 
             [block moveDown];
 
@@ -45,17 +43,15 @@
         [blocksToSetPosition addObject:block];
     }
 
-    [targetField setPositionUsingFieldValue:blocksToSetPosition];
+    [targetBoard setPositionUsingFieldValue:blocksToSetPosition];
 
-    [self LogSpell:targetField];
-
-
+    [self LogSpell:targetBoard];
 }
 
-
-- (NSString *)LogSpell:(Field *)targetField {
-    return [NSString stringWithFormat:@"%@ was casted on %@", _spellName, targetField.Name];
+- (NSString *)LogSpell:(Board *)targetBoard {
+    //return [NSString stringWithFormat:@"%@ was casted on %@", _spellName, targetField.Name];
+    return @"hegy";
 }
-*/
+
 
 @end

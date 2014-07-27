@@ -18,6 +18,8 @@
 }
 
 - (void) didLoadFromCCB {
+    [self initSomeBlocks];
+
 
 }
 
@@ -47,5 +49,44 @@
 
 }
 
+
+
+- (void)initSomeBlocks{
+    NSMutableArray *bArray = [NSMutableArray array];
+//    for(int i = 0; i < 10; i++)
+//    {
+//        if (i == 9) continue;
+//        for (int j = 0; j < 5; j++)
+//        {
+//            if(i%4)
+//            {
+//                //Tetromino *tempTetromino = (Tetromino *) [CCBReader load:@"Shapes/I"];
+//                Block *block = (Block *) [CCBReader load:@"Blocks/Green"];
+//                [block setBoardX:i];
+//                [block setBoardY:19-j];
+//                [block setStuck:YES];
+//                [bArray addObject:block];
+//            }
+//            else
+//            {
+//                Block *block = (Block *) [CCBReader load:@"Blocks/Cyan"];
+//                [block setBoardX:i];
+//                [block setBoardY:19-j];
+//                [block setStuck:YES];
+//                [bArray addObject:block];
+//            }
+//        }
+//    }
+
+    Block *block = (Block *) [CCBReader load:@"Blocks/Cyan"];
+    [block setBoardX:5];
+    [block setBoardY:9];
+    [block setStuck:YES];
+    [bArray addObject:block];
+
+    [_board addBlocks:bArray];
+    [self addChild:block];
+
+}
 
 @end

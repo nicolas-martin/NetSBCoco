@@ -7,11 +7,13 @@
 #import "ICastable.h"
 
 @class Field;
+@class Board;
 
 
 @interface RandomRemove : NSObject <ICastable>
 
-- (void)CastSpell:(Field *)targetField;
-- (NSString *)LogSpell:(Field *)targetField;
 
+- (NSString *)LogSpell:(Board *)targetBoard;
+
+- (void)CastSpell:(Board *)targetBoard;
 @end

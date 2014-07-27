@@ -6,6 +6,7 @@
 #import "AddLine.h"
 #import "Field.h"
 #import "Board.h"
+#import "Block.h"
 
 
 @implementation AddLine {
@@ -23,16 +24,41 @@
     return self;
 }
 
-/*
-- (void)CreateBlockLine:(Field *)targetField {
+- (void)CastSpell:(Board *)targetBoard {
+    NSMutableArray *blocksToSetPosition = [NSMutableArray array];
+
+    for (NSUInteger y = 0; y < targetBoard.Nby; y++) {
+        for (NSUInteger x = 0; x < targetBoard.Nbx; x++) {
+
+            Block *current = [targetBoard getBlockAt:ccp(x, y)];
+
+            if (current != nil && current.stuck) {
+                [targetBoard MoveBlock:current to:ccp(x, y - 1)];
+
+                [current moveUp];
+
+                [blocksToSetPosition addObject:current];
+            }
+        }
+    }
+
+    [targetBoard setPositionUsingFieldValue:blocksToSetPosition];
+
+    [self CreateBlockLine:targetBoard ];
+
+    [self LogSpell:targetBoard];
+}
+
+- (void)CreateBlockLine:(Board *)targetBoard {
     NSMutableArray *bArray = [NSMutableArray array];
 
-    for (NSUInteger x = 0; x < targetField.board.Nbx; x++) {
+    for (NSUInteger x = 0; x < targetBoard.Nbx; x++) {
         NSUInteger random = arc4random();
 
-        if ((random % 3) > 0)
-        {
-            Block *block = [Block blockWithBlockType:random % 7 displayOnMainField:NO ];
+        if ((random % 3) > 0) {
+            //TODO: Randomize blocks
+            //Block *block = [Block blockWithBlockType:random % 7 displayOnMainField:NO ];
+            Block *block = (Block *) [CCBReader load:@"Blocks/Cyann"];
             block.stuck = YES;
             [block setBoardX:x];
             [block setBoardY:19];
@@ -42,40 +68,18 @@
 
     }
 
-    [targetField addBlocks:bArray];
-}
-
-//TODO: Bug when adding a line and it collides with a falling block
-- (void)CastSpell:(Field *)targetField {
-    Board *board = targetField.board;
-
-    NSMutableArray *blocksToSetPosition = [NSMutableArray array];
-
-    for (NSUInteger y = 0; y < board.Nby; y++) {
-        for (NSUInteger x = 0; x < board.Nbx; x++) {
-
-            Block *current = [board getBlockAt:ccp(x, y)];
-
-            if (current != nil && current.stuck) {
-                [board MoveBlock:current to:ccp(x, y - 1)];
-
-                [current moveUp];
-
-                [blocksToSetPosition addObject:current];
-            }
-        }
-    }
-
-    [targetField setPositionUsingFieldValue:blocksToSetPosition];
-
-    [self CreateBlockLine:targetField ];
-
-    [self LogSpell:targetField];
+    [targetBoard addBlocks:bArray];
 
 }
 
-- (NSString *)LogSpell:(Field *)targetField {
-    return [NSString stringWithFormat:@"%@ was casted on %@", _spellName, targetField.Name];
+
+- (NSString *)LogSpell:(Board *)targetBoard {
+    //return [NSString stringWithFormat:@"%@ was casted on %@", _spellName, targetField.Name];
+    return @"HEY";
 }
-*/
+
+
+
+
+
 @end

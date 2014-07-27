@@ -21,7 +21,6 @@
         self.Nby = 20;
         _array = self.get20x10Array;
         self.userInteractionEnabled = YES;
-        self.initSomeBlocks;
 
     }
 
@@ -60,34 +59,6 @@
 }
 
 
-- (void)initSomeBlocks{
-//    NSMutableArray *bArray = [NSMutableArray array];
-//    for(int i = 0; i < 10; i++)
-//    {
-//        if (i == 9) continue;
-//        for (int j = 0; j < 5; j++)
-//        {
-//            if(i%4)
-//            {
-//                //Tetromino *tempTetromino = (Tetromino *) [CCBReader load:@"Shapes/I"];
-//                Block *block = (Block *) [CCBReader load:@"Blocks/Green"];
-//                [block setBoardX:i];
-//                [block setBoardY:19-j];
-//                [block setStuck:YES];
-//                [bArray addObject:block];
-//            }
-//            else
-//            {
-//                Block *block = (Block *) [CCBReader load:@"Blocks/Cyan"];
-//                [block setBoardX:i];
-//                [block setBoardY:19-j];
-//                [block setStuck:YES];
-//                [bArray addObject:block];
-//            }
-//        }
-//    }
-
-}
 
 
 - (void)onEnter {
@@ -429,7 +400,7 @@
 
     for (Block *blocks in blocksToAdd)
     {
-        [self addChild:blocks];
+        //[self addChild:blocks];
     }
 
     //[self newTetromino:blocksToAdd];
@@ -468,7 +439,7 @@
         userTetromino.stuck = YES;
 
     }
-    [self printCurrentBoardStatus:NO];
+    //[self printCurrentBoardStatus:NO];
 
 }
 
@@ -493,7 +464,6 @@
 
 }
 
-//TODO: Return spells to add
 - (NSMutableArray *)checkForRowsToClear {
 
     NSMutableArray *rowToDelete = [[NSMutableArray alloc]init];
@@ -572,7 +542,7 @@
 - (void)createNewTetromino {
 
     //Tetromino *tempTetromino = [Tetromino randomBlockUsingBlockFrequency:_isMain ];
-    Tetromino *tempTetromino = (Tetromino *) [CCBReader load:@"Shapes/O"];
+    Tetromino *tempTetromino = (Tetromino *) [CCBReader load:@"Shapes/L"];
 
     [self VerifyNewBlockCollision:tempTetromino];
 

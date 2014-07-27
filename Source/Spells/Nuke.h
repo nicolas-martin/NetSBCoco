@@ -6,10 +6,13 @@
 #import <Foundation/Foundation.h>
 #import "ICastable.h"
 
+@class Board;
+
 
 @interface Nuke : NSObject <ICastable>
 
-- (NSString *)LogSpell:(Field *)targetField;
-- (void)CastSpell:(Field *)targetField;
 
+- (NSString *)LogSpell:(Board *)targetBoard;
+
+- (void)CastSpell:(Board *)targetBoard;
 @end

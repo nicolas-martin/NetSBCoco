@@ -37,6 +37,10 @@
 - (void)addTetrominoToBoard:(NSMutableArray *)blocksToAdd;
 - (void)printCurrentBoardStatus:(BOOL)withPosition;
 
+- (void)addBlocks:(NSMutableArray *)blocksToAdd;
+
+- (void)setPositionUsingFieldValue:(NSMutableArray *)arrayOfBlocks;
+
 - (void)moveDownOrCreate;
 
 - (NSMutableArray *)checkForRowsToClear;
