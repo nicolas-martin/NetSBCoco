@@ -48,7 +48,8 @@
         Block *block = [allBlocksInBoard objectAtIndex:posOfSpell];
         if (block.spell == nil)
         {
-            [block addSpellToBlock:[SpellFactory getSpellUsingFrequency]];
+            id <ICastable> spell = [SpellFactory getSpellUsingFrequency];
+            [block addSpellToBlock:spell];
         }
     }
 }
@@ -439,7 +440,7 @@
         userTetromino.stuck = YES;
 
     }
-    //[self printCurrentBoardStatus:NO];
+    [self printCurrentBoardStatus:NO];
 
 }
 
@@ -542,7 +543,7 @@
 - (void)createNewTetromino {
 
     //Tetromino *tempTetromino = [Tetromino randomBlockUsingBlockFrequency:_isMain ];
-    Tetromino *tempTetromino = (Tetromino *) [CCBReader load:@"Shapes/L"];
+    Tetromino *tempTetromino = (Tetromino *) [CCBReader load:@"Shapes/I"];
 
     [self VerifyNewBlockCollision:tempTetromino];
 

@@ -12,6 +12,8 @@
 @interface Nuke : NSObject <ICastable>
 
 
+@property CCSpriteFrame *spriteFrame;
+
 - (NSString *)LogSpell:(Board *)targetBoard;
 
 - (void)CastSpell:(Board *)targetBoard;

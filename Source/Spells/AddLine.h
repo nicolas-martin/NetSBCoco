@@ -13,6 +13,8 @@
 @interface AddLine : NSObject <ICastable>
 
 
+@property CCSpriteFrame *spriteFrame;
+
 - (void)CastSpell:(Board *)targetBoard;
 
 - (NSString *)LogSpell:(Board *)targetBoard;

@@ -10,7 +10,9 @@
 @protocol ICastable <NSObject>
 
 @property NSString *spellName;
-@property NSString *spriteFileName;
+
+
+@property CCSpriteFrame *spriteFrame;
 
 - (void)CastSpell:(Board *)targetBoard;
 - (NSString *)LogSpell:(Board *)targetBoard;

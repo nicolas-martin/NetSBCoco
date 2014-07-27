@@ -16,8 +16,7 @@
 - (void)addSpellToBlock:(<ICastable>)spell {
 
     _spell = spell;
-
-    //self.spriteFrame = [CCSpriteFrame frameWithImageNamed:@"gravity.png"];
+    self.spriteFrame = spell.spriteFrame;
 
 }
 

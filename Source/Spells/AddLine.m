@@ -11,13 +11,14 @@
 
 @implementation AddLine {
 
-    NSString *_spellName;
+    NSString *spellName;
 }
 
 - (id)init {
     self = [super init];
     if (self) {
-        _spellName = @"Add line";
+        spellName = @"Add line";
+        self.spriteFrame = [CCSpriteFrame frameWithImageNamed: @"Assets/AddLine.png"];
 
     }
 

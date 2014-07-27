@@ -10,14 +10,14 @@
 
 
 @implementation Gravity {
-    NSString *_spellName;
-
+    NSString *spellName;
 }
 
 - (id)init {
     self = [super init];
     if (self) {
-        _spellName = @"Gravity";
+        spellName = @"Gravity";
+        self.spriteFrame = [CCSpriteFrame frameWithImageNamed: @"Assets/Gravity.png"];
     }
 
     return self;

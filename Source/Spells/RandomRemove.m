@@ -9,33 +9,27 @@
 
 
 @implementation RandomRemove {
-    NSString *_spellName;
-
+    NSString *spellName;
 }
 
 - (id)init {
     self = [super init];
     if (self) {
-        _spellName = @"Random Remove";
-
+        spellName = @"Random Remove";
+        self.spriteFrame = [CCSpriteFrame frameWithImageNamed: @"Assets/RandomRemove.png"];
     }
 
     return self;
 }
 
 - (NSString *)LogSpell:(Board *)targetBoard {
-    return nil;
+    //return [NSString stringWithFormat:@"%@ was casted on %@", _spellName, targetField.Name];
+    return @"nothing either";
+
 }
 
 - (void)CastSpell:(Board *)targetBoard {
-
-}
-
-
-/*
-- (void)CastSpell:(Field *)targetField {
-    Board *board = targetField.board;
-    NSMutableArray *allBlockInBoard = [board getAllBlocksInBoard];
+    NSMutableArray *allBlockInBoard = [targetBoard getAllBlocksInBoard];
     NSMutableArray *blocksToDelete = [NSMutableArray array];
 
     NSUInteger nbBlockInBoard = allBlockInBoard.count;
@@ -58,12 +52,8 @@
     }
 
 
-    [board DeleteBlockFromBoardAndSprite:blocksToDelete];
-
+    [targetBoard DeleteBlockFromBoardAndSprite:blocksToDelete];
 }
 
-- (NSString *)LogSpell:(Field *)targetField {
-    return [NSString stringWithFormat:@"%@ was casted on %@", _spellName, targetField.Name];
-}
-*/
+
 @end

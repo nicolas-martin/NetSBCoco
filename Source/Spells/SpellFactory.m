@@ -25,11 +25,6 @@
     return self;
 }
 
-+ (instancetype)managerWithDropAddLine
-{
-    return [[self alloc] initWithDropAddLine];
-}
-
 + (id <ICastable>) getSpellUsingFrequency
 {
     NSMutableDictionary *spells = [NSMutableDictionary dictionary];
@@ -66,24 +61,22 @@
 {
     id <ICastable> spell = nil;
 
-//    if ([spellName isEqualToString:@"AddLine"])
-//    {
-//        spell = [AddLine init];
-//    }
-//    else if ([spellName isEqualToString:@"RandomRemove"])
-//    {
-//        spell = [RandomRemove init];
-//    }
-//    else if ([spellName isEqualToString:@"Nuke"])
-//    {
-//        spell = [Nuke init];
-//    }
-//    else if ([spellName isEqualToString:@"Gravity"])
-//    {
-//        spell = [Gravity init];
-//    }
-    spell = [[Gravity alloc] init];
-
+    if ([spellName isEqualToString:@"AddLine"])
+    {
+        spell = [[AddLine alloc]init];
+    }
+    else if ([spellName isEqualToString:@"RandomRemove"])
+    {
+        spell = [[RandomRemove alloc]init];
+    }
+    else if ([spellName isEqualToString:@"Nuke"])
+    {
+        spell = [[Nuke alloc]init];
+    }
+    else if ([spellName isEqualToString:@"Gravity"])
+    {
+        spell = [[Gravity alloc]init];
+    }
 
     return spell;
 }

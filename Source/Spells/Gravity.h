@@ -12,6 +12,8 @@
 @interface Gravity : NSObject <ICastable>
 
 
+@property CCSpriteFrame *spriteFrame;
+
 - (id)init;
 
 - (void)CastSpell:(Board *)targetBoard;

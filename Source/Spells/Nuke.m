@@ -9,37 +9,27 @@
 
 
 @implementation Nuke {
-    NSString *_spellName;
+    NSString *spellName;
 }
 
 - (id)init {
     self = [super init];
     if (self) {
-        _spellName = @"Nuke";
-
+        spellName = @"Nuke";
+        self.spriteFrame = [CCSpriteFrame frameWithImageNamed: @"Assets/Nuke.png"];
     }
 
     return self;
 }
 
-- (NSString *)LogSpell:(Board *)targetBoard {
-    return nil;
-}
-
 - (void)CastSpell:(Board *)targetBoard {
 
+    [targetBoard DeleteBlockFromBoardAndSprite:[targetBoard getAllBlocksInBoard]];
 }
 
-
-
-//- (void)CastSpell:(Field *)targetField {
-//    Board *board = targetField.board;
-//
-//    [board DeleteBlockFromBoardAndSprite:[board getAllBlocksInBoard]];
-//
-//}
-//
-//- (NSString *)LogSpell:(Field *)targetField {
+- (NSString *)LogSpell:(Board *)targetBoard {
 //    return [NSString stringWithFormat:@"%@ was casted on %@", _spellName, targetField.Name];
-//}
+    return @"nothing";
+}
+
 @end
