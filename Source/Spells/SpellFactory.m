@@ -8,6 +8,7 @@
 #import "AddLine.h"
 #import "RandomRemove.h"
 #import "Nuke.h"
+#import "Gravity.h"
 
 
 @implementation SpellFactory {
@@ -65,22 +66,22 @@
 {
     id <ICastable> spell = nil;
 
-    if ([spellName isEqualToString:@"AddLine"])
-    {
-        spell = [AddLine init];
-    }
-    else if ([spellName isEqualToString:@"RandomRemove"])
-    {
-        spell = [RandomRemove init];
-    }
-    else if ([spellName isEqualToString:@"Nuke"])
-    {
-        spell = [Nuke init];
-    }
-    else if ([spellName isEqualToString:@"Gravity"])
-    {
-        spell = [Nuke init];
-    }
+//    if ([spellName isEqualToString:@"AddLine"])
+//    {
+//        spell = [AddLine init];
+//    }
+//    else if ([spellName isEqualToString:@"RandomRemove"])
+//    {
+//        spell = [RandomRemove init];
+//    }
+//    else if ([spellName isEqualToString:@"Nuke"])
+//    {
+//        spell = [Nuke init];
+//    }
+//    else if ([spellName isEqualToString:@"Gravity"])
+//    {
+//        spell = [Gravity init];
+//    }
     return spell;
 }
 

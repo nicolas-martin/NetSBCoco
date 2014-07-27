@@ -283,7 +283,7 @@
 
 }
 
-- (NSMutableArray *)MoveBoardDown:(NSUInteger)y {
+- (NSMutableArray *)MoveBoardDown:(NSUInteger)y nbRowsToMoveDownTo:(NSUInteger) step{
     NSMutableArray *blocksToSetPosition = [NSMutableArray array];
 
     for (y; y > 0; y--) {
@@ -291,9 +291,9 @@
             Block * current = [self getBlockAt:ccp(x, y)];
             if (current != nil) {
 
-                [self MoveBlock:current to:ccp(x, y + 1)];
+                [self MoveBlock:current to:ccp(x, y + step)];
 
-                current.boardY++;
+                current.boardY = current.boardY + step;
 
                 [blocksToSetPosition addObject:current];
 
@@ -467,10 +467,6 @@
     {
         userTetromino.stuck = YES;
 
-        // TODO: Move this in field so you have more control. Check all lines instead of just the ones added by the block.
-
-        [self checkForRowsToClear];
-
     }
     [self printCurrentBoardStatus:NO];
 
@@ -503,8 +499,8 @@
     NSMutableArray *rowToDelete = [[NSMutableArray alloc]init];
     BOOL occupied = NO;
 
-    NSUInteger deletedRow = (NSUInteger) nil;
-    for (int y = 0; y < [self Nby]; y++) {
+    NSNumber * deletedRow = (NSNumber *) nil;
+    for (NSUInteger y = 0; y < [self Nby]; y++) {
 
         //Skip row already processed
 
@@ -528,11 +524,9 @@
 
         if (occupied) {
 
-            deletedRow = (NSUInteger) y;
+            deletedRow = [NSNumber numberWithUnsignedInteger:y];
 
-            [rowToDelete addObject:[NSNumber numberWithInt:deletedRow]];
-
-            [self addSpellToField];
+            [rowToDelete addObject:deletedRow];
 
         }
         else {
@@ -547,12 +541,21 @@
 - (NSMutableArray *)deleteRowsAndReturnSpells: (NSMutableArray *)rowsToDelete{
     NSMutableArray *spellsToAdd = [[NSMutableArray alloc] init];
 
+    NSNumber *highestRow = [NSNumber numberWithInt:99];
     for (NSNumber *row in rowsToDelete){
         [spellsToAdd addObjectsFromArray:[self DeleteRow:[row unsignedIntegerValue]]];
 
-        [self setPositionUsingFieldValue:[self MoveBoardDown:([row unsignedIntegerValue]-1)]];
+        if (highestRow.integerValue > row.integerValue){
+            highestRow = row;
+        }
 
     }
+
+    [self setPositionUsingFieldValue:[self MoveBoardDown:([highestRow unsignedIntegerValue] - 1) nbRowsToMoveDownTo:rowsToDelete.count]];
+
+
+    //put it here or else it gets the bocks not yet deleted.
+    [self addSpellToField];
 
     return spellsToAdd;
 }

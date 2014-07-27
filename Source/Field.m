@@ -30,11 +30,20 @@
 
 - (void) moveDownOrCreate {
 
-    _board.moveDownOrCreate;
     NSMutableArray *rows = _board.checkForRowsToClear;
-    NSMutableArray *spellsToAdd = [_board deleteRowsAndReturnSpells:rows];
-    [self addSpellsToInventory:spellsToAdd];
-    _nbRowCleared.string = [NSString stringWithFormat:@"%d", (int) _nbRowCleared.string.integerValue + rows.count];
+    if (rows.count > 0)
+    {
+        NSMutableArray *spellsToAdd = [_board deleteRowsAndReturnSpells:rows];
+        if (spellsToAdd.count > 0)
+        {
+            [self addSpellsToInventory:spellsToAdd];
+
+        }
+        _nbRowCleared.string = [NSString stringWithFormat:@"%d", (int) _nbRowCleared.string.integerValue + rows.count];
+
+    }
+    _board.moveDownOrCreate;
+
 
 }
 

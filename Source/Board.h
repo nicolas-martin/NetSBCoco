@@ -30,6 +30,9 @@
 - (void)MoveBlock:(Block *)block to:(CGPoint)after;
 - (BOOL)boardRowFull:(NSUInteger)y;
 - (NSMutableArray *)DeleteRow:(NSUInteger)y;
+
+- (NSMutableArray *)MoveBoardDown:(NSUInteger)y nbRowsToMoveDownTo:(NSUInteger)step;
+
 - (NSMutableArray *)MoveBoardDown:(NSUInteger)y;
 - (void)addTetrominoToBoard:(NSMutableArray *)blocksToAdd;
 - (void)printCurrentBoardStatus:(BOOL)withPosition;
