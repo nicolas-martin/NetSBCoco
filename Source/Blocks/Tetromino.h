@@ -40,10 +40,10 @@ typedef enum {
 @property BOOL stuck;
 @property NSUInteger anchorX;
 @property NSUInteger anchorY;
-@property CGPoint leftMostPosition;
-@property CGPoint rightMostPosition;
-@property CGPoint highestPosition;
-@property CGPoint lowestPosition;
+@property(nonatomic) CGPoint leftMostPosition;
+@property(nonatomic) CGPoint rightMostPosition;
+@property(nonatomic) CGPoint highestPosition;
+@property(nonatomic) CGPoint lowestPosition;
 @property tetrominoType type;
 
 + (id)randomBlockUsingBlockFrequency;

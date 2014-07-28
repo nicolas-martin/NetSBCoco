@@ -58,8 +58,8 @@
             if (i % 4) {
                 //Tetromino *tempTetromino = (Tetromino *) [CCBReader load:@"Shapes/I"];
                 Block *block = (Block *) [CCBReader load:@"Blocks/Green"];
-                [block setBoardX:i];
-                [block setBoardY:19 - j];
+                [block setBoardX:(NSUInteger) i];
+                [block setBoardY:(NSUInteger) (19 - j)];
                 [block setStuck:YES];
                 [bArray addObject:block];
             }
@@ -67,8 +67,8 @@
                 Block *block = (Block *) [CCBReader load:@"Blocks/Cyan"];
                 AddLine *gravity = [[AddLine alloc] init];
                 [block addSpellToBlock:gravity];
-                [block setBoardX:i];
-                [block setBoardY:19 - j];
+                [block setBoardX:(NSUInteger) i];
+                [block setBoardY:(NSUInteger) (19 - j)];
                 [block setStuck:YES];
                 [bArray addObject:block];
             }

@@ -18,8 +18,6 @@
 
 - (id)init;
 
-+ (id)initBoard;
-
 - (BOOL)isBlockAt:(CGPoint)point;
 
 - (NSMutableArray *)getAllBlocksInBoard;

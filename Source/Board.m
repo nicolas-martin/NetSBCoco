@@ -194,7 +194,7 @@
 }
 
 - (BOOL)boardRowFull:(NSUInteger)y {
-    BOOL occupied;
+    BOOL occupied = NO;
     for (int x = 0; x < [self Nbx]; x++) {
 
         if (![self isBlockAt:ccp(x, y)]) {
@@ -208,12 +208,7 @@
             occupied = YES;
         }
     }
-    if (occupied) {
-        return YES;
-    }
-    else {
-        return NO;
-    }
+    return occupied;
 }
 
 - (NSMutableArray *)DeleteRow:(NSUInteger)y {
