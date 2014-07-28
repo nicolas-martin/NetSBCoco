@@ -21,9 +21,6 @@
         self.Nby = 20;
         _array = self.get20x10Array;
         self.userInteractionEnabled = YES;
-
-
-
     }
 
     return self;

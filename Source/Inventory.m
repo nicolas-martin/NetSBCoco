@@ -8,6 +8,7 @@
 #import "Gravity.h"
 #import "FieldCollisionHelper.h"
 #import "Field.h"
+#import "CCNode_Private.h"
 
 
 @implementation Inventory {
@@ -22,6 +23,7 @@
         inventory = [[NSMutableArray alloc]init];
         movableSprites = [[NSMutableArray alloc]init];
         self.userInteractionEnabled = YES;
+
     }
 
     return self;
@@ -41,34 +43,39 @@
         CCSprite *newSpellSprite = (id) (id <ICastable> )[[CCSprite alloc] init];
         newSpellSprite.spriteFrame = [spell spriteFrame];
 
-        [newSpellSprite setPosition:ccp(newSpellSprite.contentSize.width * inventory.count, newSpellSprite.contentSize.height/2)];
-        
+        [newSpellSprite setPosition:ccp(newSpellSprite.contentSize.width * (inventory.count -1), 0)];
+
         //do I really need this?
         [newSpellSprite setName:@"1"];
         newSpellSprite.userObject = spell;
+        newSpellSprite.anchorPoint = ccp(0, 0);
         [movableSprites addObject:newSpellSprite];
-        
-        [self addChild:newSpellSprite z:2];
+        [self addChild:newSpellSprite];
+
+        //hack so that the sprite is displayed on top of the fields which are parents.
+        [self.parent reorderChild:self z:50];
+        [self.parent.parent reorderChild:self.parent z:25];
+
+
     }
 }
 
-//- (void)removeSpell:(<ICastable>)spell {
-//
-//    [inventory removeObject:spell];
-//
-////    [movableSprites removeObject:selSprite];
-////    [selSprite removeFromParentAndCleanup:YES];
-//    [movableSprites removeObject:spell];
-//    [spell removeFromParentAndCleanup:YES];
-//
-//    NSUInteger count = 1;
-//    for (CCSprite *sprite in movableSprites)
-//    {
-//        [sprite setPosition:ccp(sprite.contentSize.width*count, sprite.contentSize.height/2)];
-//        count++;
-//
-//    }
-//}
+- (void)removeSpell:(<ICastable>)spell {
+
+    [inventory removeObject:spell];
+
+    [movableSprites removeObject:selSprite];
+
+    [selSprite removeFromParentAndCleanup:YES];
+
+    NSUInteger count = 0;
+    for (CCSprite *sprite in movableSprites)
+    {
+        [sprite setPosition:ccp(sprite.contentSize.width*count, 0)];
+        count++;
+
+    }
+}
 
 -(void) touchBegan:(UITouch *)touch withEvent:(UIEvent *)event {
     CGPoint touchLocation = [touch locationInNode:self];
@@ -97,6 +104,8 @@
     if (targetField != nil){
         id<ICastable> obj = selSprite.userObject;
         [obj CastSpell: targetField];
+
+        [self removeSpell:selSprite.userObject];
     }
 
 

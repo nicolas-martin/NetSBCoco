@@ -11,6 +11,7 @@
 #import "Tetromino.h"
 #import "FieldCollisionHelper.h"
 #import "Board.h"
+#import "CCNode_Private.h"
 
 @implementation MainScene{
     CCNode *_scene;
@@ -29,7 +30,6 @@
     return self;
 }
 - (void)didLoadFromCCB {
-    //_background.zPosition =-5;
 
     _p1.board.Name = @"Player1";
     _p2.board.Name = @"Player2";
