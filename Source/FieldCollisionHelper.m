@@ -13,20 +13,14 @@ static FieldCollisionHelper* _sharedMySingleton = nil;
 
 }
 
-+(FieldCollisionHelper*)sharedMySingleton
-{
-    @synchronized([FieldCollisionHelper class])
-    {
-        if (!_sharedMySingleton)
-            [[self alloc] init];
-
-        return _sharedMySingleton;
++ (FieldCollisionHelper *)sharedMySingleton {
+    if (_sharedMySingleton == nil) {
+        _sharedMySingleton = [[super allocWithZone:NULL] init];
     }
-
-    return nil;
+    return _sharedMySingleton;
 }
 
-- (instancetype)init {
+- (id)init {
     self = [super init];
     if (self) {
         fieldsArray = [[NSMutableArray alloc] init];
@@ -37,14 +31,17 @@ static FieldCollisionHelper* _sharedMySingleton = nil;
 }
 
 
-+ (void)AddFieldBox:(Board *)field {
+- (void)AddFieldBox:(Board *)field {
     [fieldsArray addObject:field];
 }
 
-+ (Board *)GetFieldFromPosition:(CGPoint)point {
+- (Board *)GetFieldFromPosition:(CGPoint)point {
     Board *found = nil;
     for(Board *currentField in fieldsArray){
-        if (CGRectContainsPoint(currentField.boundingBox, point)) {
+        //[node.parent convertToWorldSpace:node.position]
+        CGPoint absolutePosition = [currentField.parent convertToWorldSpace:currentField.position];
+        CGRect rect = CGRectMake(absolutePosition.x, absolutePosition.y, currentField.contentSize.width, currentField.contentSize.height);
+        if (CGRectContainsPoint(rect, point)) {
             found = currentField;
         }
     }

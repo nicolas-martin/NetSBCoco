@@ -10,6 +10,7 @@
 #import "Field.h"
 #import "Tetromino.h"
 #import "FieldCollisionHelper.h"
+#import "Board.h"
 
 @implementation MainScene{
     CCNode *_scene;
@@ -23,13 +24,21 @@
     {
         // activate touches on this scene
         self.userInteractionEnabled = TRUE;
+
     }
     return self;
 }
 - (void)didLoadFromCCB {
-    [FieldCollisionHelper AddFieldBox:_p1.board];
-    [FieldCollisionHelper AddFieldBox:_p2.board];
-    [FieldCollisionHelper AddFieldBox:_p3.board];
+    //_background.zPosition =-5;
+
+    _p1.board.Name = @"Player1";
+    _p2.board.Name = @"Player2";
+    _p3.board.Name = @"Player3";
+
+    FieldCollisionHelper *fch = [FieldCollisionHelper sharedMySingleton];
+    [fch AddFieldBox:_p1.board];
+    [fch AddFieldBox:_p2.board];
+    [fch AddFieldBox:_p3.board];
 
 
     // Use the gamescene as the collision delegate.

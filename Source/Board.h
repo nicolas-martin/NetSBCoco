@@ -14,6 +14,7 @@
 @property int NbBlocks;
 @property NSUInteger Nby;
 @property NSUInteger Nbx;
+@property NSString *Name;
 
 - (id)init;
 + (id)initBoard;

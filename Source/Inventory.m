@@ -47,7 +47,8 @@
         [newSpellSprite setName:@"1"];
         newSpellSprite.userObject = spell;
         [movableSprites addObject:newSpellSprite];
-        [self addChild:newSpellSprite];
+        
+        [self addChild:newSpellSprite z:2];
     }
 }
 
@@ -87,12 +88,16 @@
 
 
 - (void)touchEnded:(UITouch *)touch withEvent:(UIEvent *)event {
-    CGPoint touchLocation = [touch locationInNode:self];
+    CGPoint touchLocation =  [[CCDirector sharedDirector] convertToGL:[touch locationInView:[touch view]]];
+    
+    FieldCollisionHelper *fch = [FieldCollisionHelper sharedMySingleton];
+    
+    Board *targetField = [fch GetFieldFromPosition:touchLocation];
 
-    Board *targetField = [FieldCollisionHelper GetFieldFromPosition:touchLocation];
-
-    id<ICastable> obj = selSprite.userObject;
-    [obj CastSpell: targetField];
+    if (targetField != nil){
+        id<ICastable> obj = selSprite.userObject;
+        [obj CastSpell: targetField];
+    }
 
 
 

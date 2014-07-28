@@ -9,8 +9,8 @@
 
 
 @interface FieldCollisionHelper : NSObject
-+(FieldCollisionHelper*)sharedMySingleton;
-+ (void)AddFieldBox:(Board *)board;
-+ (Board *) GetFieldFromPosition:(CGPoint) point;
++ (FieldCollisionHelper*)sharedMySingleton;
+- (void)AddFieldBox:(Board *)board;
+- (Board *) GetFieldFromPosition:(CGPoint) point;
 
 @end

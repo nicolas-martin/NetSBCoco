@@ -45,12 +45,11 @@
 
     [targetBoard setPositionUsingFieldValue:blocksToSetPosition];
 
-    [self LogSpell:targetBoard];
+    CCLOG(@"%@",[self LogSpell:targetBoard]);
 }
 
 - (NSString *)LogSpell:(Board *)targetBoard {
-    //return [NSString stringWithFormat:@"%@ was casted on %@", _spellName, targetField.Name];
-    return @"hegy";
+    return [NSString stringWithFormat:@"%@ was casted on %@", spellName, targetBoard.Name];
 }
 
 
