@@ -8,8 +8,7 @@
 #define kLastColumn 9
 #define kLastRow 19
 #define rowoffset 3
-typedef enum
-{
+typedef enum {
     I_block,
     O_block,
     J_block,
@@ -18,21 +17,19 @@ typedef enum
     S_block,
     T_block
 } tetrominoType;
-typedef enum
-{
+typedef enum {
     rotateCounterclockwise = -1,
     rotateNone = 0,
     rotateClockwise = 1
 } RotationDirection;
 
-typedef enum
-{
+typedef enum {
     moveLeft = -1,
     moveNone = 0,
     moveRight = 1
 } MoveDirection;
 
-@interface Tetromino : CCNode{
+@interface Tetromino : CCNode {
     BOOL stuck;
     CGPoint leftMostPosition;
     CGPoint rightMostPosition;

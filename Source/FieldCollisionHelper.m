@@ -8,7 +8,8 @@
 #import "Board.h"
 
 NSMutableArray *fieldsArray;
-static FieldCollisionHelper* _sharedMySingleton = nil;
+static FieldCollisionHelper *_sharedMySingleton = nil;
+
 @implementation FieldCollisionHelper {
 
 }
@@ -36,7 +37,7 @@ static FieldCollisionHelper* _sharedMySingleton = nil;
 
 - (Board *)GetFieldFromPosition:(CGPoint)point {
     Board *found = nil;
-    for(Board *currentField in fieldsArray){
+    for (Board *currentField in fieldsArray) {
         //[node.parent convertToWorldSpace:node.position]
         CGPoint absolutePosition = [currentField.parent convertToWorldSpace:currentField.position];
         CGRect rect = CGRectMake(absolutePosition.x, absolutePosition.y, currentField.contentSize.width, currentField.contentSize.height);

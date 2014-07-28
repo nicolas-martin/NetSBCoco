@@ -20,46 +20,39 @@
 
 }
 
-- (void)moveUp
-{
+- (void)moveUp {
     _boardY -= 1;
     [self redrawPositionOnBoard];
 }
 
-- (void)moveDown
-{
+- (void)moveDown {
     _boardY += 1;
     [self redrawPositionOnBoard];
 }
 
--(void)MoveTo:(Block *)block
-{
+- (void)MoveTo:(Block *)block {
     _boardX = block.boardX;
     _boardY = block.boardY;
 
     [self redrawPositionOnBoard];
 }
 
-- (void)moveByX:(NSUInteger)offsetX
-{
+- (void)moveByX:(NSUInteger)offsetX {
     _boardX += offsetX;
     [self redrawPositionOnBoard];
 }
 
-- (void)moveRight
-{
+- (void)moveRight {
     _boardX += 1;
     [self redrawPositionOnBoard];
 }
 
-- (void)moveLeft
-{
+- (void)moveLeft {
     _boardX -= 1;
     [self redrawPositionOnBoard];
 }
 
-- (void)redrawPositionOnBoard
-{
+- (void)redrawPositionOnBoard {
     //compute
     //self.position = ccp(_boardX * self.contentSize.width, -_boardY * self.contentSize.height);
 }

@@ -10,25 +10,22 @@
 @implementation Tetromino {
 
 }
-- (BOOL)stuck
-{
+- (BOOL)stuck {
     for (Block *block in self.children) {
         stuck = block.stuck;
     }
     return stuck;
 }
 
-- (void)setStuck:(BOOL)stuckValue
-{
+- (void)setStuck:(BOOL)stuckValue {
     stuck = stuckValue;
     for (Block *block in self.children) {
         block.stuck = stuckValue;
     }
 }
-- (BOOL)isBlockInTetromino:(id)block
-{
-    if (block != nil)
-    {
+
+- (BOOL)isBlockInTetromino:(id)block {
+    if (block != nil) {
         for (Block *currentBlock in self.children) {
             if ([currentBlock isEqual:block]) {
                 return YES;
@@ -37,10 +34,9 @@
     }
     return NO;
 }
-- (void)moveTetrominoInDirection:(MoveDirection)direction
-{
-    for (Block* currentBlock in self.children)
-    {
+
+- (void)moveTetrominoInDirection:(MoveDirection)direction {
+    for (Block *currentBlock in self.children) {
         [currentBlock moveByX:direction];
     }
 
@@ -57,8 +53,7 @@
     NSMutableArray *reversedChildren = [[NSMutableArray alloc] initWithArray:self.children];  // make copy
 
 
-    for (Block *currentBlock in [reversedChildren reverseObjectEnumerator] )
-    {
+    for (Block *currentBlock in [reversedChildren reverseObjectEnumerator]) {
         //move each block down
         [currentBlock moveDown];
     }
@@ -66,12 +61,11 @@
     self.anchorY += 1;
 }
 
-- (CGPoint)leftMostPosition
-{
+- (CGPoint)leftMostPosition {
 
-    CGPoint	myLeftPosition = ccp(999,999);
+    CGPoint myLeftPosition = ccp(999, 999);
     for (Block *currentBlock in self.children) {
-        if ( myLeftPosition.x > currentBlock.boardX) {
+        if (myLeftPosition.x > currentBlock.boardX) {
             myLeftPosition = ccp(currentBlock.boardX, currentBlock.boardY);
         }
     }
@@ -80,8 +74,7 @@
 
 }
 
-- (CGPoint)rightMostPosition
-{
+- (CGPoint)rightMostPosition {
     CGPoint myRightPosition = ccp(-1, -1);
     for (Block *currentBlock in self.children) {
         if (myRightPosition.x < currentBlock.boardX) {
@@ -92,12 +85,11 @@
     return myRightPosition;
 }
 
-- (CGPoint)highestPosition
-{
+- (CGPoint)highestPosition {
 
-    CGPoint	myLeftPosition = ccp(999,999);
+    CGPoint myLeftPosition = ccp(999, 999);
     for (Block *currentBlock in self.children) {
-        if ( myLeftPosition.y > currentBlock.boardY) {
+        if (myLeftPosition.y > currentBlock.boardY) {
             myLeftPosition = ccp(currentBlock.boardX, currentBlock.boardY);
 
         }
@@ -107,8 +99,7 @@
 
 }
 
-- (CGPoint)lowestPosition
-{
+- (CGPoint)lowestPosition {
     CGPoint myRightPosition = ccp(-1, -1);
     for (Block *currentBlock in self.children) {
         if (myRightPosition.y < currentBlock.boardY) {

@@ -19,28 +19,25 @@
 }
 
 
-- (void) didLoadFromCCB {
+- (void)didLoadFromCCB {
 
     [self initSomeBlocks];
 
 
 }
 
-- (void) addSpellsToInventory:(NSMutableArray *)spellsToAdd{
-    for (id <ICastable> spell in spellsToAdd)
-    {
+- (void)addSpellsToInventory:(NSMutableArray *)spellsToAdd {
+    for (id <ICastable> spell in spellsToAdd) {
         [_inventory addSpell:spell];
     }
 }
 
-- (void) moveDownOrCreate {
+- (void)moveDownOrCreate {
 
     NSMutableArray *rows = self.board.checkForRowsToClear;
-    if (rows.count > 0)
-    {
+    if (rows.count > 0) {
         NSMutableArray *spellsToAdd = [self.board deleteRowsAndReturnSpells:rows];
-        if (spellsToAdd.count > 0)
-        {
+        if (spellsToAdd.count > 0) {
             [self addSpellsToInventory:spellsToAdd];
 
         }
@@ -53,36 +50,30 @@
 }
 
 
-
-- (void)initSomeBlocks{
+- (void)initSomeBlocks {
     NSMutableArray *bArray = [NSMutableArray array];
-    for(int i = 0; i < 10; i++)
-    {
+    for (int i = 0; i < 10; i++) {
         if (i == 9) continue;
-        for (int j = 0; j < 5; j++)
-        {
-            if(i%4)
-            {
+        for (int j = 0; j < 5; j++) {
+            if (i % 4) {
                 //Tetromino *tempTetromino = (Tetromino *) [CCBReader load:@"Shapes/I"];
                 Block *block = (Block *) [CCBReader load:@"Blocks/Green"];
                 [block setBoardX:i];
-                [block setBoardY:19-j];
+                [block setBoardY:19 - j];
                 [block setStuck:YES];
                 [bArray addObject:block];
             }
-            else
-            {
+            else {
                 Block *block = (Block *) [CCBReader load:@"Blocks/Cyan"];
-                AddLine *gravity= [[AddLine alloc]init];
+                AddLine *gravity = [[AddLine alloc] init];
                 [block addSpellToBlock:gravity];
                 [block setBoardX:i];
-                [block setBoardY:19-j];
+                [block setBoardY:19 - j];
                 [block setStuck:YES];
                 [bArray addObject:block];
             }
         }
     }
-
 
 
     [self.board addBlocks:bArray];

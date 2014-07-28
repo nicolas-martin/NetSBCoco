@@ -16,15 +16,24 @@
 @property BOOL disappearing;
 @property NSUInteger blockType;
 
-- (void)addSpellToBlock:(id<ICastable>) spell;
+- (void)addSpellToBlock:(id <ICastable>)spell;
+
 - (void)removeSpell;
+
 - (void)moveUp;
+
 - (void)moveDown;
+
 - (void)moveLeft;
+
 - (void)moveRight;
+
 - (void)moveByX:(NSUInteger)offsetX;
+
 - (NSComparisonResult)compareWithBlock:(Block *)block;
+
 - (void)MoveTo:(Block *)block;
+
 - (NSString *)description;
 
 @end

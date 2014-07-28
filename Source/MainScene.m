@@ -13,22 +13,21 @@
 #import "Board.h"
 #import "CCNode_Private.h"
 
-@implementation MainScene{
+@implementation MainScene {
     CCNode *_scene;
     Field *_p1;
     Field *_p2;
     Field *_p3;
 }
-- (id)init
-{
-    if (self = [super init])
-    {
+- (id)init {
+    if (self = [super init]) {
         // activate touches on this scene
         self.userInteractionEnabled = TRUE;
 
     }
     return self;
 }
+
 - (void)didLoadFromCCB {
 
     _p1.board.Name = @"Player1";
@@ -46,7 +45,6 @@
 }
 
 
-
 - (void)onEnter {
     [self schedule:@selector(gameLoop:) interval:1];
     [super onEnter];
@@ -56,8 +54,7 @@
     [_p1 moveDownOrCreate];
 }
 
-- (void)touchBegan:(UITouch *)touch withEvent:(UIEvent *)event
-{
+- (void)touchBegan:(UITouch *)touch withEvent:(UIEvent *)event {
 }
 
 @end

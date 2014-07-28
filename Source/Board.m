@@ -26,34 +26,30 @@
     return self;
 }
 
-- (void) addSpellToField{
+- (void)addSpellToField {
 
     NSMutableArray *allBlocksInBoard = [self getAllBlocksInBoard];
     NSUInteger nbBlocksInBoard = allBlocksInBoard.count;
     NSUInteger nbSpellToAdd = 0;
 
-    for (NSUInteger i = 0; i < nbBlocksInBoard; i++)
-    {
+    for (NSUInteger i = 0; i < nbBlocksInBoard; i++) {
         //55% of the blocks will have a spell
-        if([self randomBoolWithPercentage:55])
-        {
+        if ([self randomBoolWithPercentage:55]) {
             nbSpellToAdd++;
         }
     }
 
-    for (NSUInteger i = 0; i < nbSpellToAdd; i++)
-    {
+    for (NSUInteger i = 0; i < nbSpellToAdd; i++) {
         NSUInteger posOfSpell = arc4random() % nbBlocksInBoard;
         Block *block = [allBlocksInBoard objectAtIndex:posOfSpell];
-        if (block.spell == nil)
-        {
+        if (block.spell == nil) {
             id <ICastable> spell = [SpellFactory getSpellUsingFrequency];
             [block addSpellToBlock:spell];
         }
     }
 }
 
-- (BOOL)randomBoolWithPercentage:(NSUInteger)percentage{
+- (BOOL)randomBoolWithPercentage:(NSUInteger)percentage {
     return (arc4random() % 100) < percentage;
 }
 
@@ -61,11 +57,11 @@
     //doesn't work?
 }
 
-- (void)touchBegan:(UITouch *)touch withEvent:(UIEvent *)event{
+- (void)touchBegan:(UITouch *)touch withEvent:(UIEvent *)event {
     //this sucks!
     CGPoint pos = [touch locationInNode:self];
 
-    CGPoint tileCoordForPosition = [self tileCoordForPosition: pos];
+    CGPoint tileCoordForPosition = [self tileCoordForPosition:pos];
     CGFloat leftMostX = 0;
     CGFloat rightMostX = 0;
     CGFloat lowestY = 0;
@@ -75,18 +71,14 @@
     rightMostX = [userTetromino rightMostPosition].x;
     lowestY = [userTetromino lowestPosition].y;
 
-    if (tileCoordForPosition.x < leftMostX)
-    {
+    if (tileCoordForPosition.x < leftMostX) {
         [self moveTetrominoLeft];
     }
-    else if (tileCoordForPosition.x > rightMostX)
-    {
+    else if (tileCoordForPosition.x > rightMostX) {
         [self moveTetrominoRight];
     }
-    else if (tileCoordForPosition.y > lowestY)
-    {
-        while (!userTetromino.stuck)
-        {
+    else if (tileCoordForPosition.y > lowestY) {
+        while (!userTetromino.stuck) {
             [self moveDownOrCreate];
         }
 
@@ -95,7 +87,7 @@
 
 }
 
-- (CGPoint)tileCoordForPosition:(CGPoint)position{
+- (CGPoint)tileCoordForPosition:(CGPoint)position {
     CGFloat tileWidth = [[userTetromino.children objectAtIndex:1] contentSize].width;
     NSUInteger x = (NSUInteger) (position.x / tileWidth);
     NSUInteger y = (NSUInteger) (((self.contentSize.height) - position.y) / tileWidth);
@@ -128,13 +120,12 @@
     return [inner objectAtIndex:(NSUInteger) point.y] != [NSNumber numberWithChar:0];
 }
 
-- (NSMutableArray *)getAllBlocksInBoard{
+- (NSMutableArray *)getAllBlocksInBoard {
     NSMutableArray *blocksInBoard = [NSMutableArray array];
-    for (NSUInteger x = 0; x < self.Nbx; x++)    {
-        for (NSUInteger y = 0; y < self.Nby; y++)
-        {
+    for (NSUInteger x = 0; x < self.Nbx; x++) {
+        for (NSUInteger y = 0; y < self.Nby; y++) {
             Block *block = [self getBlockAt:ccp(x, y)];
-            if(block != nil && block.stuck) {
+            if (block != nil && block.stuck) {
                 [blocksInBoard addObject:block];
             }
 
@@ -144,7 +135,7 @@
     return blocksInBoard;
 }
 
-- (Block *) getBlockAt:(CGPoint)point {
+- (Block *)getBlockAt:(CGPoint)point {
 
     NSUInteger x = (NSUInteger) point.x;
     NSUInteger y = (NSUInteger) point.y;
@@ -157,7 +148,7 @@
     }
 }
 
-- (void)insertBlockAt:(Block *) block at:(CGPoint)point {
+- (void)insertBlockAt:(Block *)block at:(CGPoint)point {
     NSUInteger x = (NSUInteger) point.x;
     NSUInteger y = (NSUInteger) point.y;
 
@@ -174,7 +165,7 @@
 
 - (void)DeleteBlockFromBoardAndSprite:(NSMutableArray *)blocks {
 
-    for (Block * block in blocks) {
+    for (Block *block in blocks) {
         [[_array objectAtIndex:(NSUInteger) block.boardX] replaceObjectAtIndex:(NSUInteger) block.boardY withObject:[NSNumber numberWithInt:0]];
         [block removeFromParentAndCleanup:YES];
     }
@@ -184,7 +175,7 @@
 - (void)MoveTetromino:(Tetromino *)FromTetromino to:(Tetromino *)ToTetromino {
 
     //delete
-    for (Block * block in FromTetromino.children) {
+    for (Block *block in FromTetromino.children) {
         [[_array objectAtIndex:block.boardX] replaceObjectAtIndex:block.boardY withObject:[NSNumber numberWithInt:0]];
     }
     //insert
@@ -217,12 +208,10 @@
             occupied = YES;
         }
     }
-    if (occupied)
-    {
+    if (occupied) {
         return YES;
     }
-    else
-    {
+    else {
         return NO;
     }
 }
@@ -232,10 +221,9 @@
 
     for (NSUInteger x = 0; x < _Nbx; x++) {
 
-        Block * block = [self getBlockAt:ccp(x, y)];
+        Block *block = [self getBlockAt:ccp(x, y)];
 
-        if (block.spell != Nil)
-        {
+        if (block.spell != Nil) {
             [blocksWithSpell addObject:block.spell];
         }
 
@@ -248,12 +236,12 @@
 
 }
 
-- (NSMutableArray *)MoveBoardDown:(NSUInteger)y nbRowsToMoveDownTo:(NSUInteger) step{
+- (NSMutableArray *)MoveBoardDown:(NSUInteger)y nbRowsToMoveDownTo:(NSUInteger)step {
     NSMutableArray *blocksToSetPosition = [NSMutableArray array];
 
     for (y; y > 0; y--) {
         for (NSUInteger x = 0; x < _Nbx; x++) {
-            Block * current = [self getBlockAt:ccp(x, y)];
+            Block *current = [self getBlockAt:ccp(x, y)];
             if (current != nil) {
 
                 [self MoveBlock:current to:ccp(x, y + step)];
@@ -307,7 +295,7 @@
 }
 
 //TODO: Use collision detection instead.
-- (BOOL)canMoveTetrominoByYTetromino:(Tetromino *)userTetromino offSetY:(NSUInteger)offSetY{
+- (BOOL)canMoveTetrominoByYTetromino:(Tetromino *)userTetromino offSetY:(NSUInteger)offSetY {
 
     // Sort blocks by x value if moving left, reverse order if moving right
     NSMutableArray *reversedChildren = [[NSMutableArray alloc] initWithArray:userTetromino.children];
@@ -317,7 +305,7 @@
         enumerator = [reversedChildren reverseObjectEnumerator];
     }
 
-    for (Block * currentBlock in enumerator) {
+    for (Block *currentBlock in enumerator) {
         //dont compare yourself
         if (!([userTetromino isBlockInTetromino:[self getBlockAt:ccp(currentBlock.boardX, currentBlock.boardY + offSetY)]])) {
             //if there's another block at the position you're looking at, you can't move
@@ -331,7 +319,7 @@
 }
 
 //TODO: Use collision detection instead.
-- (BOOL)canMoveTetrominoByXTetromino:(Tetromino *)userTetromino offSetX:(NSUInteger)offSetX{
+- (BOOL)canMoveTetrominoByXTetromino:(Tetromino *)userTetromino offSetX:(NSUInteger)offSetX {
 
     // Sort blocks by x value if moving left, reverse order if moving right
     NSMutableArray *reversedChildren = [[NSMutableArray alloc] initWithArray:userTetromino.children];
@@ -341,7 +329,7 @@
         enumerator = [reversedChildren reverseObjectEnumerator];
     }
 
-    for (Block * currentBlock in enumerator) {
+    for (Block *currentBlock in enumerator) {
         //dont compare yourself
         if (!([userTetromino isBlockInTetromino:[self getBlockAt:ccp(currentBlock.boardX + offSetX, currentBlock.boardY)]])) {
             //if there's another block at the position you're looking at, you can't move
@@ -354,9 +342,9 @@
 
 }
 
-- (BOOL)isTetrominoInBounds:(Tetromino *)tetromino noCollisionWith:(Tetromino *)with{
+- (BOOL)isTetrominoInBounds:(Tetromino *)tetromino noCollisionWith:(Tetromino *)with {
 
-    for (Block * currentBlock in tetromino.children) {
+    for (Block *currentBlock in tetromino.children) {
         //check if the new block is within the bounds and
         if (currentBlock.boardX < 0 || currentBlock.boardX >= [self Nbx]
                 || currentBlock.boardY < 0 || currentBlock.boardY >= [self Nby]) {
@@ -365,7 +353,7 @@
 
         }
 
-        for (Block * old in with.children) {
+        for (Block *old in with.children) {
             if ([old boardX] != [currentBlock boardX] && ![old boardY] == [currentBlock boardY]) {
                 if ([self isBlockAt:ccp(currentBlock.boardX, currentBlock.boardY)]) {
                     NSLog(@"DENIED - COLLISION");
@@ -380,20 +368,19 @@
     return YES;
 }
 
-- (BOOL)boardRowEmpty:(NSUInteger)y{
+- (BOOL)boardRowEmpty:(NSUInteger)y {
 
     return [self boardRowFull:y];
 
 }
 
-- (void)addBlocks:(NSMutableArray *)blocksToAdd{
+- (void)addBlocks:(NSMutableArray *)blocksToAdd {
 
     [self addTetrominoToBoard:blocksToAdd];
 
     [self setPositionUsingFieldValue:blocksToAdd];
 
-    for (Block *blocks in blocksToAdd)
-    {
+    for (Block *blocks in blocksToAdd) {
         [self.parent addChild:blocks];
     }
 
@@ -401,15 +388,14 @@
 
 }
 
-- (void)setPositionUsingFieldValue:(NSMutableArray *) arrayOfBlocks{
+- (void)setPositionUsingFieldValue:(NSMutableArray *)arrayOfBlocks {
 
-    for (Block * block in arrayOfBlocks)
-    {
+    for (Block *block in arrayOfBlocks) {
         NSInteger boardX = [block boardX];
         NSInteger boardY = [block boardY];
 
         NSInteger x = (NSInteger) (boardX * block.contentSize.width);// + fieldPositionInView.x);
-        NSInteger y = (NSInteger) ((-boardY * block.contentSize.height)+ self.contentSize.height);// + fieldPositionInView.y);
+        NSInteger y = (NSInteger) ((-boardY * block.contentSize.height) + self.contentSize.height);// + fieldPositionInView.y);
         [block setPosition:ccp(x, y)];
     }
 
@@ -419,17 +405,14 @@
     //Perhaps set all tetromino to stuck by default?
     //[userTetromino getLowestPosition];
     NSUInteger nbLinesCleared = 0;
-    if(userTetromino.stuck || userTetromino == NULL)
-    {
+    if (userTetromino.stuck || userTetromino == NULL) {
         [self createNewTetromino];
     }
-    else if(userTetromino.lowestPosition.y != 19 && [self canMoveTetrominoByYTetromino:userTetromino offSetY:1])
-    {
+    else if (userTetromino.lowestPosition.y != 19 && [self canMoveTetrominoByYTetromino:userTetromino offSetY:1]) {
         [self moveTetrominoDown];
         userTetromino.stuck = NO;
     }
-    else
-    {
+    else {
         userTetromino.stuck = YES;
 
     }
@@ -437,21 +420,18 @@
 
 }
 
-- (void)VerifyNewBlockCollision:(Tetromino *)new{
+- (void)VerifyNewBlockCollision:(Tetromino *)new {
 
     BOOL collision = NO;
 
-    for (Block * block in new.children)
-    {
-        if ([self isBlockAt:ccp(block.boardX, block.boardY)])
-        {
+    for (Block *block in new.children) {
+        if ([self isBlockAt:ccp(block.boardX, block.boardY)]) {
             collision = YES;
             continue;
         }
     }
 
-    if (collision)
-    {
+    if (collision) {
         [self gameOver:NO];
     }
 
@@ -460,10 +440,10 @@
 
 - (NSMutableArray *)checkForRowsToClear {
 
-    NSMutableArray *rowToDelete = [[NSMutableArray alloc]init];
+    NSMutableArray *rowToDelete = [[NSMutableArray alloc] init];
     BOOL occupied = NO;
 
-    NSNumber * deletedRow = (NSNumber *) nil;
+    NSNumber *deletedRow = (NSNumber *) nil;
     for (NSUInteger y = 0; y < [self Nby]; y++) {
 
         //Skip row already processed
@@ -502,14 +482,14 @@
 
 }
 
-- (NSMutableArray *)deleteRowsAndReturnSpells: (NSMutableArray *)rowsToDelete{
+- (NSMutableArray *)deleteRowsAndReturnSpells:(NSMutableArray *)rowsToDelete {
     NSMutableArray *spellsToAdd = [[NSMutableArray alloc] init];
 
     NSNumber *highestRow = [NSNumber numberWithInt:99];
-    for (NSNumber *row in rowsToDelete){
+    for (NSNumber *row in rowsToDelete) {
         [spellsToAdd addObjectsFromArray:[self DeleteRow:[row unsignedIntegerValue]]];
 
-        if (highestRow.integerValue > row.integerValue){
+        if (highestRow.integerValue > row.integerValue) {
             highestRow = row;
         }
 
@@ -524,7 +504,7 @@
     return spellsToAdd;
 }
 
-- (void)gameOver:(BOOL)won{
+- (void)gameOver:(BOOL)won {
     /*
     CCScene *gameOverScene = [GameOverLayer sceneWithWon:won];
     [[CCDirector sharedDirector] replaceScene:gameOverScene];
@@ -548,7 +528,7 @@
 
 }
 
-- (void)moveTetrominoDown{
+- (void)moveTetrominoDown {
 
     [self DeleteBlockFromBoard:userTetromino.children];
 
@@ -558,19 +538,17 @@
 
 }
 
-- (void)UpdatesNewTetromino:(Tetromino*) ToTetromino{
+- (void)UpdatesNewTetromino:(Tetromino *)ToTetromino {
     [self setPositionUsingFieldValue:ToTetromino.children];
 
     [self addTetrominoToBoard:ToTetromino.children];
 
 }
 
-- (void)moveTetrominoLeft{
+- (void)moveTetrominoLeft {
 
-    if (userTetromino.leftMostPosition.x > 0 && !userTetromino.stuck)
-    {
-        if ([self canMoveTetrominoByXTetromino:userTetromino offSetX:-1])
-        {
+    if (userTetromino.leftMostPosition.x > 0 && !userTetromino.stuck) {
+        if ([self canMoveTetrominoByXTetromino:userTetromino offSetX:-1]) {
 
             [self DeleteBlockFromBoard:userTetromino.children];
 
@@ -584,7 +562,7 @@
 
 }
 
-- (void)moveTetrominoRight{
+- (void)moveTetrominoRight {
     if (userTetromino.rightMostPosition.x < kLastColumn && !userTetromino.stuck) {
         if ([self canMoveTetrominoByXTetromino:userTetromino offSetX:1]) {
             [self DeleteBlockFromBoard:userTetromino.children];
@@ -601,8 +579,7 @@
 
     Tetromino *rotated = [Tetromino rotateTetromino:userTetromino in:direction];
 
-    if([self isTetrominoInBounds:rotated noCollisionWith:userTetromino])
-    {
+    if ([self isTetrominoInBounds:rotated noCollisionWith:userTetromino]) {
         [self DeleteBlockFromBoard:userTetromino.children];
 
         [userTetromino MoveBoardPosition:rotated];

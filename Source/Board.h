@@ -17,25 +17,35 @@
 @property NSString *Name;
 
 - (id)init;
+
 + (id)initBoard;
+
 - (BOOL)isBlockAt:(CGPoint)point;
 
 - (NSMutableArray *)getAllBlocksInBoard;
 
 - (NSMutableArray *)getAllInvertedBlocksInBoard;
 
-- (Block *) getBlockAt:(CGPoint)point ;
+- (Block *)getBlockAt:(CGPoint)point;
+
 - (void)DeleteBlockFromBoard:(NSMutableArray *)blocks;
+
 - (void)DeleteBlockFromBoardAndSprite:(NSMutableArray *)blocks;
+
 - (void)MoveTetromino:(Tetromino *)FromTetromino to:(Tetromino *)ToTetromino;
+
 - (void)MoveBlock:(Block *)block to:(CGPoint)after;
+
 - (BOOL)boardRowFull:(NSUInteger)y;
+
 - (NSMutableArray *)DeleteRow:(NSUInteger)y;
 
 - (NSMutableArray *)MoveBoardDown:(NSUInteger)y nbRowsToMoveDownTo:(NSUInteger)step;
 
 - (NSMutableArray *)MoveBoardDown:(NSUInteger)y;
+
 - (void)addTetrominoToBoard:(NSMutableArray *)blocksToAdd;
+
 - (void)printCurrentBoardStatus:(BOOL)withPosition;
 
 - (void)addBlocks:(NSMutableArray *)blocksToAdd;
