@@ -9,6 +9,7 @@
 #import "Tetromino.h"
 #import "Block.h"
 #import "Gravity.h"
+#import "AddLine.h"
 
 
 @implementation Field {
@@ -72,7 +73,7 @@
             else
             {
                 Block *block = (Block *) [CCBReader load:@"Blocks/Cyan"];
-                Gravity *gravity= [[Gravity alloc]init];
+                AddLine *gravity= [[AddLine alloc]init];
                 [block addSpellToBlock:gravity];
                 [block setBoardX:i];
                 [block setBoardY:19-j];
@@ -85,10 +86,10 @@
 
 
     [self.board addBlocks:bArray];
-    for (Block *blocks in bArray)
-    {
-        [self addChild:blocks];
-    }
+//    for (Block *blocks in bArray)
+//    {
+//        [self addChild:blocks];
+//    }
 
 }
 

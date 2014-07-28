@@ -18,7 +18,7 @@
     self = [super init];
     if (self) {
         spellName = @"Add line";
-        self.spriteFrame = [CCSpriteFrame frameWithImageNamed: @"Assets/AddLine.png"];
+        self.spriteFrame = [CCSpriteFrame frameWithImageNamed:@"Assets/AddLine.png"];
 
     }
 
@@ -45,9 +45,9 @@
 
     [targetBoard setPositionUsingFieldValue:blocksToSetPosition];
 
-    [self CreateBlockLine:targetBoard ];
+    [self CreateBlockLine:targetBoard];
 
-    [self LogSpell:targetBoard];
+    CCLOG(@"%@", [self LogSpell:targetBoard]);
 }
 
 - (void)CreateBlockLine:(Board *)targetBoard {
@@ -59,7 +59,7 @@
         if ((random % 3) > 0) {
             //TODO: Randomize blocks
             //Block *block = [Block blockWithBlockType:random % 7 displayOnMainField:NO ];
-            Block *block = (Block *) [CCBReader load:@"Blocks/Cyann"];
+            Block *block = (Block *) [CCBReader load:@"Blocks/Green"];
             block.stuck = YES;
             [block setBoardX:x];
             [block setBoardY:19];
@@ -75,12 +75,8 @@
 
 
 - (NSString *)LogSpell:(Board *)targetBoard {
-    //return [NSString stringWithFormat:@"%@ was casted on %@", _spellName, targetField.Name];
-    return @"HEY";
+    return [NSString stringWithFormat:@"%@ was casted on %@", spellName, targetBoard.Name];
 }
-
-
-
 
 
 @end

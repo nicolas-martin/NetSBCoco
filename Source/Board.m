@@ -53,13 +53,9 @@
     }
 }
 
-- (BOOL)randomBoolWithPercentage:(NSUInteger)percentage
-{
+- (BOOL)randomBoolWithPercentage:(NSUInteger)percentage{
     return (arc4random() % 100) < percentage;
 }
-
-
-
 
 - (void)onEnter {
     //doesn't work?
@@ -99,14 +95,12 @@
 
 }
 
-- (CGPoint)tileCoordForPosition:(CGPoint)position
-{
+- (CGPoint)tileCoordForPosition:(CGPoint)position{
     CGFloat tileWidth = [[userTetromino.children objectAtIndex:1] contentSize].width;
     NSUInteger x = (NSUInteger) (position.x / tileWidth);
     NSUInteger y = (NSUInteger) (((self.contentSize.height) - position.y) / tileWidth);
     return ccp(x, y);
 }
-
 
 - (void)didLoadFromCCB {
 
@@ -400,7 +394,7 @@
 
     for (Block *blocks in blocksToAdd)
     {
-        //[self addChild:blocks];
+        [self.parent addChild:blocks];
     }
 
     //[self newTetromino:blocksToAdd];
@@ -529,8 +523,6 @@
 
     return spellsToAdd;
 }
-
-
 
 - (void)gameOver:(BOOL)won{
     /*

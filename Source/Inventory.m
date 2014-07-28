@@ -5,9 +5,7 @@
 
 #import "Inventory.h"
 #import "ICastable.h"
-#import "Gravity.h"
 #import "FieldCollisionHelper.h"
-#import "Field.h"
 #import "CCNode_Private.h"
 
 
@@ -20,8 +18,8 @@
 - (id)init {
     self = [super init];
     if (self) {
-        inventory = [[NSMutableArray alloc]init];
-        movableSprites = [[NSMutableArray alloc]init];
+        inventory = [[NSMutableArray alloc] init];
+        movableSprites = [[NSMutableArray alloc] init];
         self.userInteractionEnabled = YES;
 
     }
@@ -36,14 +34,13 @@
 
 - (void)addSpell:(<ICastable>)spell {
 
-    if(inventory.count < 10)
-    {
+    if (inventory.count < 10) {
         [inventory addObject:spell];
         //Or use SpellFactory to get a spell back using the name.
-        CCSprite *newSpellSprite = (id) (id <ICastable> )[[CCSprite alloc] init];
+        CCSprite *newSpellSprite = (id) (id <ICastable>) [[CCSprite alloc] init];
         newSpellSprite.spriteFrame = [spell spriteFrame];
 
-        [newSpellSprite setPosition:ccp(newSpellSprite.contentSize.width * (inventory.count -1), 0)];
+        [newSpellSprite setPosition:ccp(newSpellSprite.contentSize.width * (inventory.count - 1), 0)];
 
         //do I really need this?
         [newSpellSprite setName:@"1"];
@@ -68,16 +65,20 @@
 
     [selSprite removeFromParentAndCleanup:YES];
 
+
+    [self reorderInventory];
+}
+
+- (void)reorderInventory {
     NSUInteger count = 0;
-    for (CCSprite *sprite in movableSprites)
-    {
-        [sprite setPosition:ccp(sprite.contentSize.width*count, 0)];
+    for (CCSprite *sprite in movableSprites) {
+        [sprite setPosition:ccp(sprite.contentSize.width * count, 0)];
         count++;
 
     }
 }
 
--(void) touchBegan:(UITouch *)touch withEvent:(UIEvent *)event {
+- (void)touchBegan:(UITouch *)touch withEvent:(UIEvent *)event {
     CGPoint touchLocation = [touch locationInNode:self];
     [self selectSpriteForTouch:touchLocation];
 }
@@ -93,31 +94,32 @@
 }
 
 
-
 - (void)touchEnded:(UITouch *)touch withEvent:(UIEvent *)event {
-    CGPoint touchLocation =  [[CCDirector sharedDirector] convertToGL:[touch locationInView:[touch view]]];
-    
+    CGPoint touchLocation = [[CCDirector sharedDirector] convertToGL:[touch locationInView:[touch view]]];
+
     FieldCollisionHelper *fch = [FieldCollisionHelper sharedMySingleton];
-    
+
     Board *targetField = [fch GetFieldFromPosition:touchLocation];
 
-    if (targetField != nil){
-        id<ICastable> obj = selSprite.userObject;
-        [obj CastSpell: targetField];
+    if (targetField != nil) {
+        id <ICastable> obj = selSprite.userObject;
+        [obj CastSpell:targetField];
 
         [self removeSpell:selSprite.userObject];
-    }
 
+    } else if (selSprite != nil) {
+
+        [self reorderInventory];
+    }
 
 
 }
 
 - (void)selectSpriteForTouch:(CGPoint)touchLocation {
-    CCSprite * newSprite = nil;
-    for (CCSprite *sprite in movableSprites)
-    {
+    CCSprite *newSprite = nil;
+    for (CCSprite *sprite in movableSprites) {
         //why
-        if (sprite.name == @"1"){
+        if (sprite.name == @"1") {
 
             if (CGRectContainsPoint(sprite.boundingBox, touchLocation)) {
                 newSprite = sprite;

@@ -15,7 +15,7 @@ static FieldCollisionHelper* _sharedMySingleton = nil;
 
 + (FieldCollisionHelper *)sharedMySingleton {
     if (_sharedMySingleton == nil) {
-        _sharedMySingleton = [[super allocWithZone:NULL] init];
+        _sharedMySingleton = (FieldCollisionHelper *) [[super allocWithZone:NULL] init];
     }
     return _sharedMySingleton;
 }
@@ -29,7 +29,6 @@ static FieldCollisionHelper* _sharedMySingleton = nil;
 
     return self;
 }
-
 
 - (void)AddFieldBox:(Board *)field {
     [fieldsArray addObject:field];
