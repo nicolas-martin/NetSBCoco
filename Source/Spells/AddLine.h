@@ -10,7 +10,7 @@
 @class Board;
 
 
-@interface AddLine : NSObject <ICastable>
+@interface AddLine : CCNode <ICastable>
 
 
 @property CCSpriteFrame *spriteFrame;

@@ -11,7 +11,6 @@
 
 @property NSString *spellName;
 
-
 @property CCSpriteFrame *spriteFrame;
 
 - (void)CastSpell:(Board *)targetBoard;

@@ -8,6 +8,7 @@
 
 /* Begin PBXBuildFile section */
 		1AA82601FE675A043EBE2B7D /* SpellFactory.m in Sources */ = {isa = PBXBuildFile; fileRef = 1AA82D1907277D9B46299F66 /* SpellFactory.m */; };
+		1AA828AE90148C124D4866E2 /* FieldCollisionHelper.m in Sources */ = {isa = PBXBuildFile; fileRef = 1AA82B5D7FB9F5D833974767 /* FieldCollisionHelper.m */; };
 		1AA82D6A2E2D79DEF384B3B6 /* Block.m in Sources */ = {isa = PBXBuildFile; fileRef = 1AA82D0472805880B730EEDB /* Block.m */; };
 		1AA82E43FC3929A4A863A1EE /* Tetromino.m in Sources */ = {isa = PBXBuildFile; fileRef = 1AA827C0EA61DC4E95669794 /* Tetromino.m */; };
 		7A7A2303CBE96D656256F097 /* AddLine.m in Sources */ = {isa = PBXBuildFile; fileRef = 7A7A28F768AE660411EFCFE6 /* AddLine.m */; };
@@ -70,6 +71,8 @@
 		1AA8239D47AEF45CF93B958E /* Tetromino.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = Tetromino.h; sourceTree = "<group>"; };
 		1AA827C0EA61DC4E95669794 /* Tetromino.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = Tetromino.m; sourceTree = "<group>"; };
 		1AA82859F8BD8657F2B91C38 /* SpellFactory.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = SpellFactory.h; sourceTree = "<group>"; };
+		1AA82B5D7FB9F5D833974767 /* FieldCollisionHelper.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = FieldCollisionHelper.m; path = Source/FieldCollisionHelper.m; sourceTree = "<group>"; };
+		1AA82C9D648A0D72263909EC /* FieldCollisionHelper.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = FieldCollisionHelper.h; path = Source/FieldCollisionHelper.h; sourceTree = "<group>"; };
 		1AA82D0472805880B730EEDB /* Block.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = Block.m; sourceTree = "<group>"; };
 		1AA82D1907277D9B46299F66 /* SpellFactory.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = SpellFactory.m; sourceTree = "<group>"; };
 		7A7A20C36F1D1AECAF7FEB29 /* Nuke.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = Nuke.m; sourceTree = "<group>"; };
@@ -199,6 +202,8 @@
 				7A7A21594481A92AAF3BAEEF /* Blocks */,
 				7A7A2E931E59367D9F216D0F /* Board.h */,
 				7A7A2C48D0D85B5FECD3EEC7 /* Board.m */,
+				1AA82B5D7FB9F5D833974767 /* FieldCollisionHelper.m */,
+				1AA82C9D648A0D72263909EC /* FieldCollisionHelper.h */,
 			);
 			name = Source;
 			sourceTree = "<group>";
@@ -423,6 +428,7 @@
 				1AA82E43FC3929A4A863A1EE /* Tetromino.m in Sources */,
 				1AA82D6A2E2D79DEF384B3B6 /* Block.m in Sources */,
 				1AA82601FE675A043EBE2B7D /* SpellFactory.m in Sources */,
+				1AA828AE90148C124D4866E2 /* FieldCollisionHelper.m in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -533,6 +539,7 @@
 				PROVISIONING_PROFILE = "";
 				SWIFT_OBJC_BRIDGING_HEADER = "SBNetromino-Bridging-Header.h";
 				SWIFT_OPTIMIZATION_LEVEL = "-Onone";
+				USER_HEADER_SEARCH_PATHS = "\"${PROJECT_DIR}/\"/**";
 				WRAPPER_EXTENSION = app;
 			};
 			name = Debug;
@@ -567,6 +574,7 @@
 				PRODUCT_NAME = SBNetromino;
 				PROVISIONING_PROFILE = "";
 				SWIFT_OBJC_BRIDGING_HEADER = "SBNetromino-Bridging-Header.h";
+				USER_HEADER_SEARCH_PATHS = "\"${PROJECT_DIR}/\"/**";
 				VALIDATE_PRODUCT = YES;
 				WRAPPER_EXTENSION = app;
 			};

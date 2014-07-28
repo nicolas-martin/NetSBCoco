@@ -17,6 +17,17 @@
     if (self) {
         spellName = @"Random Remove";
         self.spriteFrame = [CCSpriteFrame frameWithImageNamed: @"Assets/RandomRemove.png"];
+
+        CCPhysicsBody *body = self.physicsBody;
+
+        // This is used to pick which collision delegate method to call, see GameScene.m for more info.
+        body.collisionType = @"Spell";
+
+        // This sets up simple collision rules.
+        // First you list the categories (strings) that the object belongs to.
+        body.collisionCategories = @[@"Spell"];
+        // Then you list which categories its allowed to collide with.
+        body.collisionMask = @[@"Field"];
     }
 
     return self;

@@ -9,7 +9,7 @@
 @class Board;
 
 
-@interface Gravity : NSObject <ICastable>
+@interface Gravity : CCNode <ICastable>
 
 
 @property CCSpriteFrame *spriteFrame;

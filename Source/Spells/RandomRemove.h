@@ -10,7 +10,7 @@
 @class Board;
 
 
-@interface RandomRemove : NSObject <ICastable>
+@interface RandomRemove : CCNode <ICastable>
 
 
 @property CCSpriteFrame *spriteFrame;

@@ -8,22 +8,33 @@
 #import "Board.h"
 #import "Tetromino.h"
 #import "Block.h"
+#import "Gravity.h"
 
 
 @implementation Field {
     Inventory *_inventory;
-    Board *_board;
     CCLabelTTF *_nbRowCleared;
 
 }
 
+
 - (void) didLoadFromCCB {
+    CCPhysicsBody *body = self.physicsBody;
+    // This is used to pick which collision delegate method to call, see GameScene.m for more info.
+    body.collisionType = @"Field";
+
+    // This sets up simple collision rules.
+    // First you list the categories (strings) that the object belongs to.
+    body.collisionCategories = @[@"Field"];
+    // Then you list which categories its allowed to collide with.
+    body.collisionMask = @[@"Spell"];
+
     [self initSomeBlocks];
 
 
 }
 
--(void) addSpellsToInventory:(NSMutableArray *)spellsToAdd{
+- (void) addSpellsToInventory:(NSMutableArray *)spellsToAdd{
     for (id <ICastable> spell in spellsToAdd)
     {
         [_inventory addSpell:spell];
@@ -32,10 +43,10 @@
 
 - (void) moveDownOrCreate {
 
-    NSMutableArray *rows = _board.checkForRowsToClear;
+    NSMutableArray *rows = self.board.checkForRowsToClear;
     if (rows.count > 0)
     {
-        NSMutableArray *spellsToAdd = [_board deleteRowsAndReturnSpells:rows];
+        NSMutableArray *spellsToAdd = [self.board deleteRowsAndReturnSpells:rows];
         if (spellsToAdd.count > 0)
         {
             [self addSpellsToInventory:spellsToAdd];
@@ -44,7 +55,7 @@
         _nbRowCleared.string = [NSString stringWithFormat:@"%d", (int) _nbRowCleared.string.integerValue + rows.count];
 
     }
-    _board.moveDownOrCreate;
+    self.board.moveDownOrCreate;
 
 
 }
@@ -70,8 +81,8 @@
             else
             {
                 Block *block = (Block *) [CCBReader load:@"Blocks/Cyan"];
-                //block.spriteFrame = [CCSpriteFrame frameWithImageNamed: @"Assets/AddLine.png"];
-
+                Gravity *gravity= [[Gravity alloc]init];
+                [block addSpellToBlock:gravity];
                 [block setBoardX:i];
                 [block setBoardY:19-j];
                 [block setStuck:YES];
@@ -82,7 +93,7 @@
 
 
 
-    [_board addBlocks:bArray];
+    [self.board addBlocks:bArray];
     for (Block *blocks in bArray)
     {
         [self addChild:blocks];

@@ -9,7 +9,7 @@
 @class Board;
 
 
-@interface Nuke : NSObject <ICastable>
+@interface Nuke : CCNode <ICastable>
 
 
 @property CCSpriteFrame *spriteFrame;

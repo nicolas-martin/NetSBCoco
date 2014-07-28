@@ -9,6 +9,7 @@
 #import "MainScene.h"
 #import "Field.h"
 #import "Tetromino.h"
+#import "FieldCollisionHelper.h"
 
 @implementation MainScene{
     CCNode *_scene;
@@ -26,12 +27,20 @@
     return self;
 }
 - (void)didLoadFromCCB {
+    [FieldCollisionHelper AddFieldBox:_p1.board];
+    [FieldCollisionHelper AddFieldBox:_p2.board];
+    [FieldCollisionHelper AddFieldBox:_p3.board];
 
-    //[_p1 createNewTetromino];
+
+    // Use the gamescene as the collision delegate.
+    // See the ccPhysicsCollision* methods below.
 }
+
+
 
 - (void)onEnter {
     [self schedule:@selector(gameLoop:) interval:1];
+    [super onEnter];
 }
 
 - (void)gameLoop:(CCTime)delta {

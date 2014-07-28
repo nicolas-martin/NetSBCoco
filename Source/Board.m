@@ -22,6 +22,8 @@
         _array = self.get20x10Array;
         self.userInteractionEnabled = YES;
 
+
+
     }
 
     return self;
@@ -440,7 +442,7 @@
         userTetromino.stuck = YES;
 
     }
-    [self printCurrentBoardStatus:NO];
+    //[self printCurrentBoardStatus:NO];
 
 }
 

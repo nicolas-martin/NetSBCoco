@@ -11,6 +11,8 @@
 
 @interface Field : CCNode
 
+@property(nonatomic, strong) Board *board;
+
 - (void)addSpellsToInventory:(NSMutableArray *)spellsToAdd;
 
 - (void)moveDownOrCreate;
