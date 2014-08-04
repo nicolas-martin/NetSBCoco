@@ -120,9 +120,9 @@
     if (point.x == 20) {
         point.x = 19;
     }
-    NSMutableArray *inner = [_array objectAtIndex:(NSUInteger) point.x];
+    NSMutableArray *inner = _array[(NSUInteger) point.x];
 
-    return [inner objectAtIndex:(NSUInteger) point.y] != [NSNumber numberWithChar:0];
+    return inner[(NSUInteger) point.y] != @0;
 }
 
 - (NSMutableArray *)getAllBlocksInBoard {
@@ -345,22 +345,29 @@
 - (BOOL)isTetrominoInBounds:(CGPoint)point {
 
 
-        if (point.x < 0 || point.x >= [self Nbx] || point.y < 0 || point.y >= [self Nby]) {
-            NSLog(@"DENIED - OUT OF BOUNDS");
-            return NO;
+    if (point.x < 0 || point.x >= [self Nbx] || point.y < 0 || point.y >= [self Nby]) {
+        NSLog(@"DENIED - OUT OF BOUNDS");
+        return NO;
 
-        }
-    for (Block *block in userTetromino.children) {
-        if (point.x != [block boardX] && point.y != [block boardY]) {
-            if ([self isBlockAt:ccp(point.x, point.y)]) {
-                NSLog(@"DENIED - COLLISION");
-                return NO;
-            }
+    }
+
+    BOOL found = NO;
+    for (Block *currentBlock in userTetromino.children) {
+        if ([currentBlock boardX] == point.x && [currentBlock boardY] == point.y) {
+            found = YES;
+            break;
         }
     }
 
+    if (!found){
 
-    return YES;
+        if ([self isBlockAt:ccp(point.x, point.y)]) {
+            NSLog(@"DENIED - COLLISION");
+            return NO;
+        }
+    }
+
+   return YES;
 }
 
 - (BOOL)boardRowEmpty:(NSUInteger)y {
@@ -509,7 +516,7 @@
 - (void)createNewTetromino {
 
     //Tetromino *tempTetromino = [Tetromino randomBlockUsingBlockFrequency:_isMain ];
-    Tetromino *tempTetromino = (Tetromino *) [CCBReader load:@"Shapes/I"];
+    Tetromino *tempTetromino = (Tetromino *) [CCBReader load:@"Shapes/L"];
 
     [self VerifyNewBlockCollision:tempTetromino];
 
