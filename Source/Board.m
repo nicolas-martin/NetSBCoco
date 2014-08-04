@@ -62,14 +62,14 @@
     CGPoint pos = [touch locationInNode:self];
 
     CGPoint tileCoordForPosition = [self tileCoordForPosition:pos];
-    CGFloat leftMostX = 0;
-    CGFloat rightMostX = 0;
-    CGFloat lowestY = 0;
+    CGFloat leftMostX = 0, rightMostX = 0, lowestY = 0, highestY = 0;
+
 
     //compute
     leftMostX = [userTetromino leftMostPosition].x;
     rightMostX = [userTetromino rightMostPosition].x;
     lowestY = [userTetromino lowestPosition].y;
+    highestY = [userTetromino highestPosition].y;
 
     if (tileCoordForPosition.x < leftMostX) {
         [self moveTetrominoLeft];
@@ -78,11 +78,16 @@
         [self moveTetrominoRight];
     }
     else if (tileCoordForPosition.y > lowestY) {
-        while (!userTetromino.stuck) {
-            [self moveDownOrCreate];
-        }
+//        while (!userTetromino.stuck) {
+//            [self moveDownOrCreate];
+//        }
+        [self rotateTetromino:rotateClockwise];
 
+    } else if(tileCoordForPosition.y < highestY){
+        [self rotateTetromino:rotateClockwise];
     }
+
+    //rotateTetromino
 
 
 }
@@ -337,29 +342,24 @@
 
 }
 
-- (BOOL)isTetrominoInBounds:(Tetromino *)tetromino noCollisionWith:(Tetromino *)with {
+- (BOOL)isTetrominoInBounds:(CGPoint)point {
 
-    for (Block *currentBlock in tetromino.children) {
-        //check if the new block is within the bounds and
-        if (currentBlock.boardX < 0 || currentBlock.boardX >= [self Nbx]
-                || currentBlock.boardY < 0 || currentBlock.boardY >= [self Nby]) {
+
+        if (point.x < 0 || point.x >= [self Nbx] || point.y < 0 || point.y >= [self Nby]) {
             NSLog(@"DENIED - OUT OF BOUNDS");
             return NO;
 
         }
-
-        for (Block *old in with.children) {
-            if ([old boardX] != [currentBlock boardX] && ![old boardY] == [currentBlock boardY]) {
-                if ([self isBlockAt:ccp(currentBlock.boardX, currentBlock.boardY)]) {
-                    NSLog(@"DENIED - COLLISION");
-                    return NO;
-                }
+    for (Block *block in userTetromino.children) {
+        if (point.x != [block boardX] && point.y != [block boardY]) {
+            if ([self isBlockAt:ccp(point.x, point.y)]) {
+                NSLog(@"DENIED - COLLISION");
+                return NO;
             }
         }
-
-
-        //}
     }
+
+
     return YES;
 }
 
@@ -411,7 +411,7 @@
         userTetromino.stuck = YES;
 
     }
-    //[self printCurrentBoardStatus:NO];
+    [self printCurrentBoardStatus:NO];
 
 }
 
@@ -572,17 +572,45 @@
 
 - (void)rotateTetromino:(RotationDirection)direction {
 
-    Tetromino *rotated = [Tetromino rotateTetromino:userTetromino in:direction];
 
-    if ([self isTetrominoInBounds:rotated noCollisionWith:userTetromino]) {
+
+    NSUInteger px = userTetromino.anchorX;
+    NSUInteger py = userTetromino.anchorY;
+    BOOL Valid = YES;
+
+    //Tries all the new position and check if they're valid
+    for (Block *block in userTetromino.children){
+        NSUInteger y1 = block.boardY;
+        NSUInteger x1 = block.boardX;
+
+        NSUInteger x2 = y1 + px - py;
+        NSUInteger y2 = (px + py - x1); //-1 maybe?
+
+        if (![self isTetrominoInBounds:ccp(x2,y2)]){
+            Valid = NO;
+            break;
+        }
+    }
+
+    if (Valid){
         [self DeleteBlockFromBoard:userTetromino.children];
+        for (Block *block in userTetromino.children){
+            NSUInteger y1 = block.boardY;
+            NSUInteger x1 = block.boardX;
 
-        [userTetromino MoveBoardPosition:rotated];
-        [userTetromino setOrientation:rotated.orientation];
+            NSUInteger x2 = y1 + px - py;
+            NSUInteger y2 = (px + py - x1); //-1 maybe?
+
+            block.boardX = x2;
+            block.boardY = y2;
+        }
 
         [self UpdatesNewTetromino:userTetromino];
-
     }
+
+
+
+
 }
 
 @end
