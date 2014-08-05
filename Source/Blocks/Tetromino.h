@@ -29,7 +29,7 @@ typedef enum {
     moveRight = 1
 } MoveDirection;
 
-@interface Tetromino : CCNode <NSCopying> {
+@interface Tetromino : CCNode {
     BOOL stuck;
     CGPoint leftMostPosition;
     CGPoint rightMostPosition;
@@ -50,8 +50,6 @@ typedef enum {
 
 - (id)initWithRandomTypeAndOrientationUsingFrequency;
 
-- (id)init;
-
 + (id)blockWithType:(tetrominoType)blockType Direction:(RotationDirection)blockOrientation BoardX:(NSUInteger)positionX BoardY:(NSUInteger)positionY CurrentOrientation:(NSUInteger)CurrentOrientation;
 
 + (Tetromino *)rotateTetromino:(Tetromino *)userTetromino in:(RotationDirection)direction;
@@ -67,8 +65,5 @@ typedef enum {
 - (void)MoveBoardPosition:(Tetromino *)ToTetromino;
 
 - (NSString *)description;
-
-- (id)copyWithZone:(NSZone *)zone;
-
 
 @end

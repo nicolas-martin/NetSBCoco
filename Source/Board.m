@@ -418,7 +418,7 @@
         userTetromino.stuck = YES;
 
     }
-    [self printCurrentBoardStatus:NO];
+    //[self printCurrentBoardStatus:NO];
 
 }
 
@@ -516,7 +516,7 @@
 - (void)createNewTetromino {
 
     //Tetromino *tempTetromino = [Tetromino randomBlockUsingBlockFrequency:_isMain ];
-    Tetromino *tempTetromino = (Tetromino *) [CCBReader load:@"Shapes/L"];
+    Tetromino *tempTetromino = (Tetromino *) [CCBReader load:@"Shapes/Z"];
 
     [self VerifyNewBlockCollision:tempTetromino];
 
@@ -580,7 +580,7 @@
 - (void)rotateTetromino:(RotationDirection)direction {
 
 
-
+    CCLOG(@"anchorX = %d and anchorY = %d", userTetromino.anchorX, userTetromino.anchorY);
     NSUInteger px = userTetromino.anchorX;
     NSUInteger py = userTetromino.anchorY;
     BOOL Valid = YES;
@@ -590,8 +590,12 @@
         NSUInteger y1 = block.boardY;
         NSUInteger x1 = block.boardX;
 
-        NSUInteger x2 = y1 + px - py;
-        NSUInteger y2 = (px + py - x1); //-1 maybe?
+//        x2 = (px + py - y1 - q)
+//
+//        y2 = (x1 + py - px)
+        NSUInteger x2 = (px + py - y1);
+        NSUInteger y2 = (x1 + py - px);
+
 
         if (![self isTetrominoInBounds:ccp(x2,y2)]){
             Valid = NO;
@@ -605,8 +609,8 @@
             NSUInteger y1 = block.boardY;
             NSUInteger x1 = block.boardX;
 
-            NSUInteger x2 = y1 + px - py;
-            NSUInteger y2 = (px + py - x1); //-1 maybe?
+            NSUInteger x2 = (px + py - y1);
+            NSUInteger y2 = (x1 + py - px);
 
             block.boardX = x2;
             block.boardY = y2;
