@@ -28,10 +28,10 @@
 + (id <ICastable>) getSpellUsingFrequency
 {
     NSMutableDictionary *spells = [NSMutableDictionary dictionary];
-    [spells setValue:[NSNumber numberWithChar:25] forKey:@"Nuke"];
-    [spells setValue:[NSNumber numberWithChar:25] forKey:@"RandomRemove"];
-    [spells setValue:[NSNumber numberWithChar:25] forKey:@"AddLine"];
-    [spells setValue:[NSNumber numberWithChar:25] forKey:@"Gravity"];
+    [spells setValue:@25 forKey:@"Nuke"];
+    [spells setValue:@25 forKey:@"RandomRemove"];
+    [spells setValue:@25 forKey:@"AddLine"];
+    [spells setValue:@25 forKey:@"Gravity"];
 
 
     id <ICastable> spell = nil;

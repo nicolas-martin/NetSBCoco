@@ -7,6 +7,7 @@
 #import "Block.h"
 #import "Tetromino.h"
 #import "SpellFactory.h"
+#import "TetrominoFactory.h"
 
 
 @implementation Board {
@@ -78,22 +79,21 @@
         [self moveTetrominoRight];
     }
     else if (tileCoordForPosition.y > lowestY) {
-//        while (!userTetromino.stuck) {
-//            [self moveDownOrCreate];
-//        }
-        [self rotateTetromino:rotateClockwise];
+        while (!userTetromino.stuck) {
+            [self moveDownOrCreate];
+        }
+
 
     } else if(tileCoordForPosition.y < highestY){
         [self rotateTetromino:rotateClockwise];
     }
 
-    //rotateTetromino
 
 
 }
 
 - (CGPoint)tileCoordForPosition:(CGPoint)position {
-    CGFloat tileWidth = [[userTetromino.children objectAtIndex:1] contentSize].width;
+    CGFloat tileWidth = [(userTetromino.children)[1] contentSize].width;
     NSUInteger x = (NSUInteger) (position.x / tileWidth);
     NSUInteger y = (NSUInteger) (((self.contentSize.height) - position.y) / tileWidth);
     return ccp(x, y);
@@ -109,7 +109,7 @@
         NSMutableArray *subarr = [NSMutableArray array];
         for (int j = 0; j < self.Nby; ++j)
             //insert at index??
-            [subarr addObject:[NSNumber numberWithInt:0]];
+            [subarr addObject:@0];
         [arr addObject:subarr];
     }
     return arr;
@@ -146,7 +146,7 @@
     NSUInteger y = (NSUInteger) point.y;
 
     if ([self isBlockAt:point]) {
-        return [[_array objectAtIndex:x] objectAtIndex:y];
+        return [_array[x] objectAtIndex:y];
     }
     else {
         return nil;
@@ -157,13 +157,13 @@
     NSUInteger x = (NSUInteger) point.x;
     NSUInteger y = (NSUInteger) point.y;
 
-    [[_array objectAtIndex:x] replaceObjectAtIndex:y withObject:block];
+    [_array[x] replaceObjectAtIndex:y withObject:block];
 }
 
 - (void)DeleteBlockFromBoard:(NSMutableArray *)blocks {
 
     for (Block *block in blocks) {
-        [[_array objectAtIndex:(NSUInteger) block.boardX] replaceObjectAtIndex:(NSUInteger) block.boardY withObject:[NSNumber numberWithInt:0]];
+        [_array[(NSUInteger) block.boardX] replaceObjectAtIndex:(NSUInteger) block.boardY withObject:@0];
     }
 
 }
@@ -171,7 +171,7 @@
 - (void)DeleteBlockFromBoardAndSprite:(NSMutableArray *)blocks {
 
     for (Block *block in blocks) {
-        [[_array objectAtIndex:(NSUInteger) block.boardX] replaceObjectAtIndex:(NSUInteger) block.boardY withObject:[NSNumber numberWithInt:0]];
+        [_array[(NSUInteger) block.boardX] replaceObjectAtIndex:(NSUInteger) block.boardY withObject:@0];
         [block removeFromParentAndCleanup:YES];
     }
 
@@ -181,7 +181,7 @@
 
     //delete
     for (Block *block in FromTetromino.children) {
-        [[_array objectAtIndex:block.boardX] replaceObjectAtIndex:block.boardY withObject:[NSNumber numberWithInt:0]];
+        [_array[block.boardX] replaceObjectAtIndex:block.boardY withObject:@0];
     }
     //insert
     [self addTetrominoToBoard:ToTetromino.children];
@@ -193,7 +193,7 @@
     NSUInteger y = (NSUInteger) [block boardY];
 
     //delete
-    [[_array objectAtIndex:x] replaceObjectAtIndex:y withObject:[NSNumber numberWithInt:0]];
+    [_array[x] replaceObjectAtIndex:y withObject:@0];
     //insert
     [self insertBlockAt:block at:after];
 }
@@ -228,7 +228,7 @@
         }
 
         [block removeFromParentAndCleanup:YES];
-        [[_array objectAtIndex:x] replaceObjectAtIndex:y withObject:[NSNumber numberWithInt:0]];
+        [_array[x] replaceObjectAtIndex:y withObject:@0];
 
     }
 
@@ -265,17 +265,24 @@
 }
 
 - (void)printCurrentBoardStatus:(BOOL)withPosition {
+    NSUInteger anchorx = userTetromino.anchorX;
+    NSUInteger anchory = userTetromino.anchorY;
     NSLog(@"--------------------------------------------------------------------");
-    for (int j = 0; j < 20; ++j) {
+    for (NSUInteger j = 0; j < 20; ++j) {
         NSMutableString *row = [NSMutableString string];
-        for (int i = 0; i < 10; ++i) {
+        for (NSUInteger i = 0; i < 10; ++i) {
 
             if ([self isBlockAt:ccp(i, j)]) {
                 if (withPosition) {
                     [row appendFormat:@"(%02d,%02d) ", i, j];
                 }
                 else {
-                    [row appendFormat:@"X "];
+                    if(j == anchory && i == anchorx){
+                        [row appendFormat:@"O "];
+                    }else{
+                        [row appendFormat:@"X "];
+                    }
+
                 }
             }
             else {
@@ -295,6 +302,7 @@
 }
 
 //TODO: Use collision detection instead.
+//TODO: Remove "userTetromino" parameter and make sure it still works
 - (BOOL)canMoveTetrominoByYTetromino:(Tetromino *)userTetromino offSetY:(NSUInteger)offSetY {
 
     // Sort blocks by x value if moving left, reverse order if moving right
@@ -319,6 +327,7 @@
 }
 
 //TODO: Use collision detection instead.
+//TODO: Remove "userTetromino" parameter and make sure it still works
 - (BOOL)canMoveTetrominoByXTetromino:(Tetromino *)userTetromino offSetX:(NSUInteger)offSetX {
 
     // Sort blocks by x value if moving left, reverse order if moving right
@@ -418,7 +427,7 @@
         userTetromino.stuck = YES;
 
     }
-    //[self printCurrentBoardStatus:NO];
+
 
 }
 
@@ -470,7 +479,7 @@
 
         if (occupied) {
 
-            deletedRow = [NSNumber numberWithUnsignedInteger:y];
+            deletedRow = @(y);
 
             [rowToDelete addObject:deletedRow];
 
@@ -487,7 +496,7 @@
 - (NSMutableArray *)deleteRowsAndReturnSpells:(NSMutableArray *)rowsToDelete {
     NSMutableArray *spellsToAdd = [[NSMutableArray alloc] init];
 
-    NSNumber *highestRow = [NSNumber numberWithInt:99];
+    NSNumber *highestRow = @99;
     for (NSNumber *row in rowsToDelete) {
         [spellsToAdd addObjectsFromArray:[self DeleteRow:[row unsignedIntegerValue]]];
 
@@ -515,8 +524,8 @@
 
 - (void)createNewTetromino {
 
-    //Tetromino *tempTetromino = [Tetromino randomBlockUsingBlockFrequency:_isMain ];
-    Tetromino *tempTetromino = (Tetromino *) [CCBReader load:@"Shapes/Z"];
+    //Tetromino *tempTetromino = (Tetromino *) [CCBReader load:@"Shapes/S"];
+    Tetromino * tempTetromino = [TetrominoFactory getTetrominoUsingFrequency];
 
     [self VerifyNewBlockCollision:tempTetromino];
 
@@ -527,6 +536,8 @@
     [self addChild:tempTetromino];
 
     userTetromino = tempTetromino;
+
+    [self printCurrentBoardStatus:NO];
 
 }
 
@@ -591,8 +602,8 @@
         NSUInteger x1 = block.boardX;
 
 //        x2 = (px + py - y1 - q)
-//
 //        y2 = (x1 + py - px)
+
         NSUInteger x2 = (px + py - y1);
         NSUInteger y2 = (x1 + py - px);
 
@@ -616,10 +627,11 @@
             block.boardY = y2;
         }
 
+
         [self UpdatesNewTetromino:userTetromino];
+//        [self printCurrentBoardStatus:NO];
+
     }
-
-
 
 
 }

@@ -46,12 +46,11 @@
 
 
 - (void)onEnter {
-//    [self schedule:@selector(gameLoop:) interval:1];
-//    [super onEnter];
+    [self schedule:@selector(gameLoop:) interval:1];
+    [super onEnter];
 
-    for(int i =0; i < 5; i++){
-        [_p1 moveDownOrCreate];
-    }
+    [_p1 moveDownOrCreate];
+
 }
 
 - (void)gameLoop:(CCTime)delta {

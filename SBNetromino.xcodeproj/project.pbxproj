@@ -7,9 +7,10 @@
 	objects = {
 
 /* Begin PBXBuildFile section */
+		1AA823F6212ADD3FE94BC720 /* FieldCollisionHelper.m in Sources */ = {isa = PBXBuildFile; fileRef = 1AA827E346BC2FA1D7CCCC2D /* FieldCollisionHelper.m */; };
 		1AA82601FE675A043EBE2B7D /* SpellFactory.m in Sources */ = {isa = PBXBuildFile; fileRef = 1AA82D1907277D9B46299F66 /* SpellFactory.m */; };
-		1AA828AE90148C124D4866E2 /* FieldCollisionHelper.m in Sources */ = {isa = PBXBuildFile; fileRef = 1AA82B5D7FB9F5D833974767 /* FieldCollisionHelper.m */; };
 		1AA82D6A2E2D79DEF384B3B6 /* Block.m in Sources */ = {isa = PBXBuildFile; fileRef = 1AA82D0472805880B730EEDB /* Block.m */; };
+		1AA82DF1C975325F20907D9A /* TetrominoFactory.m in Sources */ = {isa = PBXBuildFile; fileRef = 1AA82F9702DB6796DD8701A8 /* TetrominoFactory.m */; };
 		1AA82E43FC3929A4A863A1EE /* Tetromino.m in Sources */ = {isa = PBXBuildFile; fileRef = 1AA827C0EA61DC4E95669794 /* Tetromino.m */; };
 		7A7A2303CBE96D656256F097 /* AddLine.m in Sources */ = {isa = PBXBuildFile; fileRef = 7A7A28F768AE660411EFCFE6 /* AddLine.m */; };
 		7A7A27ED81838EA5C9A4BDF4 /* Nuke.m in Sources */ = {isa = PBXBuildFile; fileRef = 7A7A20C36F1D1AECAF7FEB29 /* Nuke.m */; };
@@ -69,12 +70,14 @@
 /* Begin PBXFileReference section */
 		1AA8202B9CEA5233E788263D /* Block.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = Block.h; sourceTree = "<group>"; };
 		1AA8239D47AEF45CF93B958E /* Tetromino.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = Tetromino.h; sourceTree = "<group>"; };
+		1AA826168A3E5DC1CFA5113E /* TetrominoFactory.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = TetrominoFactory.h; sourceTree = "<group>"; };
 		1AA827C0EA61DC4E95669794 /* Tetromino.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = Tetromino.m; sourceTree = "<group>"; };
+		1AA827E346BC2FA1D7CCCC2D /* FieldCollisionHelper.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = FieldCollisionHelper.m; sourceTree = "<group>"; };
 		1AA82859F8BD8657F2B91C38 /* SpellFactory.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = SpellFactory.h; sourceTree = "<group>"; };
-		1AA82B5D7FB9F5D833974767 /* FieldCollisionHelper.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = FieldCollisionHelper.m; path = Source/FieldCollisionHelper.m; sourceTree = "<group>"; };
-		1AA82C9D648A0D72263909EC /* FieldCollisionHelper.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = FieldCollisionHelper.h; path = Source/FieldCollisionHelper.h; sourceTree = "<group>"; };
+		1AA82CCD6F90A5DFD43D32C4 /* FieldCollisionHelper.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = FieldCollisionHelper.h; sourceTree = "<group>"; };
 		1AA82D0472805880B730EEDB /* Block.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = Block.m; sourceTree = "<group>"; };
 		1AA82D1907277D9B46299F66 /* SpellFactory.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = SpellFactory.m; sourceTree = "<group>"; };
+		1AA82F9702DB6796DD8701A8 /* TetrominoFactory.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = TetrominoFactory.m; sourceTree = "<group>"; };
 		7A7A20C36F1D1AECAF7FEB29 /* Nuke.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = Nuke.m; sourceTree = "<group>"; };
 		7A7A20C84071DB6970BDD4C5 /* Gravity.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = Gravity.h; sourceTree = "<group>"; };
 		7A7A2143B8F09AE55F1486AE /* Inventory.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = Inventory.h; path = Source/Inventory.h; sourceTree = "<group>"; };
@@ -148,6 +151,18 @@
 /* End PBXFrameworksBuildPhase section */
 
 /* Begin PBXGroup section */
+		1AA82F7CB7BA9EFD7A7711E5 /* Helper */ = {
+			isa = PBXGroup;
+			children = (
+				1AA82CCD6F90A5DFD43D32C4 /* FieldCollisionHelper.h */,
+				1AA827E346BC2FA1D7CCCC2D /* FieldCollisionHelper.m */,
+				1AA82F9702DB6796DD8701A8 /* TetrominoFactory.m */,
+				1AA826168A3E5DC1CFA5113E /* TetrominoFactory.h */,
+			);
+			name = Helper;
+			path = Source/Helper;
+			sourceTree = "<group>";
+		};
 		7A7A21594481A92AAF3BAEEF /* Blocks */ = {
 			isa = PBXGroup;
 			children = (
@@ -202,8 +217,7 @@
 				7A7A21594481A92AAF3BAEEF /* Blocks */,
 				7A7A2E931E59367D9F216D0F /* Board.h */,
 				7A7A2C48D0D85B5FECD3EEC7 /* Board.m */,
-				1AA82B5D7FB9F5D833974767 /* FieldCollisionHelper.m */,
-				1AA82C9D648A0D72263909EC /* FieldCollisionHelper.h */,
+				1AA82F7CB7BA9EFD7A7711E5 /* Helper */,
 			);
 			name = Source;
 			sourceTree = "<group>";
@@ -428,7 +442,8 @@
 				1AA82E43FC3929A4A863A1EE /* Tetromino.m in Sources */,
 				1AA82D6A2E2D79DEF384B3B6 /* Block.m in Sources */,
 				1AA82601FE675A043EBE2B7D /* SpellFactory.m in Sources */,
-				1AA828AE90148C124D4866E2 /* FieldCollisionHelper.m in Sources */,
+				1AA823F6212ADD3FE94BC720 /* FieldCollisionHelper.m in Sources */,
+				1AA82DF1C975325F20907D9A /* TetrominoFactory.m in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};

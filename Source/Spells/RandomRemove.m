@@ -4,7 +4,6 @@
 //
 
 #import "RandomRemove.h"
-#import "Field.h"
 #import "Board.h"
 
 
