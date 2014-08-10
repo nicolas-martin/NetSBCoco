@@ -6,26 +6,8 @@
 #import "TetrominoFactory.h"
 #import "Tetromino.h"
 
-static TetrominoFactory *_sharedMySingleton = nil;
 @implementation TetrominoFactory {
 
-}
-
-+ (TetrominoFactory *)sharedMySingleton {
-    if (_sharedMySingleton == nil) {
-        _sharedMySingleton = (TetrominoFactory *) [[super allocWithZone:NULL] init];
-    }
-    return _sharedMySingleton;
-}
-
-- (id)init {
-    self = [super init];
-    if (self) {
-
-
-    }
-
-    return self;
 }
 
 + (Tetromino *) getTetrominoUsingFrequency

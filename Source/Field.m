@@ -15,6 +15,7 @@
 @implementation Field {
     Inventory *_inventory;
     CCLabelTTF *_nbRowCleared;
+    CCLabelTTF *_gameOver;
 
 }
 
@@ -26,13 +27,17 @@
 
 }
 
+-(void)displayGameOver{
+    _gameOver.string = @"GAME OVER";
+}
+
 - (void)addSpellsToInventory:(NSMutableArray *)spellsToAdd {
     for (id <ICastable> spell in spellsToAdd) {
         [_inventory addSpell:spell];
     }
 }
 
-- (void)moveDownOrCreate {
+- (BOOL)updateStatus {
 
     NSMutableArray *rows = self.board.checkForRowsToClear;
     if (rows.count > 0) {
@@ -44,8 +49,7 @@
         _nbRowCleared.string = [NSString stringWithFormat:@"%d", (int) _nbRowCleared.string.integerValue + rows.count];
 
     }
-    self.board.moveDownOrCreate;
-
+    return self.board.moveDownOrCreate;
 
 }
 
@@ -56,7 +60,7 @@
         if (i == 9) continue;
         for (int j = 0; j < 5; j++) {
             if (i % 4) {
-                //Tetromino *tempTetromino = (Tetromino *) [CCBReader load:@"Shapes/I"];
+
                 Block *block = (Block *) [CCBReader load:@"Blocks/Green"];
                 [block setBoardX:(NSUInteger) i];
                 [block setBoardY:(NSUInteger) (19 - j)];

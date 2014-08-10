@@ -15,15 +15,6 @@
 
 }
 
-- (instancetype)initWithDropAddLine
-{
-    self = [super init];
-    if (self) {
-
-    }
-
-    return self;
-}
 
 + (id <ICastable>) getSpellUsingFrequency
 {

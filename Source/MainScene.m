@@ -39,23 +39,24 @@
     [fch AddFieldBox:_p2.board];
     [fch AddFieldBox:_p3.board];
 
-
-    // Use the gamescene as the collision delegate.
-    // See the ccPhysicsCollision* methods below.
 }
-
 
 - (void)onEnter {
-    [self schedule:@selector(gameLoop:) interval:1];
-    [super onEnter];
-
-    [_p1 moveDownOrCreate];
+    [self schedule:@selector(gameLoop) interval:1];
+//    [super onEnter];
 
 }
 
-- (void)gameLoop:(CCTime)delta {
+- (void)gameLoop {
 
-    [_p1 moveDownOrCreate];
+    if ([_p1 updateStatus]){
+
+        //Bug with cocos2d.. will be fixed in 3.1
+        //[self unschedule:@selector(gameLoop)];
+        ([_p1 displayGameOver]);
+
+    }
+
 }
 
 - (void)touchBegan:(UITouch *)touch withEvent:(UIEvent *)event {

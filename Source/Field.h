@@ -14,8 +14,10 @@
 @property Board *board;
 
 
+- (void)displayGameOver;
+
 - (void)addSpellsToInventory:(NSMutableArray *)spellsToAdd;
 
-- (void)moveDownOrCreate;
+- (BOOL)updateStatus;
 
 @end

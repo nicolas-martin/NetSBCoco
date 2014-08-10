@@ -40,8 +40,6 @@
 
 - (NSMutableArray *)MoveBoardDown:(NSUInteger)y nbRowsToMoveDownTo:(NSUInteger)step;
 
-- (NSMutableArray *)MoveBoardDown:(NSUInteger)y;
-
 - (void)addTetrominoToBoard:(NSMutableArray *)blocksToAdd;
 
 - (void)printCurrentBoardStatus:(BOOL)withPosition;
@@ -50,7 +48,7 @@
 
 - (void)setPositionUsingFieldValue:(NSMutableArray *)arrayOfBlocks;
 
-- (void)moveDownOrCreate;
+- (BOOL)moveDownOrCreate;
 
 - (NSMutableArray *)checkForRowsToClear;
 

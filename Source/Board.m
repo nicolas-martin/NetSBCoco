@@ -27,6 +27,7 @@
     return self;
 }
 
+//TODO: Reduce the %
 - (void)addSpellToField {
 
     NSMutableArray *allBlocksInBoard = [self getAllBlocksInBoard];
@@ -42,7 +43,7 @@
 
     for (NSUInteger i = 0; i < nbSpellToAdd; i++) {
         NSUInteger posOfSpell = arc4random() % nbBlocksInBoard;
-        Block *block = [allBlocksInBoard objectAtIndex:posOfSpell];
+        Block *block = allBlocksInBoard[posOfSpell];
         if (block.spell == nil) {
             id <ICastable> spell = [SpellFactory getSpellUsingFrequency];
             [block addSpellToBlock:spell];
@@ -79,12 +80,13 @@
         [self moveTetrominoRight];
     }
     else if (tileCoordForPosition.y > lowestY) {
-        while (!userTetromino.stuck) {
-            [self moveDownOrCreate];
+        while(userTetromino.lowestPosition.y != 19 && [self canMoveTetrominoByYTetrominoOffSetY:1]){
+            [self moveTetrominoDown];
         }
+        userTetromino.stuck = YES;
 
-
-    } else if(tileCoordForPosition.y < highestY){
+    }
+    else if(tileCoordForPosition.y < highestY){
         [self rotateTetromino:rotateClockwise];
     }
 
@@ -177,6 +179,7 @@
 
 }
 
+//Is this still needed?
 - (void)MoveTetromino:(Tetromino *)FromTetromino to:(Tetromino *)ToTetromino {
 
     //delete
@@ -184,7 +187,7 @@
         [_array[block.boardX] replaceObjectAtIndex:block.boardY withObject:@0];
     }
     //insert
-    [self addTetrominoToBoard:ToTetromino.children];
+    [self addTetrominoToBoard:(NSMutableArray *) ToTetromino.children];
 
 }
 
@@ -302,8 +305,7 @@
 }
 
 //TODO: Use collision detection instead.
-//TODO: Remove "userTetromino" parameter and make sure it still works
-- (BOOL)canMoveTetrominoByYTetromino:(Tetromino *)userTetromino offSetY:(NSUInteger)offSetY {
+- (BOOL)canMoveTetrominoByYTetrominoOffSetY:(NSUInteger)offSetY {
 
     // Sort blocks by x value if moving left, reverse order if moving right
     NSMutableArray *reversedChildren = [[NSMutableArray alloc] initWithArray:userTetromino.children];
@@ -327,8 +329,7 @@
 }
 
 //TODO: Use collision detection instead.
-//TODO: Remove "userTetromino" parameter and make sure it still works
-- (BOOL)canMoveTetrominoByXTetromino:(Tetromino *)userTetromino offSetX:(NSUInteger)offSetX {
+- (BOOL)canMoveTetrominoByXTetrominoOffSetX:(NSInteger)offSetX {
 
     // Sort blocks by x value if moving left, reverse order if moving right
     NSMutableArray *reversedChildren = [[NSMutableArray alloc] initWithArray:userTetromino.children];
@@ -395,8 +396,6 @@
         [self.parent addChild:blocks];
     }
 
-    //[self newTetromino:blocksToAdd];
-
 }
 
 - (void)setPositionUsingFieldValue:(NSMutableArray *)arrayOfBlocks {
@@ -412,26 +411,27 @@
 
 }
 
-- (void)moveDownOrCreate {
-    //Perhaps set all tetromino to stuck by default?
-    //[userTetromino getLowestPosition];
-    NSUInteger nbLinesCleared = 0;
+- (BOOL)moveDownOrCreate {
+    BOOL _gameOver;
+
     if (userTetromino.stuck || userTetromino == NULL) {
-        [self createNewTetromino];
+        _gameOver = [self createNewTetromino];
     }
-    else if (userTetromino.lowestPosition.y != 19 && [self canMoveTetrominoByYTetromino:userTetromino offSetY:1]) {
+    else if (userTetromino.lowestPosition.y != 19 && [self canMoveTetrominoByYTetrominoOffSetY:1]) {
         [self moveTetrominoDown];
         userTetromino.stuck = NO;
+        _gameOver = NO;
     }
     else {
         userTetromino.stuck = YES;
-
+        _gameOver = [self createNewTetromino];
     }
 
+    return _gameOver;
 
 }
 
-- (void)VerifyNewBlockCollision:(Tetromino *)new {
+- (BOOL)VerifyNewBlockCollision:(Tetromino *)new {
 
     BOOL collision = NO;
 
@@ -442,9 +442,7 @@
         }
     }
 
-    if (collision) {
-        [self gameOver:NO];
-    }
+    return collision;
 
 
 }
@@ -508,42 +506,40 @@
 
     [self setPositionUsingFieldValue:[self MoveBoardDown:([highestRow unsignedIntegerValue] - 1) nbRowsToMoveDownTo:rowsToDelete.count]];
 
-
     //put it here or else it gets the bocks not yet deleted.
     [self addSpellToField];
 
     return spellsToAdd;
 }
 
-- (void)gameOver:(BOOL)won {
-    /*
-    CCScene *gameOverScene = [GameOverLayer sceneWithWon:won];
-    [[CCDirector sharedDirector] replaceScene:gameOverScene];
-    */
-}
+- (BOOL)createNewTetromino {
 
-- (void)createNewTetromino {
-
-    //Tetromino *tempTetromino = (Tetromino *) [CCBReader load:@"Shapes/S"];
+    BOOL _gameOver;
     Tetromino * tempTetromino = [TetrominoFactory getTetrominoUsingFrequency];
 
-    [self VerifyNewBlockCollision:tempTetromino];
+    if([self VerifyNewBlockCollision:tempTetromino]){
+        _gameOver = YES;
+    }
+    else
+    {
+        [self addTetrominoToBoard:(NSMutableArray *) tempTetromino.children];
 
-    [self addTetrominoToBoard:tempTetromino.children];
+        [self setPositionUsingFieldValue:(NSMutableArray *) tempTetromino.children];
 
-    [self setPositionUsingFieldValue:tempTetromino.children];
+        [self addChild:tempTetromino];
 
-    [self addChild:tempTetromino];
+        userTetromino = tempTetromino;
 
-    userTetromino = tempTetromino;
+        _gameOver = NO;
+    }
 
-    [self printCurrentBoardStatus:NO];
+    return _gameOver;
 
 }
 
 - (void)moveTetrominoDown {
 
-    [self DeleteBlockFromBoard:userTetromino.children];
+    [self DeleteBlockFromBoard:(NSMutableArray *) userTetromino.children];
 
     [userTetromino moveTetrominoDown];
 
@@ -552,18 +548,19 @@
 }
 
 - (void)UpdatesNewTetromino:(Tetromino *)ToTetromino {
-    [self setPositionUsingFieldValue:ToTetromino.children];
+    [self setPositionUsingFieldValue:(NSMutableArray *) ToTetromino.children];
 
-    [self addTetrominoToBoard:ToTetromino.children];
+    [self addTetrominoToBoard:(NSMutableArray *) ToTetromino.children];
 
 }
 
+//TODO: Merge the move together
 - (void)moveTetrominoLeft {
 
     if (userTetromino.leftMostPosition.x > 0 && !userTetromino.stuck) {
-        if ([self canMoveTetrominoByXTetromino:userTetromino offSetX:-1]) {
+        if ([self canMoveTetrominoByXTetrominoOffSetX:-1]) {
 
-            [self DeleteBlockFromBoard:userTetromino.children];
+            [self DeleteBlockFromBoard:(NSMutableArray *) userTetromino.children];
 
             [userTetromino moveTetrominoInDirection:moveLeft];
 
@@ -572,13 +569,12 @@
         }
     }
 
-
 }
 
 - (void)moveTetrominoRight {
     if (userTetromino.rightMostPosition.x < kLastColumn && !userTetromino.stuck) {
-        if ([self canMoveTetrominoByXTetromino:userTetromino offSetX:1]) {
-            [self DeleteBlockFromBoard:userTetromino.children];
+        if ([self canMoveTetrominoByXTetrominoOffSetX:1]) {
+            [self DeleteBlockFromBoard:(NSMutableArray *) userTetromino.children];
 
             [userTetromino moveTetrominoInDirection:moveRight];
 
@@ -588,10 +584,10 @@
     }
 }
 
+//TODO: Sometimes when rotating a tetromino it moves up for some reason.
 - (void)rotateTetromino:(RotationDirection)direction {
 
-
-    CCLOG(@"anchorX = %d and anchorY = %d", userTetromino.anchorX, userTetromino.anchorY);
+    //CCLOG(@"anchorX = %d and anchorY = %d", userTetromino.anchorX, userTetromino.anchorY);
     NSUInteger px = userTetromino.anchorX;
     NSUInteger py = userTetromino.anchorY;
     BOOL Valid = YES;
@@ -600,9 +596,6 @@
     for (Block *block in userTetromino.children){
         NSUInteger y1 = block.boardY;
         NSUInteger x1 = block.boardX;
-
-//        x2 = (px + py - y1 - q)
-//        y2 = (x1 + py - px)
 
         NSUInteger x2 = (px + py - y1);
         NSUInteger y2 = (x1 + py - px);
@@ -615,7 +608,7 @@
     }
 
     if (Valid){
-        [self DeleteBlockFromBoard:userTetromino.children];
+        [self DeleteBlockFromBoard:(NSMutableArray *) userTetromino.children];
         for (Block *block in userTetromino.children){
             NSUInteger y1 = block.boardY;
             NSUInteger x1 = block.boardX;
@@ -627,12 +620,9 @@
             block.boardY = y2;
         }
 
-
         [self UpdatesNewTetromino:userTetromino];
-//        [self printCurrentBoardStatus:NO];
 
     }
-
 
 }
 
