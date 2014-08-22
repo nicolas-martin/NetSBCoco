@@ -25,7 +25,7 @@
     }
 }
 
-- (BOOL)isBlockInTetromino:(id)block {
+- (BOOL)isBlockInTetromino:(Block *)block {
     if (block != nil) {
         for (Block *currentBlock in self.children) {
             if ([currentBlock isEqual:block]) {
@@ -44,53 +44,9 @@
     self.anchorX += direction;
 }
 
-
-- (void)rotateTetromino:(RotationDirection)direction {
-
-    NSUInteger px = self.anchorX;
-    NSUInteger py = self.anchorY;
-
-    for (Block *block in self.children){
-        NSUInteger y1 = block.boardY;
-        NSUInteger x1 = block.boardX;
-
-        NSUInteger x2 = y1 + px - py;
-        NSUInteger y2 = (px + py - x1); //-1 maybe?
-
-
-        block.boardX = x2;
-        block.boardY = y2;
-    }
-
-
-}
-
-+ (Tetromino *)rotateTetromino:(Tetromino *)userTetromino in:(RotationDirection)direction {
-
-    NSUInteger px = userTetromino.anchorX;
-    NSUInteger py = userTetromino.anchorY;
-
-    for (Block *block in userTetromino.children){
-        NSUInteger y1 = block.boardY;
-        NSUInteger x1 = block.boardX;
-
-        NSUInteger x2 = y1 + px - py;
-        NSUInteger y2 = (px + py - x1); //-1 maybe?
-
-
-        block.boardX = x2;
-        block.boardY = y2;
-    }
-
-
-    return userTetromino;
-
-}
-
 - (void)moveTetrominoDown {
 
     NSMutableArray *reversedChildren = [[NSMutableArray alloc] initWithArray:self.children];  // make copy
-
 
     for (Block *currentBlock in [reversedChildren reverseObjectEnumerator]) {
         //move each block down
@@ -148,7 +104,6 @@
     [self setLowestPosition:myRightPosition];
     return myRightPosition;
 }
-
 
 - (NSString *)description {
     NSMutableString *description = [NSMutableString string];

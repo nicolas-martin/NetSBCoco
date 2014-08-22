@@ -81,10 +81,7 @@
 
 
     [self.board addBlocks:bArray];
-//    for (Block *blocks in bArray)
-//    {
-//        [self addChild:blocks];
-//    }
+
 
 }
 

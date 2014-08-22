@@ -33,7 +33,6 @@ typedef enum {
     BOOL stuck;
     CGPoint leftMostPosition;
     CGPoint rightMostPosition;
-    //NSUInteger orientation;
 }
 @property NSUInteger orientation;
 @property NSMutableArray *blocksInTetromino;
@@ -46,23 +45,11 @@ typedef enum {
 @property(nonatomic) CGPoint lowestPosition;
 @property tetrominoType type;
 
-+ (id)randomBlockUsingBlockFrequency;
-
-- (id)initWithRandomTypeAndOrientationUsingFrequency;
-
-+ (id)blockWithType:(tetrominoType)blockType Direction:(RotationDirection)blockOrientation BoardX:(NSUInteger)positionX BoardY:(NSUInteger)positionY CurrentOrientation:(NSUInteger)CurrentOrientation;
-
-+ (Tetromino *)rotateTetromino:(Tetromino *)userTetromino in:(RotationDirection)direction;
-
 - (BOOL)isBlockInTetromino:(id)block;
 
 - (void)moveTetrominoInDirection:(MoveDirection)direction;
 
-- (void)rotateTetromino:(RotationDirection)direction;
-
 - (void)moveTetrominoDown;
-
-- (void)MoveBoardPosition:(Tetromino *)ToTetromino;
 
 - (NSString *)description;
 
