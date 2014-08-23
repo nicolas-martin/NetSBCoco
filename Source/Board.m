@@ -592,6 +592,13 @@
     NSUInteger py = userTetromino.anchorY;
     BOOL Valid = YES;
 
+
+    //HACK: Skip the O shape
+    if(userTetromino.type ==  O_block)
+    {
+        return;
+    }
+
     //Tries all the new position and check if they're valid
     for (Block *block in userTetromino.children){
         NSUInteger y1 = block.boardY;

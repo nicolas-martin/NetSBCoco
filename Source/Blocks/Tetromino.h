@@ -9,21 +9,15 @@
 #define kLastRow 19
 #define rowoffset 3
 
-//[shapes setValue:@"T" forKey:@"0"];
-//[shapes setValue:@"L" forKey:@"1"];
-//[shapes setValue:@"J" forKey:@"2"];
-//[shapes setValue:@"Z" forKey:@"3"];
-//[shapes setValue:@"S" forKey:@"4"];
-//[shapes setValue:@"O" forKey:@"5"];
-//[shapes setValue:@"I" forKey:@"6"];
 typedef enum {
     T_block,
     L_block,
     J_block,
     Z_block,
     S_block,
-    I_block,
     O_block,
+    I_block,
+
 
 } tetrominoType;
 typedef enum {
