@@ -622,6 +622,8 @@
 
         [self UpdatesNewTetromino:userTetromino];
 
+        [self printCurrentBoardStatus:NO];
+
     }
 
 }

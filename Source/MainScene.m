@@ -42,19 +42,23 @@
 }
 
 - (void)onEnter {
-    [self schedule:@selector(gameLoop) interval:1];
+    //[self schedule:@selector(gameLoop) interval:1];
+    [self gameLoop];
 //    [super onEnter];
 
 }
 
 - (void)gameLoop {
 
-    if ([_p1 updateStatus]){
+    for (int i =0; i < 5; i++) {
 
-        //Bug with cocos2d.. will be fixed in 3.1
-        //[self unschedule:@selector(gameLoop)];
-        ([_p1 displayGameOver]);
+        if ([_p1 updateStatus]) {
 
+            //Bug with cocos2d.. will be fixed in 3.1
+            //[self unschedule:@selector(gameLoop)];
+            ([_p1 displayGameOver]);
+
+        }
     }
 
 }

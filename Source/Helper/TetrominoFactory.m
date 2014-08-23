@@ -28,6 +28,7 @@
     NSString *key = [shapes valueForKey:[NSString stringWithFormat:@"%d",random]];
 
     tetromino = (Tetromino *) [CCBReader load:[NSString stringWithFormat:@"Shapes/%@",key]];
+    tetromino.type = (tetrominoType) random;
 
     return tetromino;
 
