@@ -5,7 +5,7 @@
 
 #import "TetrominoFactory.h"
 #import "Tetromino.h"
-
+//Perhaps this class should be merged in the Tetromino class itself?
 @implementation TetrominoFactory {
 
 }
@@ -24,7 +24,7 @@
     Tetromino * tetromino = nil;
 
     //NSUInteger random = arc4random() % 7;
-    NSUInteger random = 5;
+    NSUInteger random = 3;
 
     NSString *key = [shapes valueForKey:[NSString stringWithFormat:@"%d",random]];
 

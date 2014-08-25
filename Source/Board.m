@@ -593,29 +593,20 @@
     BOOL Valid = YES;
 
 
-    //HACK: Skip the O shape
+    //HACK: Skip the 'O' shape
     if(userTetromino.type ==  O_block)
     {
         return;
     }
+//    else if(userTetromino.type == I_block)
+//    {
+//        //TODO:
+//
+//    }
+    else
+    {
 
-    //Tries all the new position and check if they're valid
-    for (Block *block in userTetromino.children){
-        NSUInteger y1 = block.boardY;
-        NSUInteger x1 = block.boardX;
-
-        NSUInteger x2 = (px + py - y1);
-        NSUInteger y2 = (x1 + py - px);
-
-
-        if (![self isTetrominoInBounds:ccp(x2,y2)]){
-            Valid = NO;
-            break;
-        }
-    }
-
-    if (Valid){
-        [self DeleteBlockFromBoard:(NSMutableArray *) userTetromino.children];
+        //Tries all the new position and check if they're valid
         for (Block *block in userTetromino.children){
             NSUInteger y1 = block.boardY;
             NSUInteger x1 = block.boardX;
@@ -623,15 +614,33 @@
             NSUInteger x2 = (px + py - y1);
             NSUInteger y2 = (x1 + py - px);
 
-            block.boardX = x2;
-            block.boardY = y2;
+
+            if (![self isTetrominoInBounds:ccp(x2,y2)]){
+                Valid = NO;
+                break;
+            }
         }
 
-        [self UpdatesNewTetromino:userTetromino];
+        if (Valid){
+            [self DeleteBlockFromBoard:(NSMutableArray *) userTetromino.children];
+            for (Block *block in userTetromino.children){
+                NSUInteger y1 = block.boardY;
+                NSUInteger x1 = block.boardX;
 
-        [self printCurrentBoardStatus:NO];
+                NSUInteger x2 = (px + py - y1);
+                NSUInteger y2 = (x1 + py - px);
 
+                block.boardX = x2;
+                block.boardY = y2;
+            }
+
+            [self UpdatesNewTetromino:userTetromino];
+
+            [self printCurrentBoardStatus:NO];
+
+        }
     }
+
 
 }
 
