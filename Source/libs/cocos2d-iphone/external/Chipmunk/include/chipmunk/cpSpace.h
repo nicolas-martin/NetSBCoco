@@ -230,7 +230,7 @@ void cpSpaceReindexShape(cpSpace *space, cpShape *shape);
 /// Update the collision detection data for all shapes attached to a body.
 void cpSpaceReindexShapesForBody(cpSpace *space, cpBody *body);
 
-/// SwitchBoard the space to use a spatial has as it's spatial index.
+/// Switch the space to use a spatial has as it's spatial index.
 void cpSpaceUseSpatialHash(cpSpace *space, cpFloat dim, int count);
 
 
