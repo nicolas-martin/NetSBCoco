@@ -18,14 +18,35 @@
     Field *_p1;
     Field *_p2;
     Field *_p3;
+    NSMutableArray *bg;
 }
 - (id)init {
     if (self = [super init]) {
         // activate touches on this scene
         self.userInteractionEnabled = TRUE;
+        bg = [@[@"Gold", @"Orange", @"Purple", @"Silver", @"Teal"] mutableCopy];
 
     }
     return self;
+}
+
+- (CCSprite *) getRandomBackground{
+
+
+    NSUInteger random = 0;
+    NSString *key = nil;
+
+    while(key == nil){
+        random = arc4random() % (bg.count - 1);
+        key = bg[random];
+    }
+
+    CCSprite *bgSprite = (CCSprite *) [CCBReader load:[NSString stringWithFormat:@"Background/%@",key]];
+
+    [bg removeObjectAtIndex:random];
+
+    return bgSprite;
+
 }
 
 - (void)didLoadFromCCB {
@@ -33,6 +54,10 @@
     _p1.board.Name = @"Player1";
     _p2.board.Name = @"Player2";
     _p3.board.Name = @"Player3";
+
+    [_p1.board addChild:self.getRandomBackground];
+    [_p2.board addChild:self.getRandomBackground];
+    [_p3.board addChild:self.getRandomBackground];
 
     FieldCollisionHelper *fch = [FieldCollisionHelper sharedMySingleton];
     [fch AddFieldBox:_p1.board];

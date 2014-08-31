@@ -8,10 +8,6 @@
 
 #import "NetworkController.h"
 #import "MessageWriter.h"
-#import "MessageReader.h"
-
-#import "Match.h"
-#import "Player.h"
 
 @interface NetworkController ()
 - (bool)writeChunk;
@@ -116,7 +112,7 @@ static NetworkController *sharedController = nil;
     if (!_gameCenterAvailable) return;
     
     NSLog(@"Authenticating local user...");
-    if ([GKLocalPlayer localPlayer].authenticated == NO) {
+    if (![GKLocalPlayer localPlayer].authenticated) {
         [self setState:NetworkStatePendingAuthentication];
         [[GKLocalPlayer localPlayer] authenticateHandler];
     } else {
@@ -324,12 +320,12 @@ static NetworkController *sharedController = nil;
     [writer writeByte:MessageCreepSent];
     [writer writeString:_playerId];
     [writer writeInt:creepType];
-    
+
     NSString* stringTime = [NSString stringWithFormat:@"%f", time];
     [writer writeInt:(int)(time*1000)];
-    
+
     [self sendData:writer.data];
-    
+
     NSLog(@"Sent CREEP_SPAWNED %d %@", creepType, stringTime);
 }
 
@@ -340,12 +336,12 @@ static NetworkController *sharedController = nil;
     [writer writeInt:towerType];
     [writer writeInt:(int)position.x];
     [writer writeInt:(int)position.y];
-    
+
     NSString* stringTime = [NSString stringWithFormat:@"%f", time];
     [writer writeInt:(int)(time*1000)];
 
     [self sendData:writer.data];
-    
+
     NSLog(@"Sent TOWER_BUILT %d [%d,%d] - %@", towerType, (int)position.x, (int)position.y, stringTime);
 }
 

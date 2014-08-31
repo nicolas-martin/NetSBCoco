@@ -33,7 +33,7 @@
 }
 
 - (void)loadiCloudStore {
-    _player = [[NSUbiquitousKeyValueStore defaultStore] valueForKey:@"player"];
+    _player = [[NSUbiquitousKeyValueStore defaultStore] valueForKey:[NSString stringWithFormat:@"player"]];
     
     if (_player == nil) {
         NSLog(@"No user found - creating a new one.");
@@ -49,7 +49,6 @@
     player.playerName = [[[GameCenterHelper sharedInstance] localPlayer] displayName];
     player.playerId = [[[GameCenterHelper sharedInstance] localPlayer] playerID];
     player.rating = 1500;
-    player.unlockedTower = 3;
     player.playerType = kPlayerLocal;
     
     return player;

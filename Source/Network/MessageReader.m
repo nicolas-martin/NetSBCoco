@@ -45,22 +45,20 @@
     int rating = [self readInt];
     int level = [self readInt];
     int xp = [self readInt];
-    int unlockedTower = [self readInt];
-    
+
     Player *player = [[Player alloc] initWithPlayerId:playerId playerName:playerName rating:rating];
     [player setLevel:level];
     [player setXp:xp];
-    [player setUnlockedTower:unlockedTower];
     
     return player;
 }
 
-- (void)readStatsForPlayer:(Player*)player {
-    [player setCreepHp:[self readInt]];
-    [player setCreepSpeed:[self readInt]];
-    [player setTowerDamage:[self readInt]];
-    [player setTowerRange:[self readInt]];
-    [player setTowerSpeed:[self readInt]];
-}
+//- (void)readStatsForPlayer:(Player*)player {
+//    [player setCreepHp:[self readInt]];
+//    [player setCreepSpeed:[self readInt]];
+//    [player setTowerDamage:[self readInt]];
+//    [player setTowerRange:[self readInt]];
+//    [player setTowerSpeed:[self readInt]];
+//}
 
 @end

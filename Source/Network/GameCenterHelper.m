@@ -8,6 +8,7 @@
 
 #import "GameCenterHelper.h"
 #import "iCloudHelper.h"
+#import "Player.h"
 
 @interface GameCenterHelper () {
     BOOL _gameCenterFeaturesEnabled;
@@ -97,7 +98,6 @@
     Player *player = [[Player alloc] initWithPlayerId:playerId playerName:playerName rating:rating];
     [player setLevel:level];
     [player setXp:xp];
-    [player setUnlockedTower:unlockedTower];
     
     return player;
 }

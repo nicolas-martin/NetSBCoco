@@ -20,8 +20,6 @@
 - (void)updateMatchFound:(Match*)match;
 - (void)updateReceivedPlayer:(Player*)player;
 - (void)updateMatchStarted;
-- (void)updateOpponentCreepSent:(int)creepType time:(double)time;
-- (void)updateOpponentTowerBuilt:(int)towerType position:(CGPoint)position time:(double)time;
 - (void)updateMatchOverWithWinner:(NSString*)winner rating:(int)rating;
 - (void)updateReceivedLadder:(NSMutableArray*)listPlayers ranking:(int)ranking;
 - (void)updateActionReceived:(Action*)action;
