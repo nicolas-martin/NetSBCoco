@@ -7,6 +7,7 @@
 #import "ICastable.h"
 
 @class Board;
+@class Field;
 
 
 @interface Nuke : CCNode <ICastable>
@@ -16,5 +17,5 @@
 
 - (NSString *)LogSpell:(Board *)targetBoard;
 
-- (void)CastSpell:(Board *)targetBoard;
+- (void)CastSpell:(Board *)targetBoard Sender:(Field *)senderField;
 @end

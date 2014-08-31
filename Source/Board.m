@@ -8,6 +8,7 @@
 #import "Tetromino.h"
 #import "SpellFactory.h"
 #import "TetrominoFactory.h"
+#import "Field.h"
 
 
 @implementation Board {
@@ -27,8 +28,6 @@
 
     return self;
 }
-
-
 
 //TODO: Reduce the %
 - (void)addSpellToField {
@@ -525,9 +524,7 @@
     }
     else
     {
-        [self addTetrominoToBoard:(NSMutableArray *) tempTetromino.children];
-
-        [self setPositionUsingFieldValue:(NSMutableArray *) tempTetromino.children];
+        [self UpdatesNewTetromino:tempTetromino];
 
         [self addChild:tempTetromino];
 
@@ -551,6 +548,7 @@
 }
 
 - (void)UpdatesNewTetromino:(Tetromino *)ToTetromino {
+
     [self setPositionUsingFieldValue:(NSMutableArray *) ToTetromino.children];
 
     [self addTetrominoToBoard:(NSMutableArray *) ToTetromino.children];
@@ -635,6 +633,7 @@
 
                 block.boardX = x2;
                 block.boardY = y2;
+
             }
 
             [self UpdatesNewTetromino:userTetromino];

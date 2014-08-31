@@ -22,7 +22,7 @@
     return self;
 }
 
-- (void)CastSpell:(Board *)targetBoard {
+- (void)CastSpell:(Board *)targetBoard Sender:(Field *)senderField {
 
     [targetBoard DeleteBlockFromBoardAndSprite:[targetBoard getAllBlocksInBoard]];
 

@@ -6,6 +6,7 @@
 #import "AddLine.h"
 #import "Board.h"
 #import "Block.h"
+#import "Field.h"
 
 
 @implementation AddLine {
@@ -24,7 +25,7 @@
     return self;
 }
 
-- (void)CastSpell:(Board *)targetBoard {
+- (void)CastSpell:(Board *)targetBoard Sender:(Field *)senderField {
     NSMutableArray *blocksToSetPosition = [NSMutableArray array];
 
     for (NSUInteger y = 0; y < targetBoard.Nby; y++) {

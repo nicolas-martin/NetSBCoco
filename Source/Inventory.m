@@ -3,6 +3,7 @@
 // Copyright (c) 2014 Apportable. All rights reserved.
 //
 
+#import <MacTypes.h>
 #import "Inventory.h"
 #import "ICastable.h"
 #import "FieldCollisionHelper.h"
@@ -103,7 +104,7 @@
 
     if (targetField != nil) {
         id <ICastable> obj = selSprite.userObject;
-        [obj CastSpell:targetField];
+        [obj CastSpell:targetField Sender:(Field *) self.parent];
 
         [self removeSpell:selSprite.userObject];
 

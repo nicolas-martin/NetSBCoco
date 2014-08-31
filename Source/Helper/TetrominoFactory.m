@@ -24,12 +24,16 @@
     Tetromino * tetromino = nil;
 
     //NSUInteger random = arc4random() % 7;
-    NSUInteger random = 3;
+    NSUInteger random = 6;
 
     NSString *key = [shapes valueForKey:[NSString stringWithFormat:@"%d",random]];
 
     tetromino = (Tetromino *) [CCBReader load:[NSString stringWithFormat:@"Shapes/%@",key]];
     tetromino.type = (tetrominoType) random;
+
+    for (int i = 0; i < 4; i++){
+        [tetromino moveTetrominoInDirection:moveRight];
+    }
 
     return tetromino;
 

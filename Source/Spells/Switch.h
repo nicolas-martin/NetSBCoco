@@ -1,16 +1,16 @@
 //
-// Created by Nicolas Martin on 2014-07-09.
-// Copyright (c) 2014 Apportable. All rights reserved.
+// Created by Nicolas Martin on 2014-08-30.
+// Copyright (c) 2014 hero. All rights reserved.
 //
 
 #import <Foundation/Foundation.h>
-#import "ICastable.h"
 
-@class Field;
+@protocol ICastable;
 @class Board;
+@class Field;
 
 
-@interface RandomRemove : CCNode <ICastable>
+@interface Switch : CCNode <ICastable>
 
 
 @property CCSpriteFrame *spriteFrame;
@@ -18,4 +18,5 @@
 - (NSString *)LogSpell:(Board *)targetBoard;
 
 - (void)CastSpell:(Board *)targetBoard Sender:(Field *)senderField;
+
 @end

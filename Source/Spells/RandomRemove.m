@@ -5,6 +5,7 @@
 
 #import "RandomRemove.h"
 #import "Board.h"
+#import "Field.h"
 
 
 @implementation RandomRemove {
@@ -28,7 +29,7 @@
 
 }
 
-- (void)CastSpell:(Board *)targetBoard {
+- (void)CastSpell:(Board *)targetBoard Sender:(Field *)senderField {
     NSMutableArray *allBlockInBoard = [targetBoard getAllBlocksInBoard];
     NSMutableArray *blocksToDelete = [NSMutableArray array];
 

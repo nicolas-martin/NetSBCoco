@@ -6,6 +6,7 @@
 #import <Foundation/Foundation.h>
 
 @class Board;
+@class Field;
 
 @protocol ICastable <NSObject>
 
@@ -13,7 +14,7 @@
 
 @property CCSpriteFrame *spriteFrame;
 
-- (void)CastSpell:(Board *)targetBoard;
+- (void)CastSpell:(Board *)targetBoard Sender:(Field *)senderField;
 - (NSString *)LogSpell:(Board *)targetBoard;
 
 @end

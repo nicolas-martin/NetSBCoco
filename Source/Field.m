@@ -10,6 +10,7 @@
 #import "Block.h"
 #import "Gravity.h"
 #import "AddLine.h"
+#import "Switch.h"
 
 
 @implementation Field {
@@ -23,7 +24,6 @@
 - (void)didLoadFromCCB {
 
     [self initSomeBlocks];
-
 
 }
 
@@ -69,7 +69,7 @@
             }
             else {
                 Block *block = (Block *) [CCBReader load:@"Blocks/Cyan"];
-                AddLine *gravity = [[AddLine alloc] init];
+                Switch *gravity = [[Switch alloc] init];
                 [block addSpellToBlock:gravity];
                 [block setBoardX:(NSUInteger) i];
                 [block setBoardY:(NSUInteger) (19 - j)];

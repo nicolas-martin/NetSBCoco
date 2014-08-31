@@ -23,7 +23,7 @@
     return self;
 }
 
-- (void)CastSpell:(Board *)targetBoard {
+- (void)CastSpell:(Board *)targetBoard Sender:(Field *)senderField {
     NSEnumerator *enumerator;
     NSMutableArray *blocksToSetPosition = [NSMutableArray array];
 
