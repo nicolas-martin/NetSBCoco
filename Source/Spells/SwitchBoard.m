@@ -8,6 +8,7 @@
 #import "ICastable.h"
 #import "Board.h"
 #import "Field.h"
+#import "SpellFactory.h"
 
 
 @implementation SwitchBoard {
@@ -17,8 +18,9 @@
 - (id)init {
     self = [super init];
     if (self) {
-        spellName = @"SwitchBoard field";
-        self.spriteFrame = [CCSpriteFrame frameWithImageNamed: @"Assets/SwitchField.png"];
+        self.spellType = kSwitchBoard;
+        self.spellName = [SpellFactory getNameFromEnum:self.spellType];
+        self.spriteFrame = [CCSpriteFrame frameWithImageNamed:[SpellFactory getFileNameFromEnum:self.spellType]];
 
     }
 
@@ -33,6 +35,8 @@
     NSMutableArray *targetBoardBlocks;
     NSMutableArray *playerBoardBlocks;
 
+    if (targetBoard == senderField.board)
+        return;
     playerBoardBlocks = senderField.board.getAllBlocksInBoard;
     targetBoardBlocks = targetBoard.getAllBlocksInBoard;
 

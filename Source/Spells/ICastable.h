@@ -8,7 +8,7 @@
 @class Board;
 @class Field;
 
-typedef enum {
+typedef enum spellsType{
     kAddLine = 0,
     kClearSpecial = 1,
     kGravity = 2,
@@ -21,6 +21,7 @@ typedef enum {
 @protocol ICastable <NSObject>
 
 @property NSString *spellName;
+@property spellsType spellType;
 
 @property CCSpriteFrame *spriteFrame;
 

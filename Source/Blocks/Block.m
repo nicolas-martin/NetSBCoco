@@ -3,6 +3,7 @@
 // Copyright (c) 2014 Apportable. All rights reserved.
 //
 
+#import <MacTypes.h>
 #import "Block.h"
 #import "ICastable.h"
 

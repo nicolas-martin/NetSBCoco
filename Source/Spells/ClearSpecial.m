@@ -8,6 +8,7 @@
 #import "Board.h"
 #import "Field.h"
 #import "Block.h"
+#import "SpellFactory.h"
 
 
 @implementation ClearSpecial {
@@ -18,9 +19,9 @@
 - (id)init {
     self = [super init];
     if (self) {
-        spellName = @"Clear special blocks";
-        self.spriteFrame = [CCSpriteFrame frameWithImageNamed:@"Assets/ClearSpell.png"];
-
+        self.spellType = kClearSpecial;
+        self.spellName = [SpellFactory getNameFromEnum:self.spellType];
+        self.spriteFrame = [CCSpriteFrame frameWithImageNamed:[SpellFactory getFileNameFromEnum:self.spellType]];
     }
 
     return self;

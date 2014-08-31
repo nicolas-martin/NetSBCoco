@@ -402,8 +402,8 @@
         NSInteger boardX = [block boardX];
         NSInteger boardY = [block boardY];
 
-        NSInteger x = (NSInteger) (boardX * block.contentSize.width);// + fieldPositionInView.x);
-        NSInteger y = (NSInteger) ((-boardY * block.contentSize.height) + self.contentSize.height);// + fieldPositionInView.y);
+        NSInteger x = (NSInteger) (boardX * block.contentSize.width);
+        NSInteger y = (NSInteger) ((-boardY * block.contentSize.height) + self.contentSize.height);
         [block setPosition:ccp(x, y)];
     }
 
@@ -584,7 +584,6 @@
 //TODO: Sometimes when rotating a tetromino it moves up for some reason.
 - (void)rotateTetromino:(RotationDirection)direction {
 
-    //CCLOG(@"anchorX = %d and anchorY = %d", userTetromino.anchorX, userTetromino.anchorY);
     NSUInteger px = userTetromino.anchorX;
     NSUInteger py = userTetromino.anchorY;
     BOOL Valid = YES;

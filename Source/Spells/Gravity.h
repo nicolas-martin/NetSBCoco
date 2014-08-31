@@ -14,6 +14,8 @@
 
 
 @property CCSpriteFrame *spriteFrame;
+@property spellsType spellType;
+@property NSString *spellName;
 
 - (id)init;
 

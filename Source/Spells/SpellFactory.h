@@ -10,5 +10,9 @@
 
 + (id <ICastable>)getSpellUsingFrequency;
 
++ (NSString *)getFileNameFromEnum:(spellsType)spellType;
+
++ (NSString *)getNameFromEnum:(spellsType)spellType;
+
 + (id <ICastable>)getSpellFromType:(spellsType)spellName;
 @end

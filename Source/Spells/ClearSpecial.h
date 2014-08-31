@@ -13,6 +13,8 @@
 
 
 @property CCSpriteFrame *spriteFrame;
+@property spellsType spellType;
+@property NSString *spellName;
 
 - (void)CastSpell:(Board *)targetBoard Sender:(Field *)senderField;
 

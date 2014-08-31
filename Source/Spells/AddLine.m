@@ -7,6 +7,7 @@
 #import "Board.h"
 #import "Block.h"
 #import "Field.h"
+#import "SpellFactory.h"
 
 
 @implementation AddLine {
@@ -17,8 +18,10 @@
 - (id)init {
     self = [super init];
     if (self) {
-        spellName = @"Add line";
-        self.spriteFrame = [CCSpriteFrame frameWithImageNamed:@"Assets/AddLine.png"];
+        self.spellType = kAddLine;
+        self.spellName = [SpellFactory getNameFromEnum:self.spellType];
+        self.spriteFrame = [CCSpriteFrame frameWithImageNamed:[SpellFactory getFileNameFromEnum:self.spellType]];
+        
 
     }
 

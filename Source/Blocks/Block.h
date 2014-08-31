@@ -43,10 +43,6 @@ typedef enum {
 
 - (void)moveByX:(NSUInteger)offsetX;
 
-- (NSComparisonResult)compareWithBlock:(Block *)block;
-
 - (void)MoveTo:(Block *)block;
-
-- (NSString *)description;
 
 @end

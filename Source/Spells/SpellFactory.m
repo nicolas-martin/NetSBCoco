@@ -28,6 +28,67 @@
 
 }
 
+
++ (NSString *)getFileNameFromEnum:(spellsType)spellType{
+    NSString *fileName = nil;
+
+    switch(spellType) {
+        case kAddLine:
+            fileName = @"Assets/AddLine.png";
+            break;
+        case kClearSpecial:
+            fileName = @"Assets/ClearSpell.png";
+            break;
+        case kGravity:
+            fileName = @"Assets/Gravity.png";
+            break;
+        case kNuke:
+            fileName = @"Assets/Nuke.png";
+            break;
+        case kRandomRemove:
+            fileName = @"Assets/RandomRemove.png";
+            break;
+        case kSwitchBoard:
+            fileName = @"Assets/SwitchField.png";
+            break;
+
+        default:
+            fileName = @"";
+    }
+
+    return fileName;
+}
+
++ (NSString *)getNameFromEnum:(spellsType)spellType{
+    NSString *spellName = nil;
+
+    switch(spellType) {
+        case kAddLine:
+            spellName = @"Add line";
+            break;
+        case kClearSpecial:
+            spellName = @"Clear Special Blocks";
+            break;
+        case kGravity:
+            spellName = @"Gravity";
+            break;
+        case kNuke:
+            spellName = @"Nuke";
+            break;
+        case kRandomRemove:
+            spellName = @"Random Remove";
+            break;
+        case kSwitchBoard:
+            spellName = @"Switch Board";
+            break;
+
+        default:
+            spellName = @"";
+    }
+
+    return spellName;
+}
+
 + (id <ICastable>)getSpellFromType:(spellsType)spellType
 {
     id <ICastable> spell = nil;

@@ -4,6 +4,7 @@
 //
 
 #import <Foundation/Foundation.h>
+#import "ICastable.h"
 
 @protocol ICastable;
 @class Board;
@@ -12,8 +13,9 @@
 
 @interface SwitchBoard : CCNode <ICastable>
 
-
+@property spellsType spellType;
 @property CCSpriteFrame *spriteFrame;
+@property NSString *spellName;
 
 - (NSString *)LogSpell:(Board *)targetBoard;
 

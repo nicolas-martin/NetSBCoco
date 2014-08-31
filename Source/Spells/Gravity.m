@@ -7,6 +7,7 @@
 #import "Field.h"
 #import "Board.h"
 #import "Block.h"
+#import "SpellFactory.h"
 
 
 @implementation Gravity {
@@ -16,8 +17,9 @@
 - (id)init {
     self = [super init];
     if (self) {
-        spellName = @"Gravity";
-        self.spriteFrame = [CCSpriteFrame frameWithImageNamed:@"Assets/Gravity.png"];
+        self.spellType = kGravity;
+        self.spellName = [SpellFactory getNameFromEnum:self.spellType];
+        self.spriteFrame = [CCSpriteFrame frameWithImageNamed:[SpellFactory getFileNameFromEnum:self.spellType]];
     }
 
     return self;

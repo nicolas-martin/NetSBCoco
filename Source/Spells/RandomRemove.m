@@ -6,6 +6,7 @@
 #import "RandomRemove.h"
 #import "Board.h"
 #import "Field.h"
+#import "SpellFactory.h"
 
 
 @implementation RandomRemove {
@@ -15,8 +16,9 @@
 - (id)init {
     self = [super init];
     if (self) {
-        spellName = @"Random Remove";
-        self.spriteFrame = [CCSpriteFrame frameWithImageNamed: @"Assets/RandomRemove.png"];
+        self.spellType = kRandomRemove;
+        self.spellName = [SpellFactory getNameFromEnum:self.spellType];
+        self.spriteFrame = [CCSpriteFrame frameWithImageNamed:[SpellFactory getFileNameFromEnum:self.spellType]];
 
     }
 

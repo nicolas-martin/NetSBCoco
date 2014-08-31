@@ -6,6 +6,7 @@
 #import "Nuke.h"
 #import "Field.h"
 #import "Board.h"
+#import "SpellFactory.h"
 
 
 @implementation Nuke {
@@ -15,8 +16,9 @@
 - (id)init {
     self = [super init];
     if (self) {
-        spellName = @"Nuke";
-        self.spriteFrame = [CCSpriteFrame frameWithImageNamed: @"Assets/Nuke.png"];
+        self.spellType = kNuke;
+        self.spellName = [SpellFactory getNameFromEnum:self.spellType];
+        self.spriteFrame = [CCSpriteFrame frameWithImageNamed:[SpellFactory getFileNameFromEnum:self.spellType]];
     }
 
     return self;
