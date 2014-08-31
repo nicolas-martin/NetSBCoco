@@ -1,4 +1,5 @@
 #import <Foundation/Foundation.h>
+#import "ICastable.h"
 
 @protocol ICastable;
 
@@ -8,4 +9,6 @@
 }
 
 + (id <ICastable>)getSpellUsingFrequency;
+
++ (id <ICastable>)getSpellFromType:(spellsType)spellName;
 @end

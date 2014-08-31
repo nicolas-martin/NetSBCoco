@@ -7,8 +7,6 @@
 #import "Block.h"
 #import "Tetromino.h"
 #import "SpellFactory.h"
-#import "TetrominoFactory.h"
-#import "Field.h"
 
 
 @implementation Board {
@@ -306,7 +304,6 @@
     }
 }
 
-//TODO: Use collision detection instead.
 - (BOOL)canMoveTetrominoByYTetrominoOffSetY:(NSUInteger)offSetY {
 
     // Sort blocks by x value if moving left, reverse order if moving right
@@ -330,7 +327,6 @@
 
 }
 
-//TODO: Use collision detection instead.
 - (BOOL)canMoveTetrominoByXTetrominoOffSetX:(NSInteger)offSetX {
 
     // Sort blocks by x value if moving left, reverse order if moving right
@@ -517,7 +513,7 @@
 - (BOOL)createNewTetromino {
 
     BOOL _gameOver;
-    Tetromino * tempTetromino = [TetrominoFactory getTetrominoUsingFrequency];
+    Tetromino * tempTetromino = [Tetromino CreateRandomTetromino];
 
     if([self VerifyNewBlockCollision:tempTetromino]){
         _gameOver = YES;
@@ -601,7 +597,6 @@
     }
 //    else if(userTetromino.type == I_block)
 //    {
-//        //TODO:
 //
 //    }
     else

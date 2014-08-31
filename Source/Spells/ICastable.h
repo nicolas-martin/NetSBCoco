@@ -8,6 +8,16 @@
 @class Board;
 @class Field;
 
+typedef enum {
+    kAddLine = 0,
+    kClearSpecial = 1,
+    kGravity = 2,
+    kNuke = 3,
+    kRandomRemove = 4,
+    kSwitchBoard = 5,
+} spellsType;
+
+
 @protocol ICastable <NSObject>
 
 @property NSString *spellName;

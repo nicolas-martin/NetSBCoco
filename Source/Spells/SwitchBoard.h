@@ -10,7 +10,7 @@
 @class Field;
 
 
-@interface Switch : CCNode <ICastable>
+@interface SwitchBoard : CCNode <ICastable>
 
 
 @property CCSpriteFrame *spriteFrame;

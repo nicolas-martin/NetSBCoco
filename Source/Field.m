@@ -9,6 +9,7 @@
 #import "Block.h"
 #import "Gravity.h"
 #import "ClearSpecial.h"
+#import "SpellFactory.h"
 
 
 @implementation Field {
@@ -59,19 +60,17 @@
         for (int j = 0; j < 5; j++) {
             if (i % 4) {
 
-                Block *block = [Block CreateRandomBlock];
-                [block setBoardX:(NSUInteger) i];
-                [block setBoardY:(NSUInteger) (19 - j)];
-                [block setStuck:YES];
+                Block *block = [Block CreateRandomBlockWithPosition:ccp(i, 19-j)];
                 [bArray addObject:block];
             }
             else {
-                Block *block = [Block CreateRandomBlock];
-                ClearSpecial *gravity = [[ClearSpecial alloc] init];
-                [block addSpellToBlock:gravity];
-                [block setBoardX:(NSUInteger) i];
-                [block setBoardY:(NSUInteger) (19 - j)];
-                [block setStuck:YES];
+
+                Block *block = [Block CreateRandomBlockWithPosition:ccp(i, 19-j)];
+
+                //id spell = [SpellFactory getSpellFromType:kRandomRemove];
+                id spell = [SpellFactory getSpellUsingFrequency];
+
+                [block addSpellToBlock:spell];
                 [bArray addObject:block];
             }
         }

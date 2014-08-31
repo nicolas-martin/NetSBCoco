@@ -17,9 +17,8 @@
 		1AA8279E01582F8C8238E197 /* iCloudHelper.m in Sources */ = {isa = PBXBuildFile; fileRef = 1AA82C3F3E4225B1234E749F /* iCloudHelper.m */; };
 		1AA82D6A2E2D79DEF384B3B6 /* Block.m in Sources */ = {isa = PBXBuildFile; fileRef = 1AA82D0472805880B730EEDB /* Block.m */; };
 		1AA82DAB5C75DC3520CAEEAE /* Player.m in Sources */ = {isa = PBXBuildFile; fileRef = 1AA82A40DD08CFF8DCAECBB3 /* Player.m */; };
-		1AA82DF1C975325F20907D9A /* TetrominoFactory.m in Sources */ = {isa = PBXBuildFile; fileRef = 1AA82F9702DB6796DD8701A8 /* TetrominoFactory.m */; };
 		1AA82E43FC3929A4A863A1EE /* Tetromino.m in Sources */ = {isa = PBXBuildFile; fileRef = 1AA827C0EA61DC4E95669794 /* Tetromino.m */; };
-		1AA82F55A56B5B5211850172 /* Switch.m in Sources */ = {isa = PBXBuildFile; fileRef = 1AA8202E5923045912E03ADE /* Switch.m */; };
+		1AA82F55A56B5B5211850172 /* SwitchBoard.m in Sources */ = {isa = PBXBuildFile; fileRef = 1AA8202E5923045912E03ADE /* SwitchBoard.m */; };
 		7A7A2303CBE96D656256F097 /* AddLine.m in Sources */ = {isa = PBXBuildFile; fileRef = 7A7A28F768AE660411EFCFE6 /* AddLine.m */; };
 		7A7A27ED81838EA5C9A4BDF4 /* Nuke.m in Sources */ = {isa = PBXBuildFile; fileRef = 7A7A20C36F1D1AECAF7FEB29 /* Nuke.m */; };
 		7A7A2B4A967F06D9AA427CB4 /* RandomRemove.m in Sources */ = {isa = PBXBuildFile; fileRef = 7A7A240BD3C56381C666095F /* RandomRemove.m */; };
@@ -77,21 +76,20 @@
 
 /* Begin PBXFileReference section */
 		1AA8202B9CEA5233E788263D /* Block.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = Block.h; sourceTree = "<group>"; };
-		1AA8202E5923045912E03ADE /* Switch.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = Switch.m; sourceTree = "<group>"; };
+		1AA8202E5923045912E03ADE /* SwitchBoard.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = SwitchBoard.m; sourceTree = "<group>"; };
 		1AA820DBD269D9AE10338CF6 /* NetworkController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = NetworkController.m; sourceTree = "<group>"; };
 		1AA821191932049A0E9C9FD7 /* Player.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = Player.h; sourceTree = "<group>"; };
 		1AA8221223100E8EA8C901B3 /* MessageReader.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = MessageReader.h; sourceTree = "<group>"; };
 		1AA8239D47AEF45CF93B958E /* Tetromino.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = Tetromino.h; sourceTree = "<group>"; };
 		1AA823A1259FC7EE25720418 /* ClearSpecial.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = ClearSpecial.m; sourceTree = "<group>"; };
 		1AA824A8EDB7BECCC1BDDE36 /* iCloudHelper.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = iCloudHelper.h; sourceTree = "<group>"; };
-		1AA826168A3E5DC1CFA5113E /* TetrominoFactory.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = TetrominoFactory.h; sourceTree = "<group>"; };
 		1AA827C0EA61DC4E95669794 /* Tetromino.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = Tetromino.m; sourceTree = "<group>"; };
 		1AA827E346BC2FA1D7CCCC2D /* FieldCollisionHelper.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = FieldCollisionHelper.m; sourceTree = "<group>"; };
 		1AA82859F8BD8657F2B91C38 /* SpellFactory.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = SpellFactory.h; sourceTree = "<group>"; };
 		1AA828617EA53849D6EFD341 /* NetworkController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = NetworkController.h; sourceTree = "<group>"; };
 		1AA8287485BC7788FC1DE3B0 /* MessageReader.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = MessageReader.m; sourceTree = "<group>"; };
 		1AA82A40DD08CFF8DCAECBB3 /* Player.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = Player.m; sourceTree = "<group>"; };
-		1AA82A964DABA3B54C625116 /* Switch.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = Switch.h; sourceTree = "<group>"; };
+		1AA82A964DABA3B54C625116 /* SwitchBoard.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = SwitchBoard.h; sourceTree = "<group>"; };
 		1AA82C0DB672B52752718B13 /* MessageWriter.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = MessageWriter.h; sourceTree = "<group>"; };
 		1AA82C20B01F58C49F647E81 /* ClearSpecial.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = ClearSpecial.h; sourceTree = "<group>"; };
 		1AA82C3F3E4225B1234E749F /* iCloudHelper.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = iCloudHelper.m; sourceTree = "<group>"; };
@@ -101,7 +99,6 @@
 		1AA82D1907277D9B46299F66 /* SpellFactory.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = SpellFactory.m; sourceTree = "<group>"; };
 		1AA82E9F80AC49071D67D190 /* GameCenterHelper.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = GameCenterHelper.h; sourceTree = "<group>"; };
 		1AA82F78668A68AE41DF629E /* MessageWriter.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = MessageWriter.m; sourceTree = "<group>"; };
-		1AA82F9702DB6796DD8701A8 /* TetrominoFactory.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = TetrominoFactory.m; sourceTree = "<group>"; };
 		7A7A20C36F1D1AECAF7FEB29 /* Nuke.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = Nuke.m; sourceTree = "<group>"; };
 		7A7A20C84071DB6970BDD4C5 /* Gravity.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = Gravity.h; sourceTree = "<group>"; };
 		7A7A2143B8F09AE55F1486AE /* Inventory.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = Inventory.h; path = Source/Inventory.h; sourceTree = "<group>"; };
@@ -198,8 +195,6 @@
 			children = (
 				1AA82CCD6F90A5DFD43D32C4 /* FieldCollisionHelper.h */,
 				1AA827E346BC2FA1D7CCCC2D /* FieldCollisionHelper.m */,
-				1AA82F9702DB6796DD8701A8 /* TetrominoFactory.m */,
-				1AA826168A3E5DC1CFA5113E /* TetrominoFactory.h */,
 			);
 			name = Helper;
 			path = Source/Helper;
@@ -231,8 +226,8 @@
 				7A7A231A7B75FCBE5635D33E /* RandomRemove.h */,
 				1AA82D1907277D9B46299F66 /* SpellFactory.m */,
 				1AA82859F8BD8657F2B91C38 /* SpellFactory.h */,
-				1AA8202E5923045912E03ADE /* Switch.m */,
-				1AA82A964DABA3B54C625116 /* Switch.h */,
+				1AA8202E5923045912E03ADE /* SwitchBoard.m */,
+				1AA82A964DABA3B54C625116 /* SwitchBoard.h */,
 				1AA823A1259FC7EE25720418 /* ClearSpecial.m */,
 				1AA82C20B01F58C49F647E81 /* ClearSpecial.h */,
 			);
@@ -492,14 +487,13 @@
 				1AA82D6A2E2D79DEF384B3B6 /* Block.m in Sources */,
 				1AA82601FE675A043EBE2B7D /* SpellFactory.m in Sources */,
 				1AA823F6212ADD3FE94BC720 /* FieldCollisionHelper.m in Sources */,
-				1AA82DF1C975325F20907D9A /* TetrominoFactory.m in Sources */,
 				1AA8279E01582F8C8238E197 /* iCloudHelper.m in Sources */,
 				1AA82392D51B1346E040CC49 /* MessageReader.m in Sources */,
 				1AA820C1FB49C257E7FDF86E /* MessageWriter.m in Sources */,
 				1AA8245C37E9B8E613185252 /* GameCenterHelper.m in Sources */,
 				1AA8244A834D9FF2C02A661E /* NetworkController.m in Sources */,
 				1AA82DAB5C75DC3520CAEEAE /* Player.m in Sources */,
-				1AA82F55A56B5B5211850172 /* Switch.m in Sources */,
+				1AA82F55A56B5B5211850172 /* SwitchBoard.m in Sources */,
 				1AA820D4163EF55E477909DC /* ClearSpecial.m in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;

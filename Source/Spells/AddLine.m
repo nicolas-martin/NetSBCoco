@@ -57,9 +57,7 @@
         NSUInteger random = arc4random();
 
         if ((random % 3) > 0) {
-            //TODO: Randomize blocks
-            //Block *block = [Block blockWithBlockType:random % 7 displayOnMainField:NO ];
-            Block *block = (Block *) [CCBReader load:@"Blocks/Green"];
+            Block *block = [Block CreateRandomBlock];
             block.stuck = YES;
             [block setBoardX:x];
             [block setBoardY:19];

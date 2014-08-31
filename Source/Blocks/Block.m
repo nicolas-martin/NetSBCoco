@@ -18,7 +18,21 @@
     NSUInteger random = arc4random() % (blocks.count - 1);
     NSString *key = blocks[random];
 
-    return (Block *) [CCBReader load:[NSString stringWithFormat:@"Blocks/%@",key]];
+    Block *block = (Block *) [CCBReader load:[NSString stringWithFormat:@"Blocks/%@",key]];
+
+    block.type = (blockType)random;
+
+    return block;
+}
+
++ (Block *)CreateRandomBlockWithPosition:(CGPoint) blockPosition{
+    Block *block = [Block CreateRandomBlock];
+    block.boardX = (NSUInteger) blockPosition.x;
+    block.boardY = (NSUInteger) blockPosition.y;
+    [block setStuck:YES];
+
+    return block;
+
 }
 
 

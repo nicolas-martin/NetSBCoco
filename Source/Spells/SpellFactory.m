@@ -9,6 +9,8 @@
 #import "RandomRemove.h"
 #import "Nuke.h"
 #import "Gravity.h"
+#import "ClearSpecial.h"
+#import "SwitchBoard.h"
 
 
 @implementation SpellFactory {
@@ -18,55 +20,40 @@
 
 + (id <ICastable>) getSpellUsingFrequency
 {
-    NSMutableDictionary *spells = [NSMutableDictionary dictionary];
-    [spells setValue:@25 forKey:@"Nuke"];
-    [spells setValue:@25 forKey:@"RandomRemove"];
-    [spells setValue:@25 forKey:@"AddLine"];
-    [spells setValue:@25 forKey:@"Gravity"];
+    //TODO: Perhaps balance the game by changing the frequency of certain spells
 
+    NSUInteger random = arc4random() % 6;
 
-    id <ICastable> spell = nil;
-
-    NSUInteger random = arc4random() % 100;
-
-    for (NSString *key in spells)
-    {
-        NSUInteger value = [[spells valueForKey:key] unsignedIntegerValue];
-        if (random > value)
-        {
-            random = random - value;
-        }
-        else
-        {
-            spell = [self getSpellFromName:key];
-            break;
-        }
-
-
-    }
-    return spell;
+    return [self getSpellFromType:(spellsType)random];
 
 }
 
-+ (id <ICastable>) getSpellFromName:(NSString *) spellName
++ (id <ICastable>)getSpellFromType:(spellsType)spellType
 {
     id <ICastable> spell = nil;
 
-    if ([spellName isEqualToString:@"AddLine"])
-    {
-        spell = [[AddLine alloc]init];
-    }
-    else if ([spellName isEqualToString:@"RandomRemove"])
-    {
-        spell = [[RandomRemove alloc]init];
-    }
-    else if ([spellName isEqualToString:@"Nuke"])
-    {
-        spell = [[Nuke alloc]init];
-    }
-    else if ([spellName isEqualToString:@"Gravity"])
-    {
-        spell = [[Gravity alloc]init];
+    switch(spellType) {
+        case kAddLine:
+            spell = [[AddLine alloc]init];
+            break;
+        case kClearSpecial:
+            spell = [[ClearSpecial alloc]init];
+            break;
+        case kGravity:
+            spell = [[Gravity alloc]init];
+            break;
+        case kNuke:
+            spell = [[Nuke alloc] init];
+            break;
+        case kRandomRemove:
+            spell = [[RandomRemove alloc]init];
+            break;
+        case kSwitchBoard:
+            spell = [[SwitchBoard alloc]init];
+            break;
+
+        default:
+            spell = nil;
     }
 
     return spell;

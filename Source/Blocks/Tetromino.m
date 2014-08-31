@@ -11,6 +11,36 @@
 
 }
 
++ (Tetromino *) CreateRandomTetromino
+{
+    NSMutableDictionary *shapes = [NSMutableDictionary dictionary];
+    [shapes setValue:@"T" forKey:@"0"];
+    [shapes setValue:@"L" forKey:@"1"];
+    [shapes setValue:@"J" forKey:@"2"];
+    [shapes setValue:@"Z" forKey:@"3"];
+    [shapes setValue:@"S" forKey:@"4"];
+    [shapes setValue:@"O" forKey:@"5"];
+    [shapes setValue:@"I" forKey:@"6"];
+
+    Tetromino * tetromino = nil;
+
+    //NSUInteger random = arc4random() % 7;
+    NSUInteger random = 6;
+
+    NSString *key = [shapes valueForKey:[NSString stringWithFormat:@"%d",random]];
+
+    tetromino = (Tetromino *) [CCBReader load:[NSString stringWithFormat:@"Shapes/%@",key]];
+    tetromino.type = (tetrominoType) random;
+
+    for (int i = 0; i < 4; i++){
+        [tetromino moveTetrominoInDirection:moveRight];
+    }
+
+    return tetromino;
+
+}
+
+
 - (BOOL)stuck {
     for (Block *block in self.children) {
         stuck = block.stuck;

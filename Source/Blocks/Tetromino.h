@@ -48,6 +48,8 @@ typedef enum {
 @property(nonatomic) CGPoint lowestPosition;
 @property tetrominoType type;
 
++ (Tetromino *)CreateRandomTetromino;
+
 - (BOOL)isBlockInTetromino:(id)block;
 
 - (void)moveTetrominoInDirection:(MoveDirection)direction;

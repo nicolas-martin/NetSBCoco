@@ -4,20 +4,20 @@
 //
 
 #import <MacTypes.h>
-#import "Switch.h"
+#import "SwitchBoard.h"
 #import "ICastable.h"
 #import "Board.h"
 #import "Field.h"
 
 
-@implementation Switch {
+@implementation SwitchBoard {
     NSString *spellName;
 }
 
 - (id)init {
     self = [super init];
     if (self) {
-        spellName = @"Switch field";
+        spellName = @"SwitchBoard field";
         self.spriteFrame = [CCSpriteFrame frameWithImageNamed: @"Assets/SwitchField.png"];
 
     }

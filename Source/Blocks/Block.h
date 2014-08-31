@@ -7,16 +7,27 @@
 
 @protocol ICastable;
 
+typedef enum {
+    Blue = 0,
+    Cyan = 1,
+    Green = 2,
+    Magenta = 3,
+    Orange = 4,
+    Red = 5,
+    Yellow = 6
+} blockType;
+
 
 @interface Block : CCSprite
 @property NSUInteger boardX;
 @property NSUInteger boardY;
 @property id <ICastable> spell;
 @property BOOL stuck;
-@property BOOL disappearing;
-@property NSUInteger blockType;
+@property blockType type;
 
 + (Block *)CreateRandomBlock;
+
++ (Block *)CreateRandomBlockWithPosition:(CGPoint)blockPosition;
 
 - (void)addSpellToBlock:(id <ICastable>)spell;
 
