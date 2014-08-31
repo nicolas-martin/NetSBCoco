@@ -16,6 +16,8 @@
 @property BOOL disappearing;
 @property NSUInteger blockType;
 
++ (Block *)CreateRandomBlock;
+
 - (void)addSpellToBlock:(id <ICastable>)spell;
 
 - (void)removeSpell;

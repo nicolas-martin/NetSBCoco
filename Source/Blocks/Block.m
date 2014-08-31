@@ -12,11 +12,35 @@
 
 }
 
++ (Block *)CreateRandomBlock{
+    NSMutableArray *blocks = [@[@"Blue", @"Cyan", @"Green", @"Magenta", @"Orange", @"Red", @"Yellow"] mutableCopy];
+
+    NSUInteger random = arc4random() % (blocks.count - 1);
+    NSString *key = blocks[random];
+
+    return (Block *) [CCBReader load:[NSString stringWithFormat:@"Blocks/%@",key]];
+}
+
+
+- (void)ReplaceBlockRandomImage{
+    NSMutableArray *blocks = [@[@"Blue", @"Cyan", @"Green", @"Magenta", @"Orange", @"Red", @"Yellow"] mutableCopy];
+
+    NSUInteger random = arc4random() % (blocks.count - 1);
+    NSString *key = blocks[random];
+
+    self.spriteFrame = [CCSpriteFrame frameWithImageNamed:[NSString stringWithFormat:@"Assets/%@.png",key]];
+}
 
 - (void)addSpellToBlock:(<ICastable>)spell {
 
     _spell = spell;
     self.spriteFrame = spell.spriteFrame;
+
+}
+
+- (void)removeSpell {
+    _spell = nil;
+    [self ReplaceBlockRandomImage];
 
 }
 

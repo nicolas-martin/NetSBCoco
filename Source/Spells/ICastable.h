@@ -15,6 +15,8 @@
 @property CCSpriteFrame *spriteFrame;
 
 - (void)CastSpell:(Board *)targetBoard Sender:(Field *)senderField;
+
+//TODO: Could be taken out and logged by the inventory instead.
 - (NSString *)LogSpell:(Board *)targetBoard;
 
 @end

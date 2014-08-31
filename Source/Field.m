@@ -6,11 +6,9 @@
 #import "Field.h"
 #import "Inventory.h"
 #import "Board.h"
-#import "Tetromino.h"
 #import "Block.h"
 #import "Gravity.h"
-#import "AddLine.h"
-#import "Switch.h"
+#import "ClearSpecial.h"
 
 
 @implementation Field {
@@ -61,15 +59,15 @@
         for (int j = 0; j < 5; j++) {
             if (i % 4) {
 
-                Block *block = (Block *) [CCBReader load:@"Blocks/Green"];
+                Block *block = [Block CreateRandomBlock];
                 [block setBoardX:(NSUInteger) i];
                 [block setBoardY:(NSUInteger) (19 - j)];
                 [block setStuck:YES];
                 [bArray addObject:block];
             }
             else {
-                Block *block = (Block *) [CCBReader load:@"Blocks/Cyan"];
-                Switch *gravity = [[Switch alloc] init];
+                Block *block = [Block CreateRandomBlock];
+                ClearSpecial *gravity = [[ClearSpecial alloc] init];
                 [block addSpellToBlock:gravity];
                 [block setBoardX:(NSUInteger) i];
                 [block setBoardY:(NSUInteger) (19 - j)];

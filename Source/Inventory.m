@@ -104,6 +104,7 @@
 
     if (targetField != nil) {
         id <ICastable> obj = selSprite.userObject;
+
         [obj CastSpell:targetField Sender:(Field *) self.parent];
 
         [self removeSpell:selSprite.userObject];
