@@ -1,4 +1,4 @@
-//
+#import "Board.h"//
 // Created by Nicolas Martin on 2014-07-08.
 // Copyright (c) 2014 Apportable. All rights reserved.
 //
@@ -106,6 +106,8 @@
         id <ICastable> obj = selSprite.userObject;
 
         [obj CastSpell:targetField Sender:(Field *) self.parent];
+
+        CCLOG(@"%@ was casted on %@", obj.spellName, targetField.name);
 
         [self removeSpell:selSprite.userObject];
 

@@ -17,9 +17,7 @@
 @property spellsType spellType;
 @property NSString *spellName;
 
-- (id)init;
 
 - (void)CastSpell:(Board *)targetBoard Sender:(Field *)senderField;
 
-- (NSString *)LogSpell:(Board *)targetBoard;
 @end

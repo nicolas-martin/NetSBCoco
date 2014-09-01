@@ -126,7 +126,7 @@
 				<key>value</key>
 				<array>
 					<string></string>
-					<string>Assets/Yellow.png</string>
+					<string>Assets/c-Yellow.png</string>
 				</array>
 			</dict>
 			<dict>
@@ -143,6 +143,8 @@
 				</array>
 			</dict>
 		</array>
+		<key>selected</key>
+		<true/>
 	</dict>
 	<key>notes</key>
 	<array/>

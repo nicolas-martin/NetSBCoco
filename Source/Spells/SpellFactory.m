@@ -34,22 +34,22 @@
 
     switch(spellType) {
         case kAddLine:
-            fileName = @"Assets/AddLine.png";
+            fileName = @"Assets/s-AddLine.png";
             break;
         case kClearSpecial:
-            fileName = @"Assets/ClearSpell.png";
+            fileName = @"Assets/s-ClearSpell.png";
             break;
         case kGravity:
-            fileName = @"Assets/Gravity.png";
+            fileName = @"Assets/s-Gravity.png";
             break;
         case kNuke:
-            fileName = @"Assets/Nuke.png";
+            fileName = @"Assets/s-Nuke.png";
             break;
         case kRandomRemove:
-            fileName = @"Assets/RandomRemove.png";
+            fileName = @"Assets/s-RandomRemove.png";
             break;
         case kSwitchBoard:
-            fileName = @"Assets/SwitchField.png";
+            fileName = @"Assets/s-SwitchField.png";
             break;
 
         default:

@@ -38,10 +38,4 @@
 
 }
 
-
-- (NSString *)LogSpell:(Board *)targetBoard {
-    return [NSString stringWithFormat:@"%@ was casted on %@", spellName, targetBoard.Name];
-}
-
-
 @end

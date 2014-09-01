@@ -28,11 +28,6 @@
 
     [targetBoard DeleteBlockFromBoardAndSprite:[targetBoard getAllBlocksInBoard]];
 
-    CCLOG(@"%@", [self LogSpell:targetBoard]);
-}
-
-- (NSString *)LogSpell:(Board *)targetBoard {
-    return [NSString stringWithFormat:@"%@ was casted on %@", spellName, targetBoard.Name];
 }
 
 @end

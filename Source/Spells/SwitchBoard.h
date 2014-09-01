@@ -17,8 +17,6 @@
 @property CCSpriteFrame *spriteFrame;
 @property NSString *spellName;
 
-- (NSString *)LogSpell:(Board *)targetBoard;
-
 - (void)CastSpell:(Board *)targetBoard Sender:(Field *)senderField;
 
 @end

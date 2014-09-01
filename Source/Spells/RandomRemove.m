@@ -25,11 +25,6 @@
     return self;
 }
 
-- (NSString *)LogSpell:(Board *)targetBoard {
-    return [NSString stringWithFormat:@"%@ was casted on %@", spellName, targetBoard.Name];
-
-
-}
 
 - (void)CastSpell:(Board *)targetBoard Sender:(Field *)senderField {
     NSMutableArray *allBlockInBoard = [targetBoard getAllBlocksInBoard];
@@ -57,7 +52,6 @@
 
     [targetBoard DeleteBlockFromBoardAndSprite:blocksToDelete];
 
-    CCLOG(@"%@", [self LogSpell:targetBoard]);
 }
 
 

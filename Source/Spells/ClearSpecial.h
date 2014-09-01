@@ -18,5 +18,4 @@
 
 - (void)CastSpell:(Board *)targetBoard Sender:(Field *)senderField;
 
-- (NSString *)LogSpell:(Board *)targetBoard;
 @end

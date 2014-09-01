@@ -50,7 +50,6 @@
 
     [self CreateBlockLine:targetBoard];
 
-    CCLOG(@"%@", [self LogSpell:targetBoard]);
 }
 
 - (void)CreateBlockLine:(Board *)targetBoard {
@@ -73,11 +72,5 @@
     [targetBoard addBlocks:bArray];
 
 }
-
-
-- (NSString *)LogSpell:(Board *)targetBoard {
-    return [NSString stringWithFormat:@"%@ was casted on %@", spellName, targetBoard.Name];
-}
-
 
 @end

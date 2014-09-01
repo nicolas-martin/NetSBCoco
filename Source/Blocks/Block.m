@@ -43,7 +43,7 @@
     NSUInteger random = arc4random() % (blocks.count - 1);
     NSString *key = blocks[random];
 
-    self.spriteFrame = [CCSpriteFrame frameWithImageNamed:[NSString stringWithFormat:@"Assets/%@.png",key]];
+    self.spriteFrame = [CCSpriteFrame frameWithImageNamed:[NSString stringWithFormat:@"Assets/c-%@.png",key]];
 }
 
 - (void)addSpellToBlock:(<ICastable>)spell {
