@@ -24,8 +24,8 @@
 
     Tetromino * tetromino = nil;
 
-    //NSUInteger random = arc4random() % 7;
-    NSUInteger random = 6;
+    NSUInteger random = arc4random() % 7;
+    //NSUInteger random = 6;
 
     NSString *key = [shapes valueForKey:[NSString stringWithFormat:@"%d",random]];
 

@@ -12,6 +12,8 @@
 @implementation Board {
     NSMutableArray *_array;
     Tetromino *userTetromino;
+    BOOL isDrag;
+    CGPoint previousTouch;
 }
 
 - (id)init {
@@ -59,39 +61,60 @@
     //doesn't work?
 }
 
-- (void)touchBegan:(UITouch *)touch withEvent:(UIEvent *)event {
-    //this sucks!
+- (void)touchMoved:(UITouch *)touch withEvent:(UIEvent *)event
+{
+
+    NSUInteger previousLocation = userTetromino.anchorX;
     CGPoint pos = [touch locationInNode:self];
-
     CGPoint tileCoordForPosition = [self tileCoordForPosition:pos];
-    CGFloat leftMostX = 0, rightMostX = 0, lowestY = 0, highestY = 0;
 
-
-    //compute
-    leftMostX = [userTetromino leftMostPosition].x;
-    rightMostX = [userTetromino rightMostPosition].x;
-    lowestY = [userTetromino lowestPosition].y;
-    highestY = [userTetromino highestPosition].y;
-
-    if (tileCoordForPosition.x < leftMostX) {
+    if(previousLocation > tileCoordForPosition.x){
         [self moveTetrominoLeft];
     }
-    else if (tileCoordForPosition.x > rightMostX) {
+    else if (previousLocation < tileCoordForPosition.x)
+    {
         [self moveTetrominoRight];
     }
-    else if (tileCoordForPosition.y > lowestY) {
-        while(userTetromino.lowestPosition.y != 19 && [self canMoveTetrominoByYTetrominoOffSetY:1]){
-            [self moveTetrominoDown];
-        }
-        userTetromino.stuck = YES;
 
-    }
-    else if(tileCoordForPosition.y < highestY){
+    isDrag = YES;
+
+}
+
+- (void)touchBegan:(UITouch *)touch withEvent:(UIEvent *)event {
+
+    isDrag = NO;
+
+    previousTouch = [touch locationInNode:self];
+
+}
+
+- (void)touchEnded:(UITouch *)touch withEvent:(UIEvent *)event
+{
+    if (!isDrag){
+
+        CGPoint pos = [touch locationInNode:self];
+
+        CGPoint tileCoordForPosition = [self tileCoordForPosition:pos];
+
         [self rotateTetromino:rotateClockwise];
+
+
+    }else{
+        CGPoint pos = [touch locationInNode:self];
+        float swipeLength = ccpDistance(previousTouch, pos);
+
+        if (previousTouch.y > pos.y && swipeLength > 60) {
+            while(userTetromino.lowestPosition.y != 19 && [self canMoveTetrominoByYTetrominoOffSetY:1]){
+                [self moveTetrominoDown];
+            }
+            userTetromino.stuck = YES;
+        }
     }
 
-
-
+    isDrag = NO;
+}
+- (void)touchCancelled:(UITouch *)touch withEvent:(UIEvent *)event
+{
 }
 
 - (CGPoint)tileCoordForPosition:(CGPoint)position {
@@ -102,8 +125,8 @@
 }
 
 - (void)didLoadFromCCB {
-
 }
+
 
 - (NSMutableArray *)get20x10Array {
     NSMutableArray *arr = [NSMutableArray array];

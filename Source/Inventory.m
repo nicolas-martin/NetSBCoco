@@ -37,7 +37,7 @@
 
     if (inventory.count < 10) {
         [inventory addObject:spell];
-        //Or use SpellFactory to get a spell back using the name.
+        //TODO: Could improve the way we add spells to the inventory (userObject)
         CCSprite *newSpellSprite = (id) (id <ICastable>) [[CCSprite alloc] init];
         newSpellSprite.spriteFrame = [spell spriteFrame];
 
@@ -65,7 +65,6 @@
     [movableSprites removeObject:selSprite];
 
     [selSprite removeFromParentAndCleanup:YES];
-
 
     [self reorderInventory];
 }

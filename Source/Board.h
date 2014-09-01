@@ -16,7 +16,10 @@
 @property NSUInteger Nbx;
 @property NSString *Name;
 
+
 - (id)init;
+
+- (void)swipeDown:(UISwipeGestureRecognizer *)fallDown;
 
 - (BOOL)isBlockAt:(CGPoint)point;
 
