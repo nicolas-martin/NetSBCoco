@@ -67,7 +67,8 @@
 }
 
 - (void)onEnter {
-[self schedule:@selector(gameLoop) interval:1];
+    //TODO: Impelement levels
+    [self schedule:@selector(gameLoop) interval:1];
 
     [super onEnter];
 
@@ -76,6 +77,7 @@
 - (void)gameLoop {
 
     if ([_p1 updateStatus]) {
+        //
 
         //Bug with cocos2d.. will be fixed in 3.1
         //[self unschedule:@selector(gameLoop)];

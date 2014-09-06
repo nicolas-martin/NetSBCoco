@@ -9,6 +9,7 @@
 #import "GameCenterHelper.h"
 #import "iCloudHelper.h"
 #import "Player.h"
+#import "Board.h"
 
 @interface GameCenterHelper () {
     BOOL _gameCenterFeaturesEnabled;
@@ -66,8 +67,6 @@
     
     //[reader readStatsForPlayer:player];
     
-    [self notifyReceivedPlayer:player];
-    
     GKMatchRequest* request = [[GKMatchRequest alloc] init];
     request.minPlayers = 2;
     request.maxPlayers = 2;
@@ -102,6 +101,8 @@
     return player;
 }
 
+
+
 // Matchmaking has failed with an error
 - (void)matchmakerViewController:(GKMatchmakerViewController *)viewController didFailWithError:(NSError *)error {
     [[self viewController] dismissViewControllerAnimated:NO completion:nil];
@@ -114,96 +115,47 @@
     _match = theMatch;
     [_match setDelegate:self];
     NSLog(@"Ready to start match!");
-    
-    [self notifyMatchFound:nil];
-    
 
-    
-    PlayerType new_playerType = kPlayerDistant;
+    //[self notifyMatchFound:nil];
+
     Player* new_player = [self readPlayer];
-    [new_player setPlayerType:new_playerType];
-    
+    [new_player setPlayerType:kPlayerDistant];
+
     //[reader readStatsForPlayer:player];
-    
-    [self notifyReceivedPlayer:new_player];
+
+    //[self notifyReceivedPlayer:new_player];
 }
 
-- (void)sendCreepSpawned:(int)creepType time:(double)time {
-    NSLog(@"AAAH");
-}
-- (void)sendFindMatch {
-    NSLog(@"AAAH");
-}
-- (void)sendGetLadder {
-    NSLog(@"AAAH");
-}
-- (void)sendMatchOverWithWinner:(NSString *)winner {
-    NSLog(@"AAAH");
-}
-- (void) sendTowerBuilt:(int)towerType position:(CGPoint)position time:(double)time {
-    NSLog(@"AAAH");
-}
 
 - (void)matchmakerViewController:(GKMatchmakerViewController *)viewController didFindPlayers:(NSArray *)playerIDs {
-    NSLog(@"Super he");
+    //FOUND A PLAYER
+    //TODO: save the player to the list
+
 }
 
 - (void)matchmakerViewController:(GKMatchmakerViewController *)viewController didReceiveAcceptFromHostedPlayer:(NSString *)playerID {
     NSLog(@"Wow");
 }
 
-- (void)sendAction:(Action *)action {
-    [_match sendDataToAllPlayers:[NSKeyedArchiver archivedDataWithRootObject:action] withDataMode:GKSendDataReliable error:nil];
+- (void)sendAction:(Board *)board {
+    [_match sendDataToAllPlayers:[NSKeyedArchiver archivedDataWithRootObject:board] withDataMode:GKSendDataReliable error:nil];
     NSLog(@"Action sent");
 }
 
 - (void)match:(GKMatch *)match didReceiveData:(NSData *)data fromPlayer:(NSString *)playerID {
     NSLog(@"Action received!");
     NSData* newData = data;
-    Action* action =[NSKeyedUnarchiver unarchiveObjectWithData:newData];
-    [self notifyReceivedAction:action];
-}
+    Board* action =[NSKeyedUnarchiver unarchiveObjectWithData:newData];
+//    NSMutableArray *playerBoardBlocks;
+//
+//    targetBoardBlocks = targetBoard.getAllBlocksInBoard;
+//
+//    [senderField.board DeleteBlockFromBoardAndSprite:playerBoardBlocks];
+//    [targetBoard DeleteBlockFromBoardAndSprite:targetBoardBlocks];
+//
+//    [senderField.board addBlocks:targetBoardBlocks];
 
-#pragma mark - Notify observers
-- (void)addNetworkObserver:(id<NetworkControllerDelegate>)observer {
-    NSLog(@"Adding one observer");
-    [_listObservers addObject:observer];
-}
 
-- (void)notifyMatchFound:(Match*)match {
-    NSLog(@"About to notify observers");
-    for (id<NetworkControllerDelegate> observer in _listObservers) {
-        NSLog(@"Found one..");
-        if ([observer respondsToSelector:@selector(updateMatchFound:)]) {
-            NSLog(@"Notification sent");
-            [observer updateMatchFound:match];
-        }
-    }
-}
-
-- (void)notifyReceivedAction:(Action*)action {
-    for (id<NetworkControllerDelegate> observer in _listObservers) {
-        if ([observer respondsToSelector:@selector(updateActionReceived:)]) {
-            [observer updateActionReceived:action];
-        }
-    }
-}
-
-- (void)notifyMatchStarted {
-    for (id<NetworkControllerDelegate> observer in _listObservers) {
-        if ([observer respondsToSelector:@selector(updateMatchStarted)]) {
-            [observer updateMatchStarted];
-        }
-    }
-}
-
-- (void)notifyReceivedPlayer:(Player*)player {
-    for (id<NetworkControllerDelegate> observer in _listObservers) {
-        if ([observer respondsToSelector:@selector(updateReceivedPlayer:)]) {
-            NSLog(@"Notify new player");
-            [observer updateReceivedPlayer:player];
-        }
-    }
 }
 
 

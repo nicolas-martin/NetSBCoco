@@ -9,7 +9,7 @@
 @class Block;
 
 
-@interface Board : CCNode
+@interface Board : CCNode// <NScoder>
 
 @property int NbBlocks;
 @property NSUInteger Nby;

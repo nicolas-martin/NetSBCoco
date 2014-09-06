@@ -37,7 +37,6 @@
     NSUInteger nbSpellToAdd = 0;
 
     for (NSUInteger i = 0; i < nbBlocksInBoard; i++) {
-        //55% of the blocks will have a spell
         if ([self randomBoolWithPercentage:10]) {
             nbSpellToAdd++;
         }

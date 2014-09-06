@@ -10,6 +10,7 @@
 #import "Gravity.h"
 #import "ClearSpecial.h"
 #import "SpellFactory.h"
+#import "GameCenterHelper.h"
 
 
 @implementation Field {
@@ -48,7 +49,12 @@
         _nbRowCleared.string = [NSString stringWithFormat:@"%d", (int) _nbRowCleared.string.integerValue + rows.count];
 
     }
+
+    //[[GameCenterHelper sharedInstance] sendAction:_board];
+
     return self.board.moveDownOrCreate;
+
+
 
 }
 
