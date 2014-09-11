@@ -32,9 +32,8 @@
     enumerator = [targetBoard.getAllBlocksInBoard reverseObjectEnumerator];
 
     for (Block *block in enumerator) {
-        while (block.boardY + 1 < 20 && ![targetBoard isBlockAt:ccp(block.boardX, block.boardY + 1)]) {
+        while (block.boardY + 1 < targetBoard.Nbx && ![targetBoard isBlockAt:ccp(block.boardX, block.boardY + 1)]) {
 
-//            NSLog(@"Moving block from (%d, %d) to (%d, %d)", block.boardX, block.boardY,block.boardX,block.boardY+1);
             [targetBoard MoveBlock:block to:ccp(block.boardX, block.boardY + 1)];
 
             [block moveDown];

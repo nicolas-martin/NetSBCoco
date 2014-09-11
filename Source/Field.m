@@ -50,28 +50,26 @@
 
     }
 
+    //TODO: Send the updated board to all players
     //[[GameCenterHelper sharedInstance] sendAction:_board];
 
     return self.board.moveDownOrCreate;
-
-
-
 }
 
 
 - (void)initSomeBlocks {
     NSMutableArray *bArray = [NSMutableArray array];
-    for (int i = 0; i < 10; i++) {
+    for (int i = 0; i < _board.Nbx; i++) {
         if (i == 9) continue;
         for (int j = 0; j < 5; j++) {
             if (i % 4) {
 
-                Block *block = [Block CreateRandomBlockWithPosition:ccp(i, 19-j)];
+                Block *block = [Block CreateRandomBlockWithPosition:ccp(i, ((_board.Nby - 1) - j))];
                 [bArray addObject:block];
             }
             else {
 
-                Block *block = [Block CreateRandomBlockWithPosition:ccp(i, 19-j)];
+                Block *block = [Block CreateRandomBlockWithPosition:ccp(i, ((_board.Nby - 1) - j))];
 
                 //id spell = [SpellFactory getSpellFromType:kRandomRemove];
                 id spell = [SpellFactory getSpellUsingFrequency];

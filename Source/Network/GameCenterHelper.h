@@ -14,10 +14,10 @@
 
 @interface GameCenterHelper : NSObject <GKMatchmakerViewControllerDelegate, GKMatchDelegate>
 
-@property (strong, nonatomic) UIViewController *viewController;
-@property (strong, nonatomic) GKMatch *match;
-@property (nonatomic, strong) NSMutableArray *listObservers;
-@property (strong, nonatomic) GKPlayer* localPlayer;
+@property(nonatomic) UIViewController *viewController;
+@property GKMatch *match;
+@property GKPlayer* localPlayer;
+@property NSMutableArray *listPlayers;
 
 + (GameCenterHelper*)sharedInstance;
 - (void) authenticateLocalPlayer;

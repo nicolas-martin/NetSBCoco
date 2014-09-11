@@ -19,6 +19,7 @@
 - (id)init {
     self = [super init];
     if (self) {
+        _MaxNbSpells = 10;
         inventory = [[NSMutableArray alloc] init];
         movableSprites = [[NSMutableArray alloc] init];
         self.userInteractionEnabled = YES;
@@ -35,8 +36,9 @@
 
 - (void)addSpell:(<ICastable>)spell {
 
-    if (inventory.count < 10) {
+    if (inventory.count < _MaxNbSpells) {
         [inventory addObject:spell];
+
         //TODO: Could improve the way we add spells to the inventory (userObject)
         CCSprite *newSpellSprite = (id) (id <ICastable>) [[CCSprite alloc] init];
         newSpellSprite.spriteFrame = [spell spriteFrame];

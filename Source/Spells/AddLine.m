@@ -62,7 +62,7 @@
             Block *block = [Block CreateRandomBlock];
             block.stuck = YES;
             [block setBoardX:x];
-            [block setBoardY:19];
+            [block setBoardY:targetBoard.Nbx-1];
 
             [bArray addObject:block];
         }

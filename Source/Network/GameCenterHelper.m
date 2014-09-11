@@ -7,8 +7,6 @@
 //
 
 #import "GameCenterHelper.h"
-#import "iCloudHelper.h"
-#import "Player.h"
 #import "Board.h"
 
 @interface GameCenterHelper () {
@@ -31,7 +29,7 @@
 
 -(id)init {
     if (self = [super init]) {
-        _listObservers = [[NSMutableArray alloc] init];
+        _listPlayers = [[NSMutableArray alloc] init];
     }
     return self;
 }
@@ -49,7 +47,10 @@
     localPlayer.authenticateHandler = ^(UIViewController *viewController, NSError *error) {
         if ([GKLocalPlayer localPlayer].authenticated) {
             _localPlayer = [GKLocalPlayer localPlayer];
-            [[iCloudHelper sharedInstance] loadiCloudStore];
+
+            //TODO Don't need to save anything for now.
+            //[[iCloudHelper sharedInstance] loadiCloudStore];
+
             NSLog(@"Authenticated");
         } else if(viewController) {
             NSLog(@"Shoud authenticate");
@@ -61,15 +62,11 @@
 }
 
 - (void)findOpponent {
-    PlayerType playerType = kPlayerLocal;
-    Player* player = [self readPlayer];
-    [player setPlayerType:playerType];
-    
-    //[reader readStatsForPlayer:player];
-    
+
     GKMatchRequest* request = [[GKMatchRequest alloc] init];
     request.minPlayers = 2;
-    request.maxPlayers = 2;
+    request.maxPlayers = 4;
+
     GKMatchmakerViewController *mmvc = [[GKMatchmakerViewController alloc]
                                          initWithMatchRequest:request];
     mmvc.matchmakerDelegate = self;
@@ -79,29 +76,10 @@
     [[self viewController] presentViewController:mmvc animated:YES completion:nil];
 }
 
-
 - (void)matchmakerViewControllerWasCancelled:(GKMatchmakerViewController *)viewController {
     NSLog(@"Matchrequest cancelled");
     [[self viewController] dismissViewControllerAnimated:YES completion:nil];
 }
-
-
-- (Player*)readPlayer {
-    NSString *playerId = @"0000";
-    NSString *playerName = @"Yianks";
-    int rating = 1500;
-    int level = 1;
-    int xp = 100;
-    int unlockedTower = 11;
-    
-    Player *player = [[Player alloc] initWithPlayerId:playerId playerName:playerName rating:rating];
-    [player setLevel:level];
-    [player setXp:xp];
-    
-    return player;
-}
-
-
 
 // Matchmaking has failed with an error
 - (void)matchmakerViewController:(GKMatchmakerViewController *)viewController didFailWithError:(NSError *)error {
@@ -109,27 +87,31 @@
     NSLog(@"Error finding match: %@", error.localizedDescription);
 }
 
+// A peer-to-peer match has been found, the game should start
 - (void)matchmakerViewController:(GKMatchmakerViewController *)viewController didFindMatch:(GKMatch *)theMatch {
-    NSLog(@"he");
+    [_listPlayers addObject:theMatch.playerIDs];
+
     [[self viewController] dismissViewControllerAnimated:NO completion:nil];
     _match = theMatch;
     [_match setDelegate:self];
     NSLog(@"Ready to start match!");
 
-    //[self notifyMatchFound:nil];
-
-    Player* new_player = [self readPlayer];
-    [new_player setPlayerType:kPlayerDistant];
-
-    //[reader readStatsForPlayer:player];
-
-    //[self notifyReceivedPlayer:new_player];
 }
 
+- (void) loadPlayerData: (NSArray *) identifiers {
+    [GKPlayer loadPlayersForIdentifiers:identifiers withCompletionHandler:^(NSArray *players, NSError *error) {
+        if (error != nil) {
+            // Handle the error.
+        }
+        if (players != nil) {
+            // Process the array of GKPlayer objects.
+        }
+    }];
+}
 
+// Players have been found for a server-hosted game, the game should start
 - (void)matchmakerViewController:(GKMatchmakerViewController *)viewController didFindPlayers:(NSArray *)playerIDs {
-    //FOUND A PLAYER
-    //TODO: save the player to the list
+    //TODO: save the player to the list - How to resolve then to names?
 
 }
 

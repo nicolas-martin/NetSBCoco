@@ -8,10 +8,9 @@
 
 #import "MainScene.h"
 #import "Field.h"
-#import "Tetromino.h"
 #import "FieldCollisionHelper.h"
 #import "Board.h"
-#import "CCNode_Private.h"
+#import "GameCenterHelper.h"
 
 @implementation MainScene {
     CCNode *_scene;
@@ -22,7 +21,6 @@
 }
 - (id)init {
     if (self = [super init]) {
-        // activate touches on this scene
         self.userInteractionEnabled = TRUE;
         bg = [@[@"Gold", @"Orange", @"Purple", @"Silver", @"Teal"] mutableCopy];
 
@@ -31,7 +29,6 @@
 }
 
 - (CCSprite *) getRandomBackground{
-
 
     NSUInteger random = 0;
     NSString *key = nil;
@@ -50,6 +47,7 @@
 }
 
 - (void)didLoadFromCCB {
+    //[[GameCenterHelper sharedInstance].listPlayers ]
 
     _p1.board.Name = @"Player1";
     _p2.board.Name = @"Player2";
@@ -67,7 +65,8 @@
 }
 
 - (void)onEnter {
-    //TODO: Impelement levels
+
+    //TODO: Levels speed for each players
     [self schedule:@selector(gameLoop) interval:1];
 
     [super onEnter];
@@ -77,7 +76,6 @@
 - (void)gameLoop {
 
     if ([_p1 updateStatus]) {
-        //
 
         //Bug with cocos2d.. will be fixed in 3.1
         //[self unschedule:@selector(gameLoop)];
@@ -88,6 +86,7 @@
 }
 
 - (void)touchBegan:(UITouch *)touch withEvent:(UIEvent *)event {
+
 }
 
 @end

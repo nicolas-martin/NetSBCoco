@@ -19,21 +19,15 @@
 
 - (id)init;
 
-- (void)swipeDown:(UISwipeGestureRecognizer *)fallDown;
-
 - (BOOL)isBlockAt:(CGPoint)point;
 
 - (NSMutableArray *)getAllBlocksInBoard;
-
-- (NSMutableArray *)getAllInvertedBlocksInBoard;
 
 - (Block *)getBlockAt:(CGPoint)point;
 
 - (void)DeleteBlockFromBoard:(NSMutableArray *)blocks;
 
 - (void)DeleteBlockFromBoardAndSprite:(NSMutableArray *)blocks;
-
-- (void)MoveTetromino:(Tetromino *)FromTetromino to:(Tetromino *)ToTetromino;
 
 - (void)MoveBlock:(Block *)block to:(CGPoint)after;
 

@@ -33,14 +33,13 @@
     NSUInteger nbBlockInBoard = allBlockInBoard.count;
 
     //Removes 20% of all the blocks
-
     NSUInteger nbBlocksToRemove = (NSUInteger )(nbBlockInBoard / 20);
 
     for (NSUInteger i = 0; i < nbBlocksToRemove; i++)
     {
         NSUInteger random = arc4random() % nbBlockInBoard;
 
-        Block *block = [allBlockInBoard objectAtIndex:random];
+        Block *block = allBlockInBoard[random];
 
         if (block)
         {
