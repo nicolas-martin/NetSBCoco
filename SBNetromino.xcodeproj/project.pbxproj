@@ -585,6 +585,7 @@
 				);
 				PRODUCT_NAME = Netromino;
 				PROVISIONING_PROFILE = "";
+				SDKROOT = iphoneos;
 				SWIFT_OBJC_BRIDGING_HEADER = "SBNetromino-Bridging-Header.h";
 				SWIFT_OPTIMIZATION_LEVEL = "-Onone";
 				USER_HEADER_SEARCH_PATHS = "\"${PROJECT_DIR}/\"/**";
@@ -621,6 +622,7 @@
 				);
 				PRODUCT_NAME = Netromino;
 				PROVISIONING_PROFILE = "";
+				SDKROOT = iphoneos;
 				SWIFT_OBJC_BRIDGING_HEADER = "SBNetromino-Bridging-Header.h";
 				USER_HEADER_SEARCH_PATHS = "\"${PROJECT_DIR}/\"/**";
 				VALIDATE_PRODUCT = YES;
