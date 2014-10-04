@@ -23,9 +23,10 @@ extern NSString *const LocalPlayerIsAuthenticated;
 
 @property (nonatomic, readonly) UIViewController *authenticationViewController;
 @property (nonatomic, readonly) NSError *lastError;
-@property (nonatomic, strong) NSMutableDictionary *playersDict;
+
 @property (nonatomic, strong) GKMatch *match;
 @property (nonatomic, assign) id <GameKitHelperDelegate> delegate;
+@property (nonatomic, strong) NSMutableDictionary *playersDict;
 
 + (instancetype)sharedGameKitHelper;
 - (void)authenticateLocalPlayer;

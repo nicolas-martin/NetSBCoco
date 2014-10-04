@@ -39,36 +39,37 @@ NSString *const LocalPlayerIsAuthenticated = @"local_player_authenticated";
 {
     //1
     GKLocalPlayer *localPlayer = [GKLocalPlayer localPlayer];
-    
+
     if (localPlayer.isAuthenticated) {
         [[NSNotificationCenter defaultCenter] postNotificationName:LocalPlayerIsAuthenticated object:nil];
         return;
     }
     //2
     localPlayer.authenticateHandler  =
-    ^(UIViewController *viewController, NSError *error) {
-        //3
-        [self setLastError:error];
-        
-        if(viewController != nil) {
-            //4
-            [self setAuthenticationViewController:viewController];
-        } else if([GKLocalPlayer localPlayer].isAuthenticated) {
-            //5
-            _enableGameCenter = YES;
-            [[NSNotificationCenter defaultCenter] postNotificationName:LocalPlayerIsAuthenticated object:nil];
-        } else {
-            //6
-            _enableGameCenter = NO;
-        }
-    };
+            ^(UIViewController *viewController, NSError *error) {
+                //3
+                [self setLastError:error];
+
+                if(viewController != nil) {
+                    //4
+                    [self setAuthenticationViewController:viewController];
+                } else if([GKLocalPlayer localPlayer].isAuthenticated) {
+                    //5
+                    _enableGameCenter = YES;
+                    [[NSNotificationCenter defaultCenter] postNotificationName:LocalPlayerIsAuthenticated object:nil];
+                } else {
+                    //6
+                    _enableGameCenter = NO;
+                }
+            };
 }
 
-// Add new method after authenticateLocalPlayer
 - (void)lookupPlayers {
 
-    NSLog(@"Looking up %lu players...", (unsigned long)_match.playerIDs.count);
+    //NSLog(@"Looking up %lu players...", (unsigned long)_match.playerIDs.count);
+    NSLog(@"Looking up %lu players...", (unsigned long)_match.players.count);
 
+    //[GKPlayer loadPlayersForIdentifiers:_match.playerIDs withCompletionHandler:^(NSArray *players, NSError *error) {
     [GKPlayer loadPlayersForIdentifiers:_match.playerIDs withCompletionHandler:^(NSArray *players, NSError *error) {
 
         if (error != nil) {
@@ -81,9 +82,9 @@ NSString *const LocalPlayerIsAuthenticated = @"local_player_authenticated";
             _playersDict = [NSMutableDictionary dictionaryWithCapacity:players.count];
             for (GKPlayer *player in players) {
                 NSLog(@"Found player: %@", player.alias);
-                [_playersDict setObject:player forKey:player.playerID];
+                _playersDict[player.playerID] = player;
             }
-            [_playersDict setObject:[GKLocalPlayer localPlayer] forKey:[GKLocalPlayer localPlayer].playerID];
+            _playersDict[[GKLocalPlayer localPlayer].playerID] = [GKLocalPlayer localPlayer];
 
             // Notify delegate match can begin
             _matchStarted = YES;
@@ -95,35 +96,34 @@ NSString *const LocalPlayerIsAuthenticated = @"local_player_authenticated";
 - (void)findMatchWithMinPlayers:(int)minPlayers maxPlayers:(int)maxPlayers
                  viewController:(UIViewController *)viewController
                        delegate:(id<GameKitHelperDelegate>)delegate {
-    
+
     if (!_enableGameCenter) return;
-    
+
     _matchStarted = NO;
     self.match = nil;
     _delegate = delegate;
     [viewController dismissViewControllerAnimated:NO completion:nil];
-    
+
     GKMatchRequest *request = [[GKMatchRequest alloc] init];
     request.minPlayers = minPlayers;
     request.maxPlayers = maxPlayers;
-    
+
     GKMatchmakerViewController *mmvc =
-        [[GKMatchmakerViewController alloc] initWithMatchRequest:request];
+            [[GKMatchmakerViewController alloc] initWithMatchRequest:request];
     mmvc.matchmakerDelegate = self;
-    
+
     [viewController presentViewController:mmvc animated:YES completion:nil];
 }
 
-- (void)setAuthenticationViewController:
-(UIViewController *)authenticationViewController
+- (void)setAuthenticationViewController: (UIViewController *)authenticationViewController
 {
     if (authenticationViewController != nil) {
         _authenticationViewController = authenticationViewController;
         [[NSNotificationCenter defaultCenter]
-         postNotificationName:PresentAuthenticationViewController
-         object:self];
+                postNotificationName:PresentAuthenticationViewController
+                              object:self];
     }
-    
+
 }
 
 - (void)setLastError:(NSError *)error
@@ -131,7 +131,7 @@ NSString *const LocalPlayerIsAuthenticated = @"local_player_authenticated";
     _lastError = [error copy];
     if (_lastError) {
         NSLog(@"GameKitHelper ERROR: %@",
-              [[_lastError userInfo] description]);
+                [[_lastError userInfo] description]);
     }
 }
 
@@ -155,7 +155,6 @@ NSString *const LocalPlayerIsAuthenticated = @"local_player_authenticated";
     match.delegate = self;
     if (!_matchStarted && match.expectedPlayerCount == 0) {
         NSLog(@"Ready to start match!");
-        // Add inside matchmakerViewController:didFindMatch, right after @"Ready to start match!":
         [self lookupPlayers];
     }
 }
@@ -165,25 +164,24 @@ NSString *const LocalPlayerIsAuthenticated = @"local_player_authenticated";
 // The match received data sent from the player.
 - (void)match:(GKMatch *)match didReceiveData:(NSData *)data fromPlayer:(NSString *)playerID {
     if (_match != match) return;
-    
+
     [_delegate match:match didReceiveData:data fromPlayer:playerID];
 }
 
 // The player state changed (eg. connected or disconnected)
 - (void)match:(GKMatch *)match player:(NSString *)playerID didChangeState:(GKPlayerConnectionState)state {
     if (_match != match) return;
-    
+
     switch (state) {
         case GKPlayerStateConnected:
             // handle a new player connection.
             NSLog(@"Player connected!");
-            
+
             if (!_matchStarted && match.expectedPlayerCount == 0) {
                 NSLog(@"Ready to start match!");
-                // Add inside match:player:didChangeState:, right after @"Ready to start match!":
                 [self lookupPlayers];
             }
-            
+
             break;
         case GKPlayerStateDisconnected:
             // a player just disconnected.
@@ -196,9 +194,9 @@ NSString *const LocalPlayerIsAuthenticated = @"local_player_authenticated";
 
 // The match was unable to connect with the player due to an error.
 - (void)match:(GKMatch *)match connectionWithPlayerFailed:(NSString *)playerID withError:(NSError *)error {
-    
+
     if (_match != match) return;
-    
+
     NSLog(@"Failed to connect to player with error: %@", error.localizedDescription);
     _matchStarted = NO;
     [_delegate matchEnded];
@@ -206,9 +204,9 @@ NSString *const LocalPlayerIsAuthenticated = @"local_player_authenticated";
 
 // The match was unable to be established with any players due to an error.
 - (void)match:(GKMatch *)match didFailWithError:(NSError *)error {
-    
+
     if (_match != match) return;
-    
+
     NSLog(@"Match failed with error: %@", error.localizedDescription);
     _matchStarted = NO;
     [_delegate matchEnded];
