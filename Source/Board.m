@@ -57,7 +57,7 @@
 }
 
 - (void)onEnter {
-    //doesn't work?
+
 }
 
 - (void)touchMoved:(UITouch *)touch withEvent:(UIEvent *)event
@@ -102,8 +102,8 @@
         CGPoint pos = [touch locationInNode:self];
         float swipeLength = ccpDistance(previousTouch, pos);
 
-        if (previousTouch.y > pos.y && swipeLength > 60) {
-            while(userTetromino.lowestPosition.y != 19 && [self canMoveTetrominoByYTetrominoOffSetY:1]){
+        if (previousTouch.y > pos.y && swipeLength > 40) {
+            while(userTetromino.lowestPosition.y != _Nby - 1 && [self canMoveTetrominoByYTetrominoOffSetY:1]){
                 [self moveTetrominoDown];
             }
             userTetromino.stuck = YES;
@@ -125,7 +125,6 @@
 
 - (void)didLoadFromCCB {
 }
-
 
 - (NSMutableArray *)get20x10Array {
     NSMutableArray *arr = [NSMutableArray array];
@@ -437,7 +436,7 @@
     if (userTetromino.stuck || userTetromino == NULL) {
         _gameOver = [self createNewTetromino];
     }
-    else if (userTetromino.lowestPosition.y != _Nbx-1 && [self canMoveTetrominoByYTetrominoOffSetY:1]) {
+    else if (userTetromino.lowestPosition.y != _Nby - 1 && [self canMoveTetrominoByYTetrominoOffSetY:1]) {
         [self moveTetrominoDown];
         userTetromino.stuck = NO;
         _gameOver = NO;
@@ -654,7 +653,7 @@
 
             [self UpdatesNewTetromino:userTetromino];
 
-            [self printCurrentBoardStatus:NO];
+            //[self printCurrentBoardStatus:NO];
 
         }
     }

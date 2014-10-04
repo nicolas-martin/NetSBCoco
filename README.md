@@ -10,7 +10,7 @@ enemy!
 - Nuke Field
 - Clear random block
 - Gravity
-- _Switch field_
+- Switch field
+- Clear special blocks
 - _Fog_
-- _Clear special blocks_
 - _Clear column_

@@ -89,7 +89,7 @@
 
 // A peer-to-peer match has been found, the game should start
 - (void)matchmakerViewController:(GKMatchmakerViewController *)viewController didFindMatch:(GKMatch *)theMatch {
-    [_listPlayers addObject:theMatch.playerIDs];
+    [_listPlayers addObject:theMatch.players];
 
     [[self viewController] dismissViewControllerAnimated:NO completion:nil];
     _match = theMatch;

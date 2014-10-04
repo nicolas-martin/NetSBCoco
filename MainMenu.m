@@ -12,7 +12,7 @@
 }
 
 - (void)didLoadFromCCB {
-    [[GameCenterHelper sharedInstance] authenticateLocalPlayer];
+    //[[GameCenterHelper sharedInstance] authenticateLocalPlayer];
 
 }
 
