@@ -8,9 +8,10 @@
 
 /* Begin PBXBuildFile section */
 		1AA820D4163EF55E477909DC /* ClearSpecial.m in Sources */ = {isa = PBXBuildFile; fileRef = 1AA823A1259FC7EE25720418 /* ClearSpecial.m */; };
+		1AA822076AFF47D96A111562 /* MultiplayerNetworking.m in Sources */ = {isa = PBXBuildFile; fileRef = 1AA828AFA47E660616606F4A /* MultiplayerNetworking.m */; };
 		1AA823F6212ADD3FE94BC720 /* FieldCollisionHelper.m in Sources */ = {isa = PBXBuildFile; fileRef = 1AA827E346BC2FA1D7CCCC2D /* FieldCollisionHelper.m */; };
-		1AA8245C37E9B8E613185252 /* GameCenterHelper.m in Sources */ = {isa = PBXBuildFile; fileRef = 1AA82C85DDFB2D6237C77E86 /* GameCenterHelper.m */; };
 		1AA82601FE675A043EBE2B7D /* SpellFactory.m in Sources */ = {isa = PBXBuildFile; fileRef = 1AA82D1907277D9B46299F66 /* SpellFactory.m */; };
+		1AA82A7291F335393855541F /* GameKitHelper.m in Sources */ = {isa = PBXBuildFile; fileRef = 1AA82CD78FF11FF6FFAC0F53 /* GameKitHelper.m */; };
 		1AA82AEA53EDA6B8577282FD /* MainMenu.m in Sources */ = {isa = PBXBuildFile; fileRef = 1AA82FCEB86F52A08E13F433 /* MainMenu.m */; };
 		1AA82D6A2E2D79DEF384B3B6 /* Block.m in Sources */ = {isa = PBXBuildFile; fileRef = 1AA82D0472805880B730EEDB /* Block.m */; };
 		1AA82E43FC3929A4A863A1EE /* Tetromino.m in Sources */ = {isa = PBXBuildFile; fileRef = 1AA827C0EA61DC4E95669794 /* Tetromino.m */; };
@@ -74,19 +75,21 @@
 /* Begin PBXFileReference section */
 		1AA8202B9CEA5233E788263D /* Block.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = Block.h; sourceTree = "<group>"; };
 		1AA8202E5923045912E03ADE /* SwitchBoard.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = SwitchBoard.m; sourceTree = "<group>"; };
+		1AA820F865EE6E51144BD2B5 /* GameKitHelper.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = GameKitHelper.h; sourceTree = "<group>"; };
 		1AA8239D47AEF45CF93B958E /* Tetromino.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = Tetromino.h; sourceTree = "<group>"; };
 		1AA823A1259FC7EE25720418 /* ClearSpecial.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = ClearSpecial.m; sourceTree = "<group>"; };
 		1AA827C0EA61DC4E95669794 /* Tetromino.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = Tetromino.m; sourceTree = "<group>"; };
 		1AA827E346BC2FA1D7CCCC2D /* FieldCollisionHelper.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = FieldCollisionHelper.m; sourceTree = "<group>"; };
 		1AA82859F8BD8657F2B91C38 /* SpellFactory.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = SpellFactory.h; sourceTree = "<group>"; };
+		1AA828AFA47E660616606F4A /* MultiplayerNetworking.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = MultiplayerNetworking.m; sourceTree = "<group>"; };
 		1AA82A964DABA3B54C625116 /* SwitchBoard.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = SwitchBoard.h; sourceTree = "<group>"; };
 		1AA82C20B01F58C49F647E81 /* ClearSpecial.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = ClearSpecial.h; sourceTree = "<group>"; };
-		1AA82C85DDFB2D6237C77E86 /* GameCenterHelper.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = GameCenterHelper.m; sourceTree = "<group>"; };
 		1AA82CCD6F90A5DFD43D32C4 /* FieldCollisionHelper.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = FieldCollisionHelper.h; sourceTree = "<group>"; };
+		1AA82CD78FF11FF6FFAC0F53 /* GameKitHelper.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = GameKitHelper.m; sourceTree = "<group>"; };
 		1AA82D0472805880B730EEDB /* Block.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = Block.m; sourceTree = "<group>"; };
 		1AA82D1907277D9B46299F66 /* SpellFactory.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = SpellFactory.m; sourceTree = "<group>"; };
 		1AA82DFFC2D4E08DE5A78997 /* MainMenu.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = MainMenu.h; sourceTree = "<group>"; };
-		1AA82E9F80AC49071D67D190 /* GameCenterHelper.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = GameCenterHelper.h; sourceTree = "<group>"; };
+		1AA82E6F26ECEA1C67D59FFB /* MultiplayerNetworking.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = MultiplayerNetworking.h; sourceTree = "<group>"; };
 		1AA82FCEB86F52A08E13F433 /* MainMenu.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = MainMenu.m; sourceTree = "<group>"; };
 		7A7A20C36F1D1AECAF7FEB29 /* Nuke.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = Nuke.m; sourceTree = "<group>"; };
 		7A7A20C84071DB6970BDD4C5 /* Gravity.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = Gravity.h; sourceTree = "<group>"; };
@@ -166,8 +169,10 @@
 		1AA82DAA7ED7E98546AD82C6 /* Network */ = {
 			isa = PBXGroup;
 			children = (
-				1AA82E9F80AC49071D67D190 /* GameCenterHelper.h */,
-				1AA82C85DDFB2D6237C77E86 /* GameCenterHelper.m */,
+				1AA820F865EE6E51144BD2B5 /* GameKitHelper.h */,
+				1AA82CD78FF11FF6FFAC0F53 /* GameKitHelper.m */,
+				1AA82E6F26ECEA1C67D59FFB /* MultiplayerNetworking.h */,
+				1AA828AFA47E660616606F4A /* MultiplayerNetworking.m */,
 			);
 			name = Network;
 			path = Source/Network;
@@ -471,10 +476,11 @@
 				1AA82D6A2E2D79DEF384B3B6 /* Block.m in Sources */,
 				1AA82601FE675A043EBE2B7D /* SpellFactory.m in Sources */,
 				1AA823F6212ADD3FE94BC720 /* FieldCollisionHelper.m in Sources */,
-				1AA8245C37E9B8E613185252 /* GameCenterHelper.m in Sources */,
 				1AA82F55A56B5B5211850172 /* SwitchBoard.m in Sources */,
 				1AA820D4163EF55E477909DC /* ClearSpecial.m in Sources */,
 				1AA82AEA53EDA6B8577282FD /* MainMenu.m in Sources */,
+				1AA82A7291F335393855541F /* GameKitHelper.m in Sources */,
+				1AA822076AFF47D96A111562 /* MultiplayerNetworking.m in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};

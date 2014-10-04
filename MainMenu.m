@@ -4,7 +4,7 @@
 //
 
 #import "MainMenu.h"
-#import "GameCenterHelper.h"
+#import "GameKitHelper.h"
 
 
 @implementation MainMenu {

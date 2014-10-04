@@ -10,7 +10,6 @@
 #import "Field.h"
 #import "FieldCollisionHelper.h"
 #import "Board.h"
-#import "GameCenterHelper.h"
 
 @implementation MainScene {
     CCNode *_scene;

@@ -10,7 +10,7 @@
 #import "Gravity.h"
 #import "ClearSpecial.h"
 #import "SpellFactory.h"
-#import "GameCenterHelper.h"
+#import "GameKitHelper.h"
 
 
 @implementation Field {
