@@ -7,7 +7,8 @@
 //
 
 #import "CCNode.h"
+#import "MultiplayerNetworking.h"
 
-@interface MainScene : CCNode
-
+@interface MainScene : CCScene <MultiplayerNetworkingProtocol>
+@property (nonatomic, strong) MultiplayerNetworking *networkingEngine;
 @end

@@ -17,6 +17,8 @@
     Field *_p2;
     Field *_p3;
     NSMutableArray *bg;
+    NSMutableArray *_players;
+    NSUInteger _currentPlayerIndex;
 }
 - (id)init {
     if (self = [super init]) {
@@ -46,15 +48,15 @@
 }
 
 - (void)didLoadFromCCB {
-    //[[GameCenterHelper sharedInstance].listPlayers ]
 
-    _p1.board.Name = @"Player1";
-    _p2.board.Name = @"Player2";
-    _p3.board.Name = @"Player3";
+    [_players addObject:_p1];
+    [_players addObject:_p2];
+    [_players addObject:_p3];
 
     [_p1.board addChild:self.getRandomBackground];
     [_p2.board addChild:self.getRandomBackground];
     [_p3.board addChild:self.getRandomBackground];
+
 
     FieldCollisionHelper *fch = [FieldCollisionHelper sharedMySingleton];
     [fch AddFieldBox:_p1.board];
@@ -82,10 +84,36 @@
 
     }
 
+    //[_players[_currentPlayerIndex] moveForward];
+    [_networkingEngine sendMove:_p1];
+
 }
 
-- (void)touchBegan:(UITouch *)touch withEvent:(UIEvent *)event {
+#pragma mark MultiplayerNetworkingProtocol
+
+- (void)matchEnded {
 
 }
+
+- (void)setCurrentPlayerIndex:(NSUInteger)index {
+    _currentPlayerIndex = index;
+
+}
+
+- (void)movePlayerAtIndex:(NSUInteger)index field:(Field *)field {
+
+}
+
+- (void)gameOver:(BOOL)player1Won {
+
+
+}
+
+- (void)setPlayerAliases:(NSArray *)playerAliases {
+    [playerAliases enumerateObjectsUsingBlock:^(NSString *playerAlias, NSUInteger idx, BOOL *stop) {
+        [_players[idx] setName:playerAlias];
+    }];
+}
+
 
 @end

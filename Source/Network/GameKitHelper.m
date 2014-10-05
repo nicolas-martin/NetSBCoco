@@ -38,48 +38,32 @@ NSString *const LocalPlayerIsAuthenticated = @"local_player_authenticated";
 
 - (void)authenticateLocalPlayer
 {
-    GKLocalPlayer* localPlayer = [GKLocalPlayer localPlayer];
 
-    localPlayer.authenticateHandler = ^(UIViewController *viewController, NSError *error) {
-        if ([GKLocalPlayer localPlayer].authenticated) {
+    //1
+    GKLocalPlayer *localPlayer = [GKLocalPlayer localPlayer];
 
-            NSLog(@"Authenticated");
+    if (localPlayer.isAuthenticated) {
+        [[NSNotificationCenter defaultCenter] postNotificationName:LocalPlayerIsAuthenticated object:nil];
+        return;
+    }
+    //2
+    localPlayer.authenticateHandler  =
+            ^(UIViewController *viewController, NSError *error) {
+                //3
+                [self setLastError:error];
 
-        } else if(viewController) {
-            NSLog(@"Shoud authenticate");
-            [[self viewController] presentViewController:viewController animated:YES completion:nil];
-
-        } else {
-            NSLog(@"Disabled?");
-        }
-    };
-
-
-//    //1
-//    GKLocalPlayer *localPlayer = [GKLocalPlayer localPlayer];
-//
-//    if (localPlayer.isAuthenticated) {
-//        [[NSNotificationCenter defaultCenter] postNotificationName:LocalPlayerIsAuthenticated object:nil];
-//        return;
-//    }
-//    //2
-//    localPlayer.authenticateHandler  =
-//            ^(UIViewController *viewController, NSError *error) {
-//                //3
-//                [self setLastError:error];
-//
-//                if(viewController != nil) {
-//                    //4
-//                    [self setAuthenticationViewController:viewController];
-//                } else if([GKLocalPlayer localPlayer].isAuthenticated) {
-//                    //5
-//                    _enableGameCenter = YES;
-//                    [[NSNotificationCenter defaultCenter] postNotificationName:LocalPlayerIsAuthenticated object:nil];
-//                } else {
-//                    //6
-//                    _enableGameCenter = NO;
-//                }
-//            };
+                if(viewController != nil) {
+                    //4
+                    [[self viewController] presentViewController:viewController animated:YES completion:nil];
+                } else if([GKLocalPlayer localPlayer].isAuthenticated) {
+                    //5
+                    _enableGameCenter = YES;
+                    [[NSNotificationCenter defaultCenter] postNotificationName:LocalPlayerIsAuthenticated object:nil];
+                } else {
+                    //6
+                    _enableGameCenter = NO;
+                }
+            };
 }
 
 - (UIViewController*)viewController {
@@ -137,16 +121,12 @@ NSString *const LocalPlayerIsAuthenticated = @"local_player_authenticated";
             [[GKMatchmakerViewController alloc] initWithMatchRequest:request];
     mmvc.matchmakerDelegate = self;
 
-    [viewController presentViewController:mmvc animated:YES completion:nil];
-}
-
-- (void)setAuthenticationViewController: (UIViewController *)authenticationViewController
-{
-    if (authenticationViewController != nil) {
-        _authenticationViewController = authenticationViewController;
-        [[NSNotificationCenter defaultCenter] postNotificationName:PresentAuthenticationViewController object:self];
+    //TODO: HACK!
+    if (_viewController == nil) {
+        _viewController = [UIApplication sharedApplication].keyWindow.rootViewController;
     }
 
+    [_viewController presentViewController:mmvc animated:YES completion:nil];
 }
 
 - (void)setLastError:(NSError *)error

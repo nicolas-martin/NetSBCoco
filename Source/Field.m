@@ -17,7 +17,12 @@
     Inventory *_inventory;
     CCLabelTTF *_nbRowCleared;
     CCLabelTTF *_gameOver;
+    CCLabelTTF *_playerName;
 
+}
+
+-(void)setName:(NSString *)Name {
+    _playerName.string = Name;
 }
 
 

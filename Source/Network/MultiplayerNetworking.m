@@ -7,6 +7,7 @@
 //
 
 #import "MultiplayerNetworking.h"
+#import "Field.h"
 
 #define playerIdKey @"PlayerId"
 #define randomNumberKey @"randomNumber"
@@ -41,6 +42,7 @@ typedef struct {
 
 typedef struct {
     Message message;
+    __unsafe_unretained Field *field;
 } MessageMove;
 
 typedef struct {
@@ -84,9 +86,10 @@ typedef struct {
     }
 }
 
-- (void)sendMove {
+- (void)sendMove:(Field *)field {
     MessageMove messageMove;
     messageMove.message.messageType = kMessageTypeMove;
+    messageMove.field = field;
     NSData *data = [NSData dataWithBytes:&messageMove
                                   length:sizeof(MessageMove)];
     [self sendData:data];
@@ -273,7 +276,7 @@ typedef struct {
     } else if (message->messageType == kMessageTypeMove) {
         NSLog(@"Move message received");
         MessageMove *messageMove = (MessageMove*)[data bytes];
-        [self.delegate movePlayerAtIndex:[self indexForPlayerWithId:playerID]];
+        [self.delegate movePlayerAtIndex:[self indexForPlayerWithId:playerID] field:NULL];
     } else if(message->messageType == kMessageTypeGameOver) {
         NSLog(@"Game over message received");
         MessageGameOver * messageGameOver = (MessageGameOver *) [data bytes];

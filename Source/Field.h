@@ -12,7 +12,7 @@
 @interface Field : CCNode
 
 @property Board *board;
-
+@property(nonatomic) NSString *Name;
 
 - (void)displayGameOver;
 
