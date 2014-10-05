@@ -9,13 +9,16 @@
 /* Begin PBXBuildFile section */
 		1AA820D4163EF55E477909DC /* ClearSpecial.m in Sources */ = {isa = PBXBuildFile; fileRef = 1AA823A1259FC7EE25720418 /* ClearSpecial.m */; };
 		1AA822076AFF47D96A111562 /* MultiplayerNetworking.m in Sources */ = {isa = PBXBuildFile; fileRef = 1AA828AFA47E660616606F4A /* MultiplayerNetworking.m */; };
+		1AA82389364267A9AC2F40B6 /* GameOverViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 1AA82BB3E8205CAC9E40D376 /* GameOverViewController.m */; };
 		1AA823F6212ADD3FE94BC720 /* FieldCollisionHelper.m in Sources */ = {isa = PBXBuildFile; fileRef = 1AA827E346BC2FA1D7CCCC2D /* FieldCollisionHelper.m */; };
 		1AA82601FE675A043EBE2B7D /* SpellFactory.m in Sources */ = {isa = PBXBuildFile; fileRef = 1AA82D1907277D9B46299F66 /* SpellFactory.m */; };
+		1AA82652733C2F9E1BCBD809 /* GameNavigationController.m in Sources */ = {isa = PBXBuildFile; fileRef = 1AA826A06E79A45208038411 /* GameNavigationController.m */; };
 		1AA82A7291F335393855541F /* GameKitHelper.m in Sources */ = {isa = PBXBuildFile; fileRef = 1AA82CD78FF11FF6FFAC0F53 /* GameKitHelper.m */; };
 		1AA82AEA53EDA6B8577282FD /* MainMenu.m in Sources */ = {isa = PBXBuildFile; fileRef = 1AA82FCEB86F52A08E13F433 /* MainMenu.m */; };
 		1AA82D6A2E2D79DEF384B3B6 /* Block.m in Sources */ = {isa = PBXBuildFile; fileRef = 1AA82D0472805880B730EEDB /* Block.m */; };
 		1AA82E43FC3929A4A863A1EE /* Tetromino.m in Sources */ = {isa = PBXBuildFile; fileRef = 1AA827C0EA61DC4E95669794 /* Tetromino.m */; };
 		1AA82F55A56B5B5211850172 /* SwitchBoard.m in Sources */ = {isa = PBXBuildFile; fileRef = 1AA8202E5923045912E03ADE /* SwitchBoard.m */; };
+		1AA82FE3B0A583C593139D62 /* GameViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 1AA8222B6A7888E171856EB5 /* GameViewController.m */; };
 		7A7A2303CBE96D656256F097 /* AddLine.m in Sources */ = {isa = PBXBuildFile; fileRef = 7A7A28F768AE660411EFCFE6 /* AddLine.m */; };
 		7A7A27ED81838EA5C9A4BDF4 /* Nuke.m in Sources */ = {isa = PBXBuildFile; fileRef = 7A7A20C36F1D1AECAF7FEB29 /* Nuke.m */; };
 		7A7A2B4A967F06D9AA427CB4 /* RandomRemove.m in Sources */ = {isa = PBXBuildFile; fileRef = 7A7A240BD3C56381C666095F /* RandomRemove.m */; };
@@ -76,13 +79,19 @@
 		1AA8202B9CEA5233E788263D /* Block.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = Block.h; sourceTree = "<group>"; };
 		1AA8202E5923045912E03ADE /* SwitchBoard.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = SwitchBoard.m; sourceTree = "<group>"; };
 		1AA820F865EE6E51144BD2B5 /* GameKitHelper.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = GameKitHelper.h; sourceTree = "<group>"; };
+		1AA8222B6A7888E171856EB5 /* GameViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = GameViewController.m; path = Source/ViewControllers/GameViewController.m; sourceTree = "<group>"; };
+		1AA8229D5A1C9F973B994015 /* GameNavigationController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = GameNavigationController.h; path = Source/ViewControllers/GameNavigationController.h; sourceTree = "<group>"; };
 		1AA8239D47AEF45CF93B958E /* Tetromino.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = Tetromino.h; sourceTree = "<group>"; };
 		1AA823A1259FC7EE25720418 /* ClearSpecial.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = ClearSpecial.m; sourceTree = "<group>"; };
+		1AA826A06E79A45208038411 /* GameNavigationController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = GameNavigationController.m; path = Source/ViewControllers/GameNavigationController.m; sourceTree = "<group>"; };
+		1AA826F2A8FABEE9BC885016 /* GameOverViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = GameOverViewController.h; path = Source/ViewControllers/GameOverViewController.h; sourceTree = "<group>"; };
 		1AA827C0EA61DC4E95669794 /* Tetromino.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = Tetromino.m; sourceTree = "<group>"; };
 		1AA827E346BC2FA1D7CCCC2D /* FieldCollisionHelper.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = FieldCollisionHelper.m; sourceTree = "<group>"; };
 		1AA82859F8BD8657F2B91C38 /* SpellFactory.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = SpellFactory.h; sourceTree = "<group>"; };
 		1AA828AFA47E660616606F4A /* MultiplayerNetworking.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = MultiplayerNetworking.m; sourceTree = "<group>"; };
+		1AA82A410BE7C5A367E8F422 /* GameViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = GameViewController.h; path = Source/ViewControllers/GameViewController.h; sourceTree = "<group>"; };
 		1AA82A964DABA3B54C625116 /* SwitchBoard.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = SwitchBoard.h; sourceTree = "<group>"; };
+		1AA82BB3E8205CAC9E40D376 /* GameOverViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = GameOverViewController.m; path = Source/ViewControllers/GameOverViewController.m; sourceTree = "<group>"; };
 		1AA82C20B01F58C49F647E81 /* ClearSpecial.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = ClearSpecial.h; sourceTree = "<group>"; };
 		1AA82CCD6F90A5DFD43D32C4 /* FieldCollisionHelper.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = FieldCollisionHelper.h; sourceTree = "<group>"; };
 		1AA82CD78FF11FF6FFAC0F53 /* GameKitHelper.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = GameKitHelper.m; sourceTree = "<group>"; };
@@ -166,6 +175,19 @@
 /* End PBXFrameworksBuildPhase section */
 
 /* Begin PBXGroup section */
+		1AA82CBE7C83DC5ADB0D75AE /* ViewControllers */ = {
+			isa = PBXGroup;
+			children = (
+				1AA8229D5A1C9F973B994015 /* GameNavigationController.h */,
+				1AA826A06E79A45208038411 /* GameNavigationController.m */,
+				1AA826F2A8FABEE9BC885016 /* GameOverViewController.h */,
+				1AA82BB3E8205CAC9E40D376 /* GameOverViewController.m */,
+				1AA82A410BE7C5A367E8F422 /* GameViewController.h */,
+				1AA8222B6A7888E171856EB5 /* GameViewController.m */,
+			);
+			name = ViewControllers;
+			sourceTree = "<group>";
+		};
 		1AA82DAA7ED7E98546AD82C6 /* Network */ = {
 			isa = PBXGroup;
 			children = (
@@ -250,6 +272,7 @@
 				1AA82DAA7ED7E98546AD82C6 /* Network */,
 				1AA82FCEB86F52A08E13F433 /* MainMenu.m */,
 				1AA82DFFC2D4E08DE5A78997 /* MainMenu.h */,
+				1AA82CBE7C83DC5ADB0D75AE /* ViewControllers */,
 			);
 			name = Source;
 			sourceTree = "<group>";
@@ -481,6 +504,9 @@
 				1AA82AEA53EDA6B8577282FD /* MainMenu.m in Sources */,
 				1AA82A7291F335393855541F /* GameKitHelper.m in Sources */,
 				1AA822076AFF47D96A111562 /* MultiplayerNetworking.m in Sources */,
+				1AA82652733C2F9E1BCBD809 /* GameNavigationController.m in Sources */,
+				1AA82389364267A9AC2F40B6 /* GameOverViewController.m in Sources */,
+				1AA82FE3B0A583C593139D62 /* GameViewController.m in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};

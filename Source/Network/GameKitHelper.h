@@ -23,6 +23,8 @@ extern NSString *const LocalPlayerIsAuthenticated;
 
 @property (nonatomic, readonly) UIViewController *authenticationViewController;
 @property (nonatomic, readonly) NSError *lastError;
+//
+@property(nonatomic) UIViewController *viewController;
 
 @property (nonatomic, strong) GKMatch *match;
 @property (nonatomic, assign) id <GameKitHelperDelegate> delegate;
