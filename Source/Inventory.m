@@ -8,6 +8,7 @@
 #import "ICastable.h"
 #import "FieldCollisionHelper.h"
 #import "CCNode_Private.h"
+#import "UITouch+CC.h"
 
 
 @implementation Inventory {
@@ -80,13 +81,13 @@
     }
 }
 
-- (void)touchBegan:(UITouch *)touch withEvent:(UIEvent *)event {
+- (void)touchBegan:(CCTouch *)touch withEvent:(CCTouchEvent *)event {
     CGPoint touchLocation = [touch locationInNode:self];
     [self selectSpriteForTouch:touchLocation];
 }
 
 
-- (void)touchMoved:(UITouch *)touch withEvent:(UIEvent *)event {
+- (void)touchMoved:(CCTouch *)touch withEvent:(UIEvent *)event {
     CGPoint touchLocation = [touch locationInNode:self];
 
     if (selSprite) {
@@ -96,7 +97,7 @@
 }
 
 
-- (void)touchEnded:(UITouch *)touch withEvent:(UIEvent *)event {
+- (void)touchEnded:(CCTouch *)touch withEvent:(UIEvent *)event {
     CGPoint touchLocation = [[CCDirector sharedDirector] convertToGL:[touch locationInView:[touch view]]];
 
     FieldCollisionHelper *fch = [FieldCollisionHelper sharedMySingleton];

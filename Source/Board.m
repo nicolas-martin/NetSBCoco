@@ -7,6 +7,7 @@
 #import "Block.h"
 #import "Tetromino.h"
 #import "SpellFactory.h"
+#import "UITouch+CC.h"
 
 
 @implementation Board {
@@ -60,7 +61,7 @@
 
 }
 
-- (void)touchMoved:(UITouch *)touch withEvent:(UIEvent *)event
+- (void)touchMoved:(CCTouch *)touch withEvent:(CCTouchEvent *)event
 {
 
     NSUInteger previousLocation = userTetromino.anchorX;
@@ -79,7 +80,7 @@
 
 }
 
-- (void)touchBegan:(UITouch *)touch withEvent:(UIEvent *)event {
+- (void)touchBegan:(CCTouch *)touch withEvent:(CCTouchEvent *)event {
 
     isDrag = NO;
 
@@ -87,7 +88,7 @@
 
 }
 
-- (void)touchEnded:(UITouch *)touch withEvent:(UIEvent *)event
+- (void)touchEnded:(CCTouch *)touch withEvent:(CCTouchEvent *)event
 {
     if (!isDrag){
 
