@@ -22,6 +22,10 @@
 }
 
 -(void)setName:(NSString *)Name {
+    //Not sure why it sends a nil here sometimes
+    if (Name == Nil){
+        Name = @"";
+    }
     _playerName.string = Name;
 }
 

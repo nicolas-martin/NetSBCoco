@@ -20,7 +20,7 @@
 }
 
 - (void)playerAuthenticated{
-    MainScene *mainScene = (MainScene *) [CCBReader loadAsScene:@"MainScene"];
+    MainScene *mainScene = (MainScene *) [[CCBReader loadAsScene:@"MainScene"] children] [0];
     _networkingEngine = [[MultiplayerNetworking alloc]init];
     _networkingEngine.delegate = mainScene;
     mainScene.networkingEngine = _networkingEngine;
@@ -30,8 +30,12 @@
 }
 
 - (void)play {
+    MainScene *mainScene = (MainScene *) [[CCBReader loadAsScene:@"MainScene"] children] [0];
+    [[CCDirector sharedDirector] replaceScene:mainScene];
+}
 
-//    [[CCDirector sharedDirector] replaceScene:mainScene];
+- (void)dealloc {
+    [[NSNotificationCenter defaultCenter] removeObserver:self];
 }
 
 @end

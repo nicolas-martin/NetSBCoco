@@ -87,7 +87,7 @@
 }
 
 
-- (void)touchMoved:(CCTouch *)touch withEvent:(UIEvent *)event {
+- (void)touchMoved:(CCTouch *)touch withEvent:(CCTouchEvent *)event {
     CGPoint touchLocation = [touch locationInNode:self];
 
     if (selSprite) {
@@ -97,7 +97,7 @@
 }
 
 
-- (void)touchEnded:(CCTouch *)touch withEvent:(UIEvent *)event {
+- (void)touchEnded:(CCTouch *)touch withEvent:(CCTouchEvent *)event {
     CGPoint touchLocation = [[CCDirector sharedDirector] convertToGL:[touch locationInView:[touch view]]];
 
     FieldCollisionHelper *fch = [FieldCollisionHelper sharedMySingleton];
