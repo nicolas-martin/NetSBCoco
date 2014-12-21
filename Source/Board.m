@@ -141,8 +141,8 @@
 
 - (BOOL)isBlockAt:(CGPoint)point {
 
-    if (point.x == _Nbx) {
-        point.x = _Nbx-1;
+    if (point.x == _Nby) {
+        point.x = _Nby-1;
     }
     NSMutableArray *inner = _array[(NSUInteger) point.x];
 

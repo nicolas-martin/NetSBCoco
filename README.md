@@ -14,3 +14,4 @@ enemy!
 - Clear special blocks
 - _Fog_
 - _Clear column_
+- _Remove Line_

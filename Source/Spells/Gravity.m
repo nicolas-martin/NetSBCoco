@@ -32,7 +32,7 @@
     enumerator = [targetBoard.getAllBlocksInBoard reverseObjectEnumerator];
 
     for (Block *block in enumerator) {
-        while (block.boardY + 1 < targetBoard.Nbx && ![targetBoard isBlockAt:ccp(block.boardX, block.boardY + 1)]) {
+        while (block.boardY + 1 < targetBoard.Nby && ![targetBoard isBlockAt:ccp(block.boardX, block.boardY + 1)]) {
 
             [targetBoard MoveBlock:block to:ccp(block.boardX, block.boardY + 1)];
 
