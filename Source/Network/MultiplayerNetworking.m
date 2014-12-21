@@ -273,10 +273,12 @@ typedef struct {
         _gameState = kGameStateActive;
         [self.delegate setCurrentPlayerIndex:[self indexForLocalPlayer]];
         [self processPlayerAliases];
+
     } else if (message->messageType == kMessageTypeMove) {
         NSLog(@"Move message received");
         MessageMove *messageMove = (MessageMove*)[data bytes];
         [self.delegate movePlayerAtIndex:[self indexForPlayerWithId:playerID] field:NULL];
+
     } else if(message->messageType == kMessageTypeGameOver) {
         NSLog(@"Game over message received");
         MessageGameOver * messageGameOver = (MessageGameOver *) [data bytes];

@@ -25,7 +25,7 @@
     _networkingEngine.delegate = mainScene;
     mainScene.networkingEngine = _networkingEngine;
 
-    [[GameKitHelper sharedGameKitHelper] findMatchWithMinPlayers:2 maxPlayers:2 viewController:nil delegate:_networkingEngine];
+    [[GameKitHelper sharedGameKitHelper] findMatchWithMinPlayers:1 maxPlayers:2 viewController:nil delegate:_networkingEngine];
 
 }
 

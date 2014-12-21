@@ -6,10 +6,13 @@
 //  Copyright (c) 2013 Apportable. All rights reserved.
 //
 
+#import <Foundation/Foundation.h>
 #import "MainScene.h"
 #import "Field.h"
 #import "FieldCollisionHelper.h"
 #import "Board.h"
+
+//TODO: Maybe move the board touch handling here?
 
 @implementation MainScene {
     CCNode *_scene;
@@ -62,32 +65,80 @@
     [fch AddFieldBox:_p1.board];
     [fch AddFieldBox:_p2.board];
     [fch AddFieldBox:_p3.board];
-
 }
 
 - (void)onEnter {
 
     //TODO: Levels speed for each players
-    [self schedule:@selector(gameLoop) interval:1];
+    //[self schedule:@selector(gameLoop) interval:1];
 
     [super onEnter];
 
 }
 
-- (void)gameLoop {
 
-    if ([_p1 updateStatus]) {
-
-        //Bug with cocos2d.. will be fixed in 3.1
-        //[self unschedule:@selector(gameLoop)];
-        ([_p1 displayGameOver]);
-
+-(void)update:(CFTimeInterval)currentTime {
+    if (self.paused && _currentPlayerIndex == -1) {
+        return;
     }
 
-    //[_players[_currentPlayerIndex] moveForward];
-    [_networkingEngine sendMove:_p1];
+    NSMutableArray *playersOut;
 
+    //Only Player 1 will check for game over condition
+    if (_currentPlayerIndex == 0) {
+        [_players enumerateObjectsUsingBlock:^(Field *field, NSUInteger idx, BOOL *stop) {
+
+            //Skip the players who are already dead.
+            if([playersOut containsObject:field]){
+                return;
+            }
+
+            if(field.updateStatus) {
+
+                if (_players.count == playersOut.count - 1)
+                {
+                    [_networkingEngine sendGameEnd:YES];
+                }
+
+                if (idx == _currentPlayerIndex) {
+                    //TODO: Use this to figure out if the human lost or if it's someone else
+                    //Do something special
+                }
+
+//                if (self.gameOverBlock) {
+//                    self.gameOverBlock(didWin);
+//                }
+            }
+            else{
+
+                [playersOut addObject:field];
+                NSLog(@"Lost");
+                _currentPlayerIndex = -1;
+                *stop = YES;
+                [_networkingEngine sendGameEnd:NO];
+
+            }
+
+
+        }];
+    }
 }
+
+//
+//- (void)gameLoop {
+//
+//    if ([_p1 updateStatus]) {
+//
+//        //Bug with cocos2d.. will be fixed in 3.1
+//        //[self unschedule:@selector(gameLoop)];
+//        ([_p1 displayGameOver]);
+//
+//    }
+//
+//    //[_players[_currentPlayerIndex] moveForward];
+//    [_networkingEngine sendMove:_p1];
+//
+//}
 
 #pragma mark MultiplayerNetworkingProtocol
 
@@ -100,18 +151,41 @@
 
 }
 
+//TODO: Exact this metho and the SwitchBoard spell into one.
+//HACK: This is clearly not the most optimal way to do it. But it's easy..
 - (void)movePlayerAtIndex:(NSUInteger)index field:(Field *)field {
+
+    NSMutableArray *targetBoardBlocks;
+    NSMutableArray *playerBoardBlocks;
+    Board * targetBoard = [(Field *)_players[index] board];
+
+    if (targetBoard == field.board)
+        return;
+    playerBoardBlocks = field.board.getAllBlocksInBoard;
+    targetBoardBlocks = targetBoard.getAllBlocksInBoard;
+
+    [field.board DeleteBlockFromBoardAndSprite:playerBoardBlocks];
+    [targetBoard DeleteBlockFromBoardAndSprite:targetBoardBlocks];
+
+    [field.board addBlocks:targetBoardBlocks];
+    [targetBoard addBlocks:playerBoardBlocks];
 
 }
 
 - (void)gameOver:(BOOL)player1Won {
-
+    BOOL didLocalPlayerWin = YES;
+    if (player1Won) {
+        didLocalPlayerWin = NO;
+    }
+//    if (self.gameOverBlock) {
+//        self.gameOverBlock(didLocalPlayerWin);
+//    }
 
 }
 
 - (void)setPlayerAliases:(NSArray *)playerAliases {
     [playerAliases enumerateObjectsUsingBlock:^(NSString *playerAlias, NSUInteger idx, BOOL *stop) {
-        [_players[idx] setName:playerAlias];
+        [(Field *)_players[idx] setName:playerAlias];
     }];
 }
 
