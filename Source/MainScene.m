@@ -22,11 +22,14 @@
     NSMutableArray *bg;
     NSMutableArray *_players;
     NSUInteger _currentPlayerIndex;
+    NSMutableArray *_playersOut;
 }
 - (id)init {
     if (self = [super init]) {
         self.userInteractionEnabled = TRUE;
         bg = [@[@"Gold", @"Orange", @"Purple", @"Silver", @"Teal"] mutableCopy];
+        _players = [[NSMutableArray alloc] init];
+        _playersOut = [[NSMutableArray alloc]init];
 
     }
     return self;
@@ -78,26 +81,29 @@
 
 
 -(void)update:(CFTimeInterval)currentTime {
-    if (self.paused && _currentPlayerIndex == -1) {
-        return;
-    }
+//    if (self.paused && _currentPlayerIndex == -1) {
+//        return;
+//    }
 
-    NSMutableArray *playersOut;
 
     //Only Player 1 will check for game over condition
     if (_currentPlayerIndex == 0) {
         [_players enumerateObjectsUsingBlock:^(Field *field, NSUInteger idx, BOOL *stop) {
 
             //Skip the players who are already dead.
-            if([playersOut containsObject:field]){
+            if([_playersOut containsObject:field]){
                 return;
             }
 
-            if(field.updateStatus) {
+            BOOL isGameOver = field.updateStatus;
+            if(!isGameOver) {
 
-                if (_players.count == playersOut.count - 1)
+                if (_players.count - 1 == _playersOut.count)
                 {
                     [_networkingEngine sendGameEnd:YES];
+                    NSLog(@"Win %d", idx);
+                    *stop = YES;
+                    _currentPlayerIndex = -1;
                 }
 
                 if (idx == _currentPlayerIndex) {
@@ -111,9 +117,9 @@
             }
             else{
 
-                [playersOut addObject:field];
-                NSLog(@"Lost");
-                _currentPlayerIndex = -1;
+                [_playersOut addObject:field];
+                NSLog(@"Lost %d", idx);
+
                 *stop = YES;
                 [_networkingEngine sendGameEnd:NO];
 
