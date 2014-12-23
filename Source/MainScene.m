@@ -30,6 +30,7 @@
         bg = [@[@"Gold", @"Orange", @"Purple", @"Silver", @"Teal"] mutableCopy];
         _players = [[NSMutableArray alloc] init];
         _playersOut = [[NSMutableArray alloc]init];
+        self.userInteractionEnabled = YES;
 
     }
     return self;
@@ -72,79 +73,66 @@
 
 - (void)onEnter {
 
-    //TODO: Levels speed for each players
-    //[self schedule:@selector(gameLoop) interval:1];
-
     [super onEnter];
 
 }
 
-
+//TODO: Levels speed for each players
 -(void)update:(CFTimeInterval)currentTime {
-//    if (self.paused && _currentPlayerIndex == -1) {
-//        return;
-//    }
+    if (self.paused && _currentPlayerIndex == -1) {
+        return;
+    }
+
+    self.lastSpawnTimeInterval += currentTime;
+    if (self.lastSpawnTimeInterval > 0.3) {
+        self.lastSpawnTimeInterval = 0;
 
 
-    //Only Player 1 will check for game over condition
-    if (_currentPlayerIndex == 0) {
-        [_players enumerateObjectsUsingBlock:^(Field *field, NSUInteger idx, BOOL *stop) {
+        //Only Player 1 will check for game over condition
+        if (_currentPlayerIndex == 0) {
+            [_players enumerateObjectsUsingBlock:^(Field *field, NSUInteger idx, BOOL *stop) {
 
-            //Skip the players who are already dead.
-            if([_playersOut containsObject:field]){
-                return;
-            }
-
-            BOOL isGameOver = field.updateStatus;
-            if(!isGameOver) {
-
-                if (_players.count - 1 == _playersOut.count)
-                {
-                    [_networkingEngine sendGameEnd:YES];
-                    NSLog(@"Win %d", idx);
-                    *stop = YES;
-                    _currentPlayerIndex = -1;
+                //Skip the players who are already dead.
+                if([_playersOut containsObject:field]){
+                    return;
                 }
 
-                if (idx == _currentPlayerIndex) {
-                    //TODO: Use this to figure out if the human lost or if it's someone else
-                    //Do something special
-                }
+                BOOL isGameOver = field.updateStatus;
+                if(!isGameOver) {
+
+                    if (_players.count - 1 == _playersOut.count)
+                    {
+                        [_networkingEngine sendGameEnd:YES];
+                        NSLog(@"Win %d", idx);
+                        *stop = YES;
+                        _currentPlayerIndex = -1;
+                    }
+
+                    if (idx == _currentPlayerIndex) {
+                        //TODO: Use this to figure out if the human lost or if it's someone else
+                        //Do something special
+                    }
 
 //                if (self.gameOverBlock) {
 //                    self.gameOverBlock(didWin);
 //                }
-            }
-            else{
+                }
+                else{
 
-                [_playersOut addObject:field];
-                NSLog(@"Lost %d", idx);
+                    [_playersOut addObject:field];
+                    NSLog(@"Lost %d", idx);
 
-                *stop = YES;
-                [_networkingEngine sendGameEnd:NO];
+                    *stop = YES;
+                    [_networkingEngine sendGameEnd:NO];
 
-            }
+                }
 
 
-        }];
+            }];
+        }
     }
 }
 
-//
-//- (void)gameLoop {
-//
-//    if ([_p1 updateStatus]) {
-//
-//        //Bug with cocos2d.. will be fixed in 3.1
-//        //[self unschedule:@selector(gameLoop)];
-//        ([_p1 displayGameOver]);
-//
-//    }
-//
-//    //[_players[_currentPlayerIndex] moveForward];
-//    [_networkingEngine sendMove:_p1];
-//
-//}
 
 #pragma mark MultiplayerNetworkingProtocol
 
@@ -157,7 +145,7 @@
 
 }
 
-//TODO: Exact this metho and the SwitchBoard spell into one.
+//TODO: Extract this method and the SwitchBoard spell into one.
 //HACK: This is clearly not the most optimal way to do it. But it's easy..
 - (void)movePlayerAtIndex:(NSUInteger)index field:(Field *)field {
 
@@ -189,11 +177,48 @@
 
 }
 
+//FIXME: Not working
 - (void)setPlayerAliases:(NSArray *)playerAliases {
     [playerAliases enumerateObjectsUsingBlock:^(NSString *playerAlias, NSUInteger idx, BOOL *stop) {
         [(Field *)_players[idx] setName:playerAlias];
     }];
 }
 
+- (void)touchMoved:(CCTouch *)touch withEvent:(CCTouchEvent *)event {
+    if (_currentPlayerIndex == -1) {
+        return;
+    }
+
+    //[(Field *)_players[index] board]
+    Field *p1Field = (Field *)_players[_currentPlayerIndex];
+    [[p1Field board] touchMoved:touch];
+    [_networkingEngine sendMove:p1Field];
+
+}
+
+- (void)touchBegan:(CCTouch *)touch withEvent:(CCTouchEvent *)event {
+
+    if (_currentPlayerIndex == -1) {
+        return;
+    }
+
+    //[(Field *)_players[index] board]
+    Field *p1Field = (Field *)_players[_currentPlayerIndex];
+    [[p1Field board] touchBegan:touch];
+    [_networkingEngine sendMove:p1Field];
+
+}
+
+- (void)touchEnded:(CCTouch *)touch withEvent:(CCTouchEvent *)event {
+    if (_currentPlayerIndex == -1) {
+        return;
+    }
+
+    //[(Field *)_players[index] board]
+    Field *p1Field = (Field *)_players[_currentPlayerIndex];
+    [[p1Field board] touchEnded:touch];
+    [_networkingEngine sendMove:p1Field];
+
+}
 
 @end

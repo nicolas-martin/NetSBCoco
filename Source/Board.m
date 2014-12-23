@@ -8,6 +8,8 @@
 #import "Tetromino.h"
 #import "SpellFactory.h"
 #import "UITouch+CC.h"
+#import "CCControl.h"
+#import "unzip.h"
 
 
 @implementation Board {
@@ -23,7 +25,7 @@
         self.Nbx = 10;
         self.Nby = 20;
         _array = self.get20x10Array;
-        self.userInteractionEnabled = YES;
+        //self.userInteractionEnabled = YES;
 
     }
 
@@ -61,9 +63,10 @@
 
 }
 
-- (void)touchMoved:(CCTouch *)touch withEvent:(CCTouchEvent *)event
-{
 
+
+
+- (void)touchMoved:(CCTouch *)touch {
     NSUInteger previousLocation = userTetromino.anchorX;
     CGPoint pos = [touch locationInNode:self];
     CGPoint tileCoordForPosition = [self tileCoordForPosition:pos];
@@ -77,19 +80,19 @@
     }
 
     isDrag = YES;
-
 }
 
-- (void)touchBegan:(CCTouch *)touch withEvent:(CCTouchEvent *)event {
 
+
+- (void)touchBegan:(CCTouch *)touch {
     isDrag = NO;
 
     previousTouch = [touch locationInNode:self];
-
 }
 
-- (void)touchEnded:(CCTouch *)touch withEvent:(CCTouchEvent *)event
-{
+
+
+- (void)touchEnded:(CCTouch *)touch {
     if (!isDrag){
 
         CGPoint pos = [touch locationInNode:self];
@@ -113,8 +116,8 @@
 
     isDrag = NO;
 }
-- (void)touchCancelled:(UITouch *)touch withEvent:(UIEvent *)event
-{
+
+- (void)touchCancelled:(CCTouch *)touch withEvent:(CCTouchEvent *)event {
 }
 
 - (CGPoint)tileCoordForPosition:(CGPoint)position {

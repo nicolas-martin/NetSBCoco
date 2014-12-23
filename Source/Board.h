@@ -19,6 +19,12 @@
 
 - (id)init;
 
+- (void)touchMoved:(CCTouch *)touch;
+
+- (void)touchBegan:(CCTouch *)touch;
+
+- (void)touchEnded:(CCTouch *)touch;
+
 - (BOOL)isBlockAt:(CGPoint)point;
 
 - (NSMutableArray *)getAllBlocksInBoard;

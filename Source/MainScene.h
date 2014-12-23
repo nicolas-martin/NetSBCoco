@@ -11,4 +11,5 @@
 
 @interface MainScene : CCScene <MultiplayerNetworkingProtocol>
 @property (nonatomic, strong) MultiplayerNetworking *networkingEngine;
+@property(nonatomic) CFTimeInterval lastSpawnTimeInterval;
 @end
