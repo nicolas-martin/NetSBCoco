@@ -85,6 +85,7 @@
 
 
 - (void)touchBegan:(CCTouch *)touch {
+
     isDrag = NO;
 
     previousTouch = [touch locationInNode:self];
@@ -93,6 +94,7 @@
 
 
 - (void)touchEnded:(CCTouch *)touch {
+
     if (!isDrag){
 
         CGPoint pos = [touch locationInNode:self];

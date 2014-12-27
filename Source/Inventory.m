@@ -24,6 +24,7 @@
         inventory = [[NSMutableArray alloc] init];
         movableSprites = [[NSMutableArray alloc] init];
         self.userInteractionEnabled = YES;
+        self.multipleTouchEnabled = YES;
 
     }
 

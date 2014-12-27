@@ -30,7 +30,10 @@
         bg = [@[@"Gold", @"Orange", @"Purple", @"Silver", @"Teal"] mutableCopy];
         _players = [[NSMutableArray alloc] init];
         _playersOut = [[NSMutableArray alloc]init];
-        self.userInteractionEnabled = YES;
+
+        [self setUserInteractionEnabled:YES];
+        [self setMultipleTouchEnabled:YES];
+
 
     }
     return self;
@@ -184,6 +187,7 @@
     }];
 }
 
+
 - (void)touchMoved:(CCTouch *)touch withEvent:(CCTouchEvent *)event {
     if (_currentPlayerIndex == -1) {
         return;
@@ -197,6 +201,7 @@
 }
 
 - (void)touchBegan:(CCTouch *)touch withEvent:(CCTouchEvent *)event {
+    NSLog(@"Touch Began");
 
     if (_currentPlayerIndex == -1) {
         return;
@@ -210,6 +215,7 @@
 }
 
 - (void)touchEnded:(CCTouch *)touch withEvent:(CCTouchEvent *)event {
+    NSLog(@"Touch ended");
     if (_currentPlayerIndex == -1) {
         return;
     }
