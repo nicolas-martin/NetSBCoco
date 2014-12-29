@@ -6,14 +6,13 @@
 //  Copyright (c) 2013 Apportable. All rights reserved.
 //
 
-#import <Foundation/Foundation.h>
 #import "MainScene.h"
 #import "Field.h"
 #import "FieldCollisionHelper.h"
 #import "Board.h"
 
-//TODO: Maybe move the board touch handling here?
-
+//Had to use node point size instead of 100% for the touch to work..
+//Might give trouble on other devices.
 @implementation MainScene {
     CCNode *_scene;
     Field *_p1;
@@ -119,6 +118,8 @@
 //                if (self.gameOverBlock) {
 //                    self.gameOverBlock(didWin);
 //                }
+
+                    [_networkingEngine sendMove:field];
                 }
                 else{
 
@@ -146,6 +147,9 @@
 - (void)setCurrentPlayerIndex:(NSUInteger)index {
     _currentPlayerIndex = index;
 
+    //TODO: Put in it's own delegate method
+    [[CCDirector sharedDirector] replaceScene:self];
+
 }
 
 //TODO: Extract this method and the SwitchBoard spell into one.
@@ -158,6 +162,7 @@
 
     if (targetBoard == field.board)
         return;
+
     playerBoardBlocks = field.board.getAllBlocksInBoard;
     targetBoardBlocks = targetBoard.getAllBlocksInBoard;
 
@@ -189,25 +194,23 @@
 
 
 - (void)touchMoved:(CCTouch *)touch withEvent:(CCTouchEvent *)event {
+
     if (_currentPlayerIndex == -1) {
         return;
     }
 
-    //[(Field *)_players[index] board]
     Field *p1Field = (Field *)_players[_currentPlayerIndex];
     [[p1Field board] touchMoved:touch];
-    [_networkingEngine sendMove:p1Field];
+//    [_networkingEngine sendMove:p1Field];
 
 }
 
 - (void)touchBegan:(CCTouch *)touch withEvent:(CCTouchEvent *)event {
-    NSLog(@"Touch Began");
 
     if (_currentPlayerIndex == -1) {
         return;
     }
 
-    //[(Field *)_players[index] board]
     Field *p1Field = (Field *)_players[_currentPlayerIndex];
     [[p1Field board] touchBegan:touch];
     [_networkingEngine sendMove:p1Field];
@@ -215,12 +218,11 @@
 }
 
 - (void)touchEnded:(CCTouch *)touch withEvent:(CCTouchEvent *)event {
-    NSLog(@"Touch ended");
+
     if (_currentPlayerIndex == -1) {
         return;
     }
 
-    //[(Field *)_players[index] board]
     Field *p1Field = (Field *)_players[_currentPlayerIndex];
     [[p1Field board] touchEnded:touch];
     [_networkingEngine sendMove:p1Field];

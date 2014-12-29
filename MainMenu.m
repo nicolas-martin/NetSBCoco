@@ -25,13 +25,13 @@
     _networkingEngine.delegate = mainScene;
     mainScene.networkingEngine = _networkingEngine;
 
-    [[GameKitHelper sharedGameKitHelper] findMatchWithMinPlayers:2 maxPlayers:2 viewController:nil delegate:_networkingEngine];
+    [[GameKitHelper sharedGameKitHelper] findMatchWithMinPlayers:2 maxPlayers:2 viewController:[CCDirector sharedDirector] delegate:_networkingEngine];
 
 }
 
 - (void)play {
-    MainScene *mainScene = (MainScene *) [[CCBReader loadAsScene:@"MainScene"] children] [0];
-    [[CCDirector sharedDirector] replaceScene:mainScene];
+//    MainScene *mainScene = (MainScene *) [[CCBReader loadAsScene:@"MainScene"] children] [0];
+//    [[CCDirector sharedDirector] replaceScene:mainScene];
 }
 
 - (void)dealloc {

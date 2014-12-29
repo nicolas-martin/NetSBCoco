@@ -84,6 +84,7 @@ typedef struct {
         NSLog(@"Error sending data:%@", error.localizedDescription);
         [self matchEnded];
     }
+
 }
 
 - (void)sendMove:(Field *)field {
@@ -93,6 +94,8 @@ typedef struct {
     NSData *data = [NSData dataWithBytes:&messageMove
                                   length:sizeof(MessageMove)];
     [self sendData:data];
+
+    NSLog(@"Move sent");
 }
 
 - (void)sendRandomNumber
@@ -259,6 +262,7 @@ typedef struct {
         //4
         if (_receivedAllRandomNumbers) {
             _isPlayer1 = [self isLocalPlayerPlayer1];
+
         }
 
         if (!tie && _receivedAllRandomNumbers) {
@@ -277,7 +281,7 @@ typedef struct {
     } else if (message->messageType == kMessageTypeMove) {
         NSLog(@"Move message received");
         MessageMove *messageMove = (MessageMove*)[data bytes];
-        [self.delegate movePlayerAtIndex:[self indexForPlayerWithId:playerID] field:NULL];
+        [self.delegate movePlayerAtIndex:[self indexForPlayerWithId:playerID] field:messageMove->field];
 
     } else if(message->messageType == kMessageTypeGameOver) {
         NSLog(@"Game over message received");
