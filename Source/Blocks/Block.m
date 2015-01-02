@@ -3,10 +3,7 @@
 // Copyright (c) 2014 Apportable. All rights reserved.
 //
 
-#import <MacTypes.h>
 #import "Block.h"
-#import "ICastable.h"
-#import "CCControl.h"
 #import "SpellFactory.h"
 
 
@@ -28,24 +25,21 @@
     return block;
 }
 
-- (instancetype)initWithBoardX:(NSUInteger)boardX boardY:(NSUInteger)boardY spell:(spellsType)spell type:(blockType)type {
-    self = [super init];
-    if (self) {
-        self.boardX = boardX;
-        self.boardY = boardY;
-        self.spell = [SpellFactory getSpellFromType:spell];
-        self.type = type;
++ (Block *)Create:(NSUInteger)boardX boardY:(NSUInteger)boardY spell:(spellsType)spell type:(blockType)type {
+    NSMutableArray *blocks = [@[@"Blue", @"Cyan", @"Green", @"Magenta", @"Orange", @"Red", @"Yellow"] mutableCopy];
 
-        [self addSpellToBlock: self.spell];
-
+    NSString *key = blocks[type];
+    Block *block = (Block *) [CCBReader load:[NSString stringWithFormat:@"Blocks/%@",key]];
+    if (spell != nil){
+        [block addSpellToBlock: [SpellFactory getSpellFromType:spell]];
     }
+    block.boardX = boardX;
+    block.boardY = boardY;
+    block.type = type;
 
-    return self;
+    return block;
 }
 
-+ (instancetype)blockWithBoardX:(NSUInteger)boardX boardY:(NSUInteger)boardY spell:(spellsType) spell type:(blockType)type {
-    return [[self alloc] initWithBoardX:boardX boardY:boardY spell:spell type:type];
-}
 
 + (Block *)CreateRandomBlockWithPosition:(CGPoint) blockPosition{
     Block *block = [Block CreateRandomBlock];

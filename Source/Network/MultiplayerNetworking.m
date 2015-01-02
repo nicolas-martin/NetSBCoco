@@ -7,10 +7,7 @@
 //
 
 #import "MultiplayerNetworking.h"
-#import "Field.h"
 #import "Block.h"
-#import "ICastable.h
-#import "SpellFactory.h"
 
 #define playerIdKey @"PlayerId"
 #define randomNumberKey @"randomNumber"
@@ -99,7 +96,8 @@ typedef struct {
     messageMove.BlockX = block.boardX;
     messageMove.BlockY = block.boardY;
     messageMove.BlockType = block.type;
-    messageMove.Spell = [(id <ICastable>)block.spell spellType];
+    //messageMove.Spell = [(id <ICastable>)block.spell spellType];
+    messageMove.Spell = nil;
     NSData *data = [NSData dataWithBytes:&messageMove length:sizeof(MessageMove)];
 
     [self sendData:data];

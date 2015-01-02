@@ -63,6 +63,16 @@
 				<key>value</key>
 				<string>0</string>
 			</dict>
+			<dict>
+				<key>name</key>
+				<string>type</string>
+				<key>optimized</key>
+				<false/>
+				<key>type</key>
+				<integer>0</integer>
+				<key>value</key>
+				<string>0</string>
+			</dict>
 		</array>
 		<key>displayName</key>
 		<string>CCSprite</string>
@@ -131,6 +141,17 @@
 			</dict>
 			<dict>
 				<key>name</key>
+				<string>normalMapSpriteFrame</string>
+				<key>type</key>
+				<string>SpriteFrame</string>
+				<key>value</key>
+				<array>
+					<string></string>
+					<string></string>
+				</array>
+			</dict>
+			<dict>
+				<key>name</key>
 				<string>color</string>
 				<key>type</key>
 				<string>Color3</string>
@@ -141,6 +162,14 @@
 					<real>1</real>
 					<real>1</real>
 				</array>
+			</dict>
+			<dict>
+				<key>name</key>
+				<string>effects</string>
+				<key>type</key>
+				<string>EffectControl</string>
+				<key>value</key>
+				<array/>
 			</dict>
 		</array>
 		<key>selected</key>

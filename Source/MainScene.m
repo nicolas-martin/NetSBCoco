@@ -169,7 +169,7 @@
 
     Board * targetBoard = [(Field *)_players[index] board];
     NSMutableArray *blocks = [NSMutableArray array];
-    [blocks addObject:[Block CreateRandomBlockWithPosition:ccp(x, y)]];
+    [blocks addObject:[Block Create:x boardY:y spell:(spellsType)spell type:(blockType)type]];
     [targetBoard addBlocks:blocks];
 
 }

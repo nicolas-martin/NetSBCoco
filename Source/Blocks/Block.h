@@ -27,12 +27,9 @@ typedef enum {
 @property BOOL stuck;
 @property blockType type;
 
-- (instancetype)initWithBoardX:(NSUInteger)boardX boardY:(NSUInteger)boardY spell:(spellsType)spell type:(blockType)type;
-
-+ (instancetype)blockWithBoardX:(NSUInteger)boardX boardY:(NSUInteger)boardY spell:(enum spellsType)spell type:(blockType)type;
-
-
 + (Block *)CreateRandomBlock;
+
++ (Block *)Create:(NSUInteger)boardX boardY:(NSUInteger)boardY spell:(spellsType)spell type:(blockType)type;
 
 + (Block *)CreateRandomBlockWithPosition:(CGPoint)blockPosition;
 
