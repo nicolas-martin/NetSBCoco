@@ -4,6 +4,8 @@
 //
 
 #import <Foundation/Foundation.h>
+#import "CCControl.h"
+#import "ICastable.h"
 
 @protocol ICastable;
 
@@ -24,6 +26,11 @@ typedef enum {
 @property id <ICastable> spell;
 @property BOOL stuck;
 @property blockType type;
+
+- (instancetype)initWithBoardX:(NSUInteger)boardX boardY:(NSUInteger)boardY spell:(spellsType)spell type:(blockType)type;
+
++ (instancetype)blockWithBoardX:(NSUInteger)boardX boardY:(NSUInteger)boardY spell:(enum spellsType)spell type:(blockType)type;
+
 
 + (Block *)CreateRandomBlock;
 

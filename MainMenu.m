@@ -7,6 +7,7 @@
 #import "GameKitHelper.h"
 #import "MultiplayerNetworking.h"
 #import "MainScene.h"
+#import "Block.h"
 
 
 @implementation MainMenu {

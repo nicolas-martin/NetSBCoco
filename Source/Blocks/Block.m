@@ -6,6 +6,8 @@
 #import <MacTypes.h>
 #import "Block.h"
 #import "ICastable.h"
+#import "CCControl.h"
+#import "SpellFactory.h"
 
 
 @implementation Block {
@@ -24,6 +26,25 @@
     block.type = (blockType)random;
 
     return block;
+}
+
+- (instancetype)initWithBoardX:(NSUInteger)boardX boardY:(NSUInteger)boardY spell:(spellsType)spell type:(blockType)type {
+    self = [super init];
+    if (self) {
+        self.boardX = boardX;
+        self.boardY = boardY;
+        self.spell = [SpellFactory getSpellFromType:spell];
+        self.type = type;
+
+        [self addSpellToBlock: self.spell];
+
+    }
+
+    return self;
+}
+
++ (instancetype)blockWithBoardX:(NSUInteger)boardX boardY:(NSUInteger)boardY spell:(spellsType) spell type:(blockType)type {
+    return [[self alloc] initWithBoardX:boardX boardY:boardY spell:spell type:type];
 }
 
 + (Block *)CreateRandomBlockWithPosition:(CGPoint) blockPosition{

@@ -8,6 +8,9 @@
 
 #import "MultiplayerNetworking.h"
 #import "Field.h"
+#import "Block.h"
+#import "ICastable.h
+#import "SpellFactory.h"
 
 #define playerIdKey @"PlayerId"
 #define randomNumberKey @"randomNumber"
@@ -42,7 +45,10 @@ typedef struct {
 
 typedef struct {
     Message message;
-    __unsafe_unretained Field *field;
+    uint32_t BlockX;
+    uint32_t BlockY;
+    uint16_t BlockType;
+    uint16_t Spell;
 } MessageMove;
 
 typedef struct {
@@ -87,12 +93,15 @@ typedef struct {
 
 }
 
-- (void)sendMove:(Field *)field {
+- (void)sendMove:(Block *)block {
     MessageMove messageMove;
     messageMove.message.messageType = kMessageTypeMove;
-    messageMove.field = field;
-    NSData *data = [NSData dataWithBytes:&messageMove
-                                  length:sizeof(MessageMove)];
+    messageMove.BlockX = block.boardX;
+    messageMove.BlockY = block.boardY;
+    messageMove.BlockType = block.type;
+    messageMove.Spell = [(id <ICastable>)block.spell spellType];
+    NSData *data = [NSData dataWithBytes:&messageMove length:sizeof(MessageMove)];
+
     [self sendData:data];
 
     NSLog(@"Move sent");
@@ -281,7 +290,12 @@ typedef struct {
     } else if (message->messageType == kMessageTypeMove) {
         NSLog(@"Move message received");
         MessageMove *messageMove = (MessageMove*)[data bytes];
-        [self.delegate movePlayerAtIndex:[self indexForPlayerWithId:playerID] field:messageMove->field];
+        [self.delegate moveFromPlayerAtIndex:[self indexForPlayerWithId:playerID]
+                                      BlockX:messageMove->BlockX
+                                      BlockY:messageMove->BlockY
+                                   BlockType:messageMove->BlockType
+                                       Spell:messageMove->Spell];
+
 
     } else if(message->messageType == kMessageTypeGameOver) {
         NSLog(@"Game over message received");

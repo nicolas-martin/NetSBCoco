@@ -10,6 +10,8 @@
 #import "Field.h"
 #import "FieldCollisionHelper.h"
 #import "Board.h"
+#import "Block.h"
+#import "CCControl.h"
 
 //Had to use node point size instead of 100% for the touch to work..
 //Might give trouble on other devices.
@@ -89,51 +91,61 @@
     if (self.lastSpawnTimeInterval > 0.3) {
         self.lastSpawnTimeInterval = 0;
 
+        Field *curr = (Field *)_players[_currentPlayerIndex];
+        BOOL isGameOver = curr.updateStatus;
+        if (!isGameOver)
+        {
+            for (Block *block in curr.board.getAllBlocksInBoard)
+            {
+                [_networkingEngine sendMove:block];
+            }
+        }
 
         //Only Player 1 will check for game over condition
-        if (_currentPlayerIndex == 0) {
-            [_players enumerateObjectsUsingBlock:^(Field *field, NSUInteger idx, BOOL *stop) {
-
-                //Skip the players who are already dead.
-                if([_playersOut containsObject:field]){
-                    return;
-                }
-
-                BOOL isGameOver = field.updateStatus;
-                if(!isGameOver) {
-
-                    if (_players.count - 1 == _playersOut.count)
-                    {
-                        [_networkingEngine sendGameEnd:YES];
-                        NSLog(@"Win %d", idx);
-                        *stop = YES;
-                        _currentPlayerIndex = -1;
-                    }
-
-                    if (idx == _currentPlayerIndex) {
-                        //TODO: Use this to figure out if the human lost or if it's someone else
-                        //Do something special
-                    }
-
-//                if (self.gameOverBlock) {
-//                    self.gameOverBlock(didWin);
+//        if (_currentPlayerIndex == 0) {
+//            [_players enumerateObjectsUsingBlock:^(Field *field, NSUInteger idx, BOOL *stop) {
+//
+//                //Skip the players who are already dead.
+//                if([_playersOut containsObject:field]){
+//                    return;
 //                }
-
-                    [_networkingEngine sendMove:field];
-                }
-                else{
-
-                    [_playersOut addObject:field];
-                    NSLog(@"Lost %d", idx);
-
-                    *stop = YES;
-                    [_networkingEngine sendGameEnd:NO];
-
-                }
-
-
-            }];
-        }
+//
+//
+//                if(!isGameOver) {
+//
+//                    if (_players.count - 1 == _playersOut.count)
+//                    {
+//                        [_networkingEngine sendGameEnd:YES];
+//                        NSLog(@"Win %d", idx);
+//                        *stop = YES;
+//                        _currentPlayerIndex = -1;
+//                    }
+//
+//                    if (idx == _currentPlayerIndex) {
+//                        //TODO: Use this to figure out if the human lost or if it's someone else
+//                        //Do something special
+//                    }
+//
+////                if (self.gameOverBlock) {
+////                    self.gameOverBlock(didWin);
+////                }
+//
+//
+//
+//                }
+//                else{
+//
+//                    [_playersOut addObject:field];
+//                    NSLog(@"Lost %d", idx);
+//
+//                    *stop = YES;
+//                    [_networkingEngine sendGameEnd:NO];
+//
+//                }
+//
+//
+//            }];
+//        }
     }
 }
 
@@ -152,25 +164,13 @@
 
 }
 
-//TODO: Extract this method and the SwitchBoard spell into one.
 //HACK: This is clearly not the most optimal way to do it. But it's easy..
-- (void)movePlayerAtIndex:(NSUInteger)index field:(Field *)field {
+- (void)moveFromPlayerAtIndex:(NSUInteger)index BlockX:(uint32_t)x BlockY:(uint32_t)y BlockType:(uint16_t)type Spell:(uint16_t)spell {
 
-    NSMutableArray *targetBoardBlocks;
-    NSMutableArray *playerBoardBlocks;
     Board * targetBoard = [(Field *)_players[index] board];
-
-    if (targetBoard == field.board)
-        return;
-
-    playerBoardBlocks = field.board.getAllBlocksInBoard;
-    targetBoardBlocks = targetBoard.getAllBlocksInBoard;
-
-    [field.board DeleteBlockFromBoardAndSprite:playerBoardBlocks];
-    [targetBoard DeleteBlockFromBoardAndSprite:targetBoardBlocks];
-
-    [field.board addBlocks:targetBoardBlocks];
-    [targetBoard addBlocks:playerBoardBlocks];
+    NSMutableArray *blocks = [NSMutableArray array];
+    [blocks addObject:[Block CreateRandomBlockWithPosition:ccp(x, y)]];
+    [targetBoard addBlocks:blocks];
 
 }
 
@@ -201,6 +201,7 @@
 
     Field *p1Field = (Field *)_players[_currentPlayerIndex];
     [[p1Field board] touchMoved:touch];
+
 //    [_networkingEngine sendMove:p1Field];
 
 }
@@ -213,7 +214,9 @@
 
     Field *p1Field = (Field *)_players[_currentPlayerIndex];
     [[p1Field board] touchBegan:touch];
-    [_networkingEngine sendMove:p1Field];
+
+
+    //[_networkingEngine sendMove:p1Field];
 
 }
 
@@ -225,7 +228,7 @@
 
     Field *p1Field = (Field *)_players[_currentPlayerIndex];
     [[p1Field board] touchEnded:touch];
-    [_networkingEngine sendMove:p1Field];
+    //[_networkingEngine sendMove:p1Field];
 
 }
 
