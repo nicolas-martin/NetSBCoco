@@ -70,6 +70,16 @@
 						<key>value</key>
 						<string>1</string>
 					</dict>
+					<dict>
+						<key>name</key>
+						<string>type</string>
+						<key>optimized</key>
+						<false/>
+						<key>type</key>
+						<integer>0</integer>
+						<key>value</key>
+						<string>5</string>
+					</dict>
 				</array>
 				<key>displayName</key>
 				<string>Block</string>
@@ -123,6 +133,8 @@
 						<string>Blocks/Red.ccb</string>
 					</dict>
 				</array>
+				<key>selected</key>
+				<true/>
 			</dict>
 			<dict>
 				<key>UUID</key>
@@ -154,6 +166,16 @@
 						<integer>0</integer>
 						<key>value</key>
 						<string>1</string>
+					</dict>
+					<dict>
+						<key>name</key>
+						<string>type</string>
+						<key>optimized</key>
+						<false/>
+						<key>type</key>
+						<integer>0</integer>
+						<key>value</key>
+						<string>5</string>
 					</dict>
 				</array>
 				<key>displayName</key>
@@ -240,6 +262,16 @@
 						<key>value</key>
 						<string>1</string>
 					</dict>
+					<dict>
+						<key>name</key>
+						<string>type</string>
+						<key>optimized</key>
+						<false/>
+						<key>type</key>
+						<integer>0</integer>
+						<key>value</key>
+						<string>5</string>
+					</dict>
 				</array>
 				<key>displayName</key>
 				<string>Block</string>
@@ -324,6 +356,16 @@
 						<integer>0</integer>
 						<key>value</key>
 						<string>0</string>
+					</dict>
+					<dict>
+						<key>name</key>
+						<string>type</string>
+						<key>optimized</key>
+						<false/>
+						<key>type</key>
+						<integer>0</integer>
+						<key>value</key>
+						<string>5</string>
 					</dict>
 				</array>
 				<key>displayName</key>
@@ -473,8 +515,6 @@
 				</array>
 			</dict>
 		</array>
-		<key>selected</key>
-		<true/>
 	</dict>
 	<key>notes</key>
 	<array/>

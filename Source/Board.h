@@ -29,11 +29,15 @@
 
 - (NSMutableArray *)getAllBlocksInBoard;
 
+- (NSMutableArray *)getAllBlocksInBoardForUpdate;
+
 - (Block *)getBlockAt:(CGPoint)point;
 
 - (void)DeleteBlockFromBoard:(NSMutableArray *)blocks;
 
 - (void)DeleteBlockFromBoardAndSprite:(NSMutableArray *)blocks;
+
+- (void)DeleteBlockSprite:(NSMutableArray *)blocks;
 
 - (void)MoveBlock:(Block *)block to:(CGPoint)after;
 
@@ -56,4 +60,6 @@
 - (NSMutableArray *)checkForRowsToClear;
 
 - (NSMutableArray *)deleteRowsAndReturnSpells:(NSMutableArray *)rowsToDelete;
+
+- (NSMutableArray *)deleteRowsAndReturnSpellsTest:(NSMutableArray *)rowsToDelete;
 @end

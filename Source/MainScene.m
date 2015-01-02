@@ -91,6 +91,7 @@
     if (self.lastSpawnTimeInterval > 0.3) {
         self.lastSpawnTimeInterval = 0;
 
+
         Field *curr = (Field *)_players[_currentPlayerIndex];
         BOOL isGameOver = curr.updateStatus;
         if (!isGameOver)
@@ -99,9 +100,30 @@
             {
                 [_networkingEngine sendMove:block];
             }
-        }
 
-        //Only Player 1 will check for game over condition
+            NSMutableArray *t = [NSMutableArray array];
+            [_players enumerateObjectsUsingBlock:^(Field *field, NSUInteger idx, BOOL *stop){
+                if (idx != _currentPlayerIndex){
+
+                    NSMutableArray *rowsToDelete = field.board.checkForRowsToClear;
+
+                    if (rowsToDelete.count > 0){
+                        [t addObject:[field.board deleteRowsAndReturnSpellsTest:rowsToDelete]];
+
+                    }
+                }
+
+            }];
+
+            for (Block *block in t){
+                [block removeFromParentAndCleanup:YES];
+                [block removeFromParent];
+
+                //[self removeChild:block cleanup:YES];
+            }
+        };
+
+        ////Only Player 1 will check for game over condition
 //        if (_currentPlayerIndex == 0) {
 //            [_players enumerateObjectsUsingBlock:^(Field *field, NSUInteger idx, BOOL *stop) {
 //
@@ -202,8 +224,6 @@
     Field *p1Field = (Field *)_players[_currentPlayerIndex];
     [[p1Field board] touchMoved:touch];
 
-//    [_networkingEngine sendMove:p1Field];
-
 }
 
 - (void)touchBegan:(CCTouch *)touch withEvent:(CCTouchEvent *)event {
@@ -216,8 +236,6 @@
     [[p1Field board] touchBegan:touch];
 
 
-    //[_networkingEngine sendMove:p1Field];
-
 }
 
 - (void)touchEnded:(CCTouch *)touch withEvent:(CCTouchEvent *)event {
@@ -228,7 +246,6 @@
 
     Field *p1Field = (Field *)_players[_currentPlayerIndex];
     [[p1Field board] touchEnded:touch];
-    //[_networkingEngine sendMove:p1Field];
 
 }
 

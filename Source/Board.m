@@ -169,6 +169,21 @@
     return blocksInBoard;
 }
 
+- (NSMutableArray *)getAllBlocksInBoardForUpdate {
+    NSMutableArray *blocksInBoard = [NSMutableArray array];
+    for (NSUInteger x = 0; x < _Nbx; x++) {
+        for (NSUInteger y = 0; y < _Nby; y++) {
+            Block *block = [self getBlockAt:ccp(x, y)];
+            if (block != nil) {
+                [blocksInBoard addObject:block];
+            }
+
+        }
+    }
+
+    return blocksInBoard;
+}
+
 - (Block *)getBlockAt:(CGPoint)point {
 
     NSUInteger x = (NSUInteger) point.x;
@@ -259,6 +274,26 @@
 
         [block removeFromParentAndCleanup:YES];
         [_array[x] replaceObjectAtIndex:y withObject:@0];
+
+    }
+
+    return blocksWithSpell;
+
+}
+
+- (NSMutableArray *)DeleteRowTest:(NSUInteger)y {
+    NSMutableArray *blocksWithSpell = [NSMutableArray array];
+
+    for (NSUInteger x = 0; x < _Nbx; x++) {
+
+        Block *block = [self getBlockAt:ccp(x, y)];
+
+        [block removeFromParentAndCleanup:YES];
+        [self removeFromParentAndCleanup:YES];
+        [_array[x] replaceObjectAtIndex:y withObject:@0];
+
+        [blocksWithSpell addObject:block];
+
 
     }
 
@@ -533,6 +568,24 @@
 
     //put it here or else it gets the bocks not yet deleted.
     [self addSpellToField];
+
+    return spellsToAdd;
+}
+
+- (NSMutableArray *)deleteRowsAndReturnSpellsTest:(NSMutableArray *)rowsToDelete {
+    NSMutableArray *spellsToAdd = [[NSMutableArray alloc] init];
+
+    NSNumber *highestRow = @99;
+    for (NSNumber *row in rowsToDelete) {
+        [spellsToAdd addObjectsFromArray:[self DeleteRowTest:[row unsignedIntegerValue]]];
+
+        if (highestRow.integerValue > row.integerValue) {
+            highestRow = row;
+        }
+
+    }
+
+    [self setPositionUsingFieldValue:[self MoveBoardDown:([highestRow unsignedIntegerValue] - 1) nbRowsToMoveDownTo:rowsToDelete.count]];
 
     return spellsToAdd;
 }

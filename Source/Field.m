@@ -32,7 +32,7 @@
 
 - (void)didLoadFromCCB {
 
-    //[self initSomeBlocks];
+    [self initSomeBlocks];
 
 }
 
