@@ -30,33 +30,41 @@
 
 - (void)CastSpell:(Board *)targetBoard Sender:(Field *)senderField {
     NSMutableArray *blocksToSetPosition = [NSMutableArray array];
+    NSMutableDictionary* blockAndStep = [NSMutableDictionary dictionary];
 
-    for (NSUInteger y = 0; y < Nby; y++) {
-        for (NSUInteger x = 0; x < Nbx; x++) {
+//    for (NSUInteger y = 0; y < Nby; y++) {
+//        for (NSUInteger x = 0; x < Nbx; x++) {
+//
+//            Block *current = [targetBoard getBlockAt:ccp(x, y)];
+//
+//            if (current != nil && current.stuck) {
+//                [targetBoard MoveBlock:current to:ccp(0, -1)];
+//
+//                [blocksToSetPosition addObject:current];
+//                [blockAndStep setValue:@"-1" forKey:NSStringFromCGPoint(ccp(x, y))];
+//
+//            }
+//        }
+//    }
 
-            Block *current = [targetBoard getBlockAt:ccp(x, y)];
 
-            if (current != nil && current.stuck) {
-                [targetBoard MoveBlock:current to:ccp(x, y - 1)];
-
-                [current moveUp];
-
-                [blocksToSetPosition addObject:current];
-            }
-        }
+    for (NSUInteger xx = 0; xx < Nbx; xx++){
+        [targetBoard moveColumnUp:xx];
     }
 
-    [targetBoard setPositionUsingFieldValue:blocksToSetPosition];
+    [blockAndStep setValue:@"-1" forKey:NSStringFromCGPoint(ccp(0, 0))];
+    NSDictionary* dict2 = @{@"Blocks" : blockAndStep, @"Target": @(((Field *) targetBoard.parent).Idx)};
+    [[NSNotificationCenter defaultCenter] postNotificationName:BlocksToMove object:nil userInfo:dict2];
 
-    NSMutableArray *line = [self CreateBlockLine:targetBoard];
-    [targetBoard addBlocks:line];
-
-    NSDictionary* dict = @{@"Blocks" : line, @"Target": @(((Field *) targetBoard.parent).Idx)};
-    [[NSNotificationCenter defaultCenter] postNotificationName:BlocksToAdd object:nil userInfo:dict];
+//    NSMutableArray *line = [self CreateBlockLine];
+//    [targetBoard addBlocks:line];
+//
+//    NSDictionary* dict = @{@"Blocks" : line, @"Target": @(((Field *) targetBoard.parent).Idx)};
+//    [[NSNotificationCenter defaultCenter] postNotificationName:BlocksToAdd object:nil userInfo:dict];
 
 }
 
-- (NSMutableArray *)CreateBlockLine:(Board *)targetBoard {
+- (NSMutableArray *)CreateBlockLine {
     NSMutableArray *bArray = [NSMutableArray array];
 
     for (NSUInteger x = 0; x < Nbx; x++) {
@@ -73,8 +81,6 @@
 
     }
     return bArray;
-
-
 
 }
 

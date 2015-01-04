@@ -36,6 +36,7 @@
     block.boardX = boardX;
     block.boardY = boardY;
     block.type = type;
+    block.stuck = YES;
 
     return block;
 }
@@ -80,6 +81,10 @@
 
 - (void)moveDown {
     _boardY += 1;
+}
+
+- (void)moveByY:(NSUInteger)offsetY {
+    _boardY += offsetY;
 }
 
 - (void)MoveTo:(Block *)block {

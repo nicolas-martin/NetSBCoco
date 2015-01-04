@@ -4,11 +4,13 @@
 //
 
 #import <Foundation/Foundation.h>
+#import "CCControl.h"
 
 @class Tetromino;
 @class Block;
 extern NSString *const BlocksToAdd;
 extern NSString *const BlocksToDelete;
+extern NSString *const BlocksToMove;
 extern NSUInteger const Nbx;
 extern NSUInteger const Nby;
 
@@ -37,6 +39,8 @@ extern NSUInteger const Nby;
 - (void)MoveBlock:(Block *)block to:(CGPoint)after;
 
 - (BOOL)boardRowFull:(NSUInteger)y;
+
+- (void)moveColumnUp:(NSUInteger)x;
 
 - (NSMutableArray *)DeleteRow:(NSUInteger)y;
 

@@ -8,6 +8,8 @@
 
 #import "MultiplayerNetworking.h"
 #import "Block.h"
+#import "CCControl.h"
+#import "CCBSequenceProperty.h"
 
 #define playerIdKey @"PlayerId"
 #define randomNumberKey @"randomNumber"
@@ -23,9 +25,10 @@ typedef NS_ENUM(NSUInteger, GameState) {
 typedef NS_ENUM(NSUInteger, MessageType) {
     kMessageTypeRandomNumber = 0,
     kMessageTypeGameBegin,
-    kMessageTypeMove,
+    kMessageTypeAddBlock,
     kMessageTypeGameOver,
-    kMessageDeleteBlock
+    kMessageTypeDeleteBlock,
+    kMessageTypeMoveBlock
 };
 
 typedef struct {
@@ -48,7 +51,7 @@ typedef struct {
     uint16_t blockType;
     uint16_t spell;
     uint32_t target;
-} MessageMove;
+} MessageAddBlock;
 
 typedef struct {
     Message message;
@@ -56,6 +59,14 @@ typedef struct {
     uint32_t blockY;
     uint32_t target;
 } MessageDeleteBlock;
+
+typedef struct {
+    Message message;
+    uint32_t blockX;
+    uint32_t blockY;
+    uint32_t target;
+    int32_t step;
+} MessageMoveBlock;
 
 typedef struct {
     Message message;
@@ -98,16 +109,16 @@ typedef struct {
 
 }
 
-- (void)sendMove:(Block *)block target:(NSUInteger)target {
-    MessageMove messageMove;
-    messageMove.message.messageType = kMessageTypeMove;
-    messageMove.blockX = block.boardX;
-    messageMove.blockY = block.boardY;
-    messageMove.blockType = block.type;
-    //messageMove.spell = [(id <ICastable>)block.spell spellType];
-    messageMove.spell = nil;
-    messageMove.target = target;
-    NSData *data = [NSData dataWithBytes:&messageMove length:sizeof(MessageMove)];
+- (void)sendAdd:(Block *)block target:(NSUInteger)target {
+    MessageAddBlock messageAdd;
+    messageAdd.message.messageType = kMessageTypeAddBlock;
+    messageAdd.blockX = block.boardX;
+    messageAdd.blockY = block.boardY;
+    messageAdd.blockType = block.type;
+    //messageAdd.spell = [(id <ICastable>)block.spell spellType];
+    messageAdd.spell = nil;
+    messageAdd.target = target;
+    NSData *data = [NSData dataWithBytes:&messageAdd length:sizeof(MessageAddBlock)];
 
     [self sendData:data];
 
@@ -116,12 +127,25 @@ typedef struct {
 
 - (void)sendDelete:(Block *)block targetId:(NSUInteger)id1 {
     MessageDeleteBlock messageDeleteBlock;
-    messageDeleteBlock.message.messageType = kMessageDeleteBlock;
+    messageDeleteBlock.message.messageType = kMessageTypeDeleteBlock;
     messageDeleteBlock.blockX = block.boardX;
     messageDeleteBlock.blockY = block.boardY;
     messageDeleteBlock.target = id1;
 
     NSData *data = [NSData dataWithBytes:&messageDeleteBlock length:sizeof(messageDeleteBlock)];
+
+    [self sendData:data];
+}
+- (void)sendMove:(CGPoint)key by:(NSInteger)by targetId:(NSUInteger)id {
+
+    MessageMoveBlock messageMoveBlock;
+    messageMoveBlock.message.messageType = kMessageTypeMoveBlock;
+    messageMoveBlock.blockX = (uint32_t) key.x;
+    messageMoveBlock.blockY = (uint32_t) key.y;
+    messageMoveBlock.step = by;
+    messageMoveBlock.target = id;
+
+    NSData *data = [NSData dataWithBytes:&messageMoveBlock length:sizeof(messageMoveBlock)];
 
     [self sendData:data];
 }
@@ -306,17 +330,17 @@ typedef struct {
         [self.delegate setCurrentPlayerIndex:[self indexForLocalPlayer]];
         [self processPlayerAliases];
 
-    } else if (message->messageType == kMessageTypeMove) {
-        NSLog(@"Move message received");
-        MessageMove *messageMove = (MessageMove*)[data bytes];
-        [self.delegate moveFromPlayerAtIndex:[self indexForPlayerWithId:playerID]
-                                      BlockX:messageMove->blockX
-                                      BlockY:messageMove->blockY
-                                   BlockType:messageMove->blockType
-                                       Spell:messageMove->spell
-                                      Target:messageMove->target];
+    } else if (message->messageType == kMessageTypeAddBlock) {
+        NSLog(@"Add message received");
+        MessageAddBlock *messageAdd = (MessageAddBlock *)[data bytes];
+        [self.delegate addFromPlayerAtIndex:[self indexForPlayerWithId:playerID]
+                                     BlockX:messageAdd->blockX
+                                     BlockY:messageAdd->blockY
+                                  BlockType:messageAdd->blockType
+                                      Spell:messageAdd->spell
+                                     Target:messageAdd->target];
 
-    } else if (message->messageType == kMessageDeleteBlock) {
+    } else if (message->messageType == kMessageTypeDeleteBlock) {
 
         MessageDeleteBlock *messageDeleteBlock = (MessageDeleteBlock *) [data bytes];
         [self.delegate deleteBlock:[self indexForPlayerWithId:playerID]
@@ -324,6 +348,14 @@ typedef struct {
                                  Y:messageDeleteBlock->blockY
                             target:messageDeleteBlock->target];
 
+    } else if (message->messageType == kMessageTypeMoveBlock) {
+
+        MessageMoveBlock *messageMoveBlock = (MessageMoveBlock *) [data bytes];
+        [self.delegate moveBlock:[self indexForPlayerWithId:playerID]
+                               X:messageMoveBlock->blockX
+                               Y:messageMoveBlock->blockY
+                          target:messageMoveBlock->target
+                            step:messageMoveBlock->step];
 
     } else if(message->messageType == kMessageTypeGameOver) {
         NSLog(@"Game over message received");
@@ -331,6 +363,7 @@ typedef struct {
         [self.delegate gameOver:messageGameOver->player1Won];
     }
 }
+
 
 
 @end

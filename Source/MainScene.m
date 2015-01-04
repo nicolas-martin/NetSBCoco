@@ -11,6 +11,7 @@
 #import "FieldCollisionHelper.h"
 #import "Board.h"
 #import "Block.h"
+#import "CCControl.h"
 
 @implementation MainScene {
     CCNode *_scene;
@@ -74,6 +75,18 @@
     [fch AddFieldBox:_p3];
     [[NSNotificationCenter defaultCenter] addObserver:self selector:@selector(BlocksToAdd:) name:BlocksToAdd object:nil];
     [[NSNotificationCenter defaultCenter] addObserver:self selector:@selector(BlocksToDelete:) name:BlocksToDelete object:nil];
+    [[NSNotificationCenter defaultCenter] addObserver:self selector:@selector(BlocksToMove:) name:BlocksToMove object:nil];
+
+}
+
+- (void)BlocksToMove:(NSNotification *)notification {
+    NSMutableDictionary * dictionary = [[notification userInfo] valueForKey:@"Blocks"];
+    NSUInteger targetId = [[[notification userInfo] valueForKey:@"Target"] unsignedIntegerValue];
+
+    for (NSString* key in dictionary) {
+        NSInteger value = [dictionary[key] integerValue];
+        [_networkingEngine sendMove:CGPointFromString(key) by:value targetId:targetId];
+    }
 
 }
 
@@ -85,7 +98,6 @@
         [_networkingEngine sendDelete:block targetId:targetId];
     }
 
-
 }
 
 - (void)BlocksToAdd:(NSNotification *)notification {
@@ -93,7 +105,7 @@
     NSUInteger target = [[[notification userInfo] valueForKey:@"Target"] unsignedIntegerValue];
 
     for (Block *block in blocks){
-        [_networkingEngine sendMove:block target:target];
+        [_networkingEngine sendAdd:block target:target];
     }
 
 }
@@ -201,7 +213,7 @@
 
 }
 
-- (void)moveFromPlayerAtIndex:(NSUInteger)index BlockX:(uint32_t)x BlockY:(uint32_t)y BlockType:(uint16_t)type Spell:(uint16_t)spell Target:(uint32_t)target{
+- (void)addFromPlayerAtIndex:(NSUInteger)index BlockX:(uint32_t)x BlockY:(uint32_t)y BlockType:(uint16_t)type Spell:(uint16_t)spell Target:(uint32_t)target{
 
     Board * targetBoard = [(Field *)_players[target] board];
     NSMutableArray *blocks = [NSMutableArray array];
@@ -213,6 +225,19 @@
 - (void)deleteBlock:(NSUInteger)id1 X:(uint32_t)x Y:(uint32_t)y target:(uint32_t)target {
     Board * board = [(Field *)_players[target] board];
     [board removeBlockAtPosition:ccp(x,y)];
+}
+
+- (void)moveBlock:(NSUInteger)id1 X:(uint32_t)x Y:(uint32_t)y target:(uint32_t)target step:(int32_t)step {
+
+    if (step == -1){
+
+        Board * board = [(Field *)_players[target] board];
+
+        for (NSUInteger xx = 0; xx < Nbx; xx++){
+            [board moveColumnUp:xx];
+        }
+    }
+
 }
 
 - (void)gameOver:(BOOL)player1Won {

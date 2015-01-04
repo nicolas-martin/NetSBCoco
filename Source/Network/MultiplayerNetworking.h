@@ -9,6 +9,7 @@
 #import "GameKitHelper.h"
 #import "CCControl.h"
 #import "ICastable.h"
+#import "CCBSequenceProperty.h"
 
 @class Field;
 @class Block;
@@ -16,8 +17,10 @@
 @protocol MultiplayerNetworkingProtocol <NSObject>
 - (void)matchEnded;
 - (void)setCurrentPlayerIndex:(NSUInteger)index;
-- (void)moveFromPlayerAtIndex:(NSUInteger)index BlockX:(uint32_t)x BlockY:(uint32_t)y BlockType:(uint16_t)type Spell:(uint16_t)spell Target:(uint32_t)target;
+- (void)addFromPlayerAtIndex:(NSUInteger)index BlockX:(uint32_t)x BlockY:(uint32_t)y BlockType:(uint16_t)type Spell:(uint16_t)spell Target:(uint32_t)target;
 - (void)deleteBlock:(NSUInteger)id X:(uint32_t)x Y:(uint32_t)y target:(uint32_t)target;
+
+- (void)moveBlock:(NSUInteger)id X:(uint32_t)x Y:(uint32_t)y target:(uint32_t)target step:(int32_t)step;
 - (void)gameOver:(BOOL)player1Won;
 - (void)setPlayerAliases:(NSArray*)playerAliases;
 
@@ -26,9 +29,10 @@
 @interface MultiplayerNetworking : NSObject<GameKitHelperDelegate>
 @property (nonatomic, assign) id<MultiplayerNetworkingProtocol> delegate;
 
-- (void)sendMove:(Block *)field target:(NSUInteger)target;
-- (void)sendGameEnd:(BOOL)player1Won;
-- (void)sendSpell:(spellsType)type target:(NSUInteger)target from:(NSUInteger)from;
 
+- (void)sendGameEnd:(BOOL)player1Won;
+
+- (void)sendAdd:(Block *)field target:(NSUInteger)target;
 - (void)sendDelete:(Block *)block targetId:(NSUInteger)id1;
+- (void)sendMove:(CGPoint)key by:(NSInteger)by targetId:(NSUInteger)id;
 @end

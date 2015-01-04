@@ -34,9 +34,7 @@
     for (Block *block in enumerator) {
         while (block.boardY + 1 < Nby && ![targetBoard isBlockAt:ccp(block.boardX, block.boardY + 1)]) {
 
-            [targetBoard MoveBlock:block to:ccp(block.boardX, block.boardY + 1)];
-
-            [block moveDown];
+            [targetBoard MoveBlock:block to:ccp(0, 1)];
 
         }
 

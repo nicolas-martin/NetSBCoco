@@ -11,6 +11,7 @@
 
 NSString *const BlocksToAdd = @"BlocksToAdd";
 NSString *const BlocksToDelete = @"BlocksToDelete";
+NSString *const BlocksToMove = @"BlocksToMove";
 NSUInteger const Nbx = 10;
 NSUInteger const Nby = 20;
 
@@ -222,10 +223,12 @@ NSUInteger const Nby = 20;
     NSUInteger x = (NSUInteger) [block boardX];
     NSUInteger y = (NSUInteger) [block boardY];
 
-    //delete
     [_array[x] replaceObjectAtIndex:y withObject:@0];
-    //insert
-    [self insertBlockAt:block at:after];
+
+    block.boardX = (NSUInteger) (block.boardX + after.x);
+    block.boardY = (NSUInteger) (block.boardY + after.y);
+
+    [self insertBlockAt:block at:ccp(block.boardX, block.boardY)];
 }
 
 - (BOOL)boardRowFull:(NSUInteger)y {
@@ -244,6 +247,26 @@ NSUInteger const Nby = 20;
         }
     }
     return occupied;
+}
+
+- (void)moveColumnUp:(NSUInteger)x{
+    NSMutableArray *blocksToSetPosition = [NSMutableArray array];
+
+    for (NSUInteger y = 0; y < Nby; y++) {
+
+        Block *current = [self getBlockAt:ccp(x, y)];
+
+        //if (current != nil && current.stuck) {
+        if (current != nil) {
+            [self MoveBlock:current to:ccp(0, -1)];
+
+            [blocksToSetPosition addObject:current];
+            //[blockAndStep setValue:@"-1" forKey:NSStringFromCGPoint(ccp(x, y))];
+
+        }
+    }
+
+    [self setPositionUsingFieldValue:blocksToSetPosition];
 }
 
 - (NSMutableArray *)DeleteRow:(NSUInteger)y {
@@ -282,9 +305,7 @@ NSUInteger const Nby = 20;
             Block *current = [self getBlockAt:ccp(x, y)];
             if (current != nil) {
 
-                [self MoveBlock:current to:ccp(x, y + step)];
-
-                current.boardY = current.boardY + step;
+                [self MoveBlock:current to:ccp(0, step)];
 
                 [blocksToSetPosition addObject:current];
 
