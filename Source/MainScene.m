@@ -100,27 +100,20 @@
             {
                 [_networkingEngine sendMove:block];
             }
-
-            NSMutableArray *t = [NSMutableArray array];
+            
             [_players enumerateObjectsUsingBlock:^(Field *field, NSUInteger idx, BOOL *stop){
                 if (idx != _currentPlayerIndex){
 
                     NSMutableArray *rowsToDelete = field.board.checkForRowsToClear;
 
                     if (rowsToDelete.count > 0){
-                        [t addObject:[field.board deleteRowsAndReturnSpellsTest:rowsToDelete]];
+                        [field.board deleteRowsAndReturnSpells:rowsToDelete];
 
                     }
                 }
 
             }];
 
-            for (Block *block in t){
-                [block removeFromParentAndCleanup:YES];
-                [block removeFromParent];
-
-                //[self removeChild:block cleanup:YES];
-            }
         };
 
         ////Only Player 1 will check for game over condition
