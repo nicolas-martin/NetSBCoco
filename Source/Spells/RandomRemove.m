@@ -49,7 +49,10 @@
     }
 
 
-    [targetBoard DeleteBlockFromBoardAndSprite:blocksToDelete];
+    [targetBoard DeleteBlocksFromBoardAndSprite:blocksToDelete];
+
+    NSDictionary* dict = @{@"Blocks" : blocksToDelete, @"Target": @(((Field *) targetBoard.parent).Idx)};
+    [[NSNotificationCenter defaultCenter] postNotificationName:BlocksToDelete object:nil userInfo:dict];
 
 }
 

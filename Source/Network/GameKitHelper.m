@@ -7,7 +7,6 @@
 //
 
 #import "GameKitHelper.h"
-#import "GameNavigationController.h"
 
 NSString *const PresentAuthenticationViewController = @"present_authentication_view_controller";
 NSString *const LocalPlayerIsAuthenticated = @"local_player_authenticated";

@@ -3,20 +3,20 @@
 // Copyright (c) 2014 Apportable. All rights reserved.
 //
 
-#import <MacTypes.h>
 #import "Inventory.h"
 #import "ICastable.h"
 #import "FieldCollisionHelper.h"
 #import "CCNode_Private.h"
-#import "UITouch+CC.h"
+#import "Field.h"
 
-
+NSString *const SpellCasted = @"SpellCasted";
 @implementation Inventory {
 
     NSMutableArray *inventory;
     NSMutableArray *movableSprites;
     CCSprite *selSprite;
 }
+
 - (id)init {
     self = [super init];
     if (self) {
@@ -34,7 +34,6 @@
 - (void)didLoadFromCCB {
 
 }
-
 
 - (void)addSpell:(<ICastable>)spell {
 
@@ -87,7 +86,6 @@
     [self selectSpriteForTouch:touchLocation];
 }
 
-
 - (void)touchMoved:(CCTouch *)touch withEvent:(CCTouchEvent *)event {
     CGPoint touchLocation = [touch locationInNode:self];
 
@@ -97,18 +95,20 @@
     }
 }
 
-
 - (void)touchEnded:(CCTouch *)touch withEvent:(CCTouchEvent *)event {
     CGPoint touchLocation = [[CCDirector sharedDirector] convertToGL:[touch locationInView:[touch view]]];
 
     FieldCollisionHelper *fch = [FieldCollisionHelper sharedMySingleton];
 
-    Board *targetField = [fch GetFieldFromPosition:touchLocation];
+    Field *targetField = [fch GetFieldFromPosition:touchLocation];
 
     if (targetField != nil) {
         id <ICastable> obj = selSprite.userObject;
 
-        [obj CastSpell:targetField Sender:(Field *) self.parent];
+        [obj CastSpell:targetField.board Sender:(Field *) self.parent];
+
+//        NSDictionary* dict = @{@"spell" : @(obj.spellType),  @"Target": @(targetField.Idx), @"From": @(((Field *) self.parent).Idx)};
+//        [[NSNotificationCenter defaultCenter] postNotificationName:SpellCasted object:nil userInfo:dict];
 
         CCLOG(@"%@ was casted on %@", obj.spellName, targetField.name);
 

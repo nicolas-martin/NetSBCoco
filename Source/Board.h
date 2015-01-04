@@ -7,9 +7,10 @@
 
 @class Tetromino;
 @class Block;
-extern NSString *const TetrominoLanded;
+extern NSString *const BlocksToAdd;
+extern NSString *const BlocksToDelete;
 
-@interface Board : CCNode// <NScoder>
+@interface Board : CCNode
 
 @property int NbBlocks;
 @property NSUInteger Nby;
@@ -29,21 +30,19 @@ extern NSString *const TetrominoLanded;
 
 - (NSMutableArray *)getAllBlocksInBoard;
 
-- (NSMutableArray *)getAllBlocksInBoardForUpdate;
-
 - (Block *)getBlockAt:(CGPoint)point;
 
 - (void)DeleteBlockFromBoard:(NSMutableArray *)blocks;
 
-- (void)DeleteBlockFromBoardAndSprite:(NSMutableArray *)blocks;
-
-- (void)DeleteBlockSprite:(NSMutableArray *)blocks;
+- (void)DeleteBlocksFromBoardAndSprite:(NSMutableArray *)blocks;
 
 - (void)MoveBlock:(Block *)block to:(CGPoint)after;
 
 - (BOOL)boardRowFull:(NSUInteger)y;
 
 - (NSMutableArray *)DeleteRow:(NSUInteger)y;
+
+- (void)removeBlockAtPosition:(CGPoint)position;
 
 - (NSMutableArray *)MoveBoardDown:(NSUInteger)y nbRowsToMoveDownTo:(NSUInteger)step;
 
@@ -61,5 +60,4 @@ extern NSString *const TetrominoLanded;
 
 - (NSMutableArray *)deleteRowsAndReturnSpells:(NSMutableArray *)rowsToDelete;
 
-- (NSMutableArray *)deleteRowsAndReturnSpellsTest:(NSMutableArray *)rowsToDelete;
 @end

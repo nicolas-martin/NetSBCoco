@@ -4,6 +4,7 @@
 //
 
 #import <Foundation/Foundation.h>
+#import "CCControl.h"
 
 @class Board;
 @class Tetromino;
@@ -13,6 +14,9 @@
 
 @property Board *board;
 @property(nonatomic) NSString *Name;
+@property(nonatomic) NSUInteger Idx;
+
+- (void)setName:(NSString *)Name andId:(NSUInteger)id1;
 
 - (void)displayGameOver;
 

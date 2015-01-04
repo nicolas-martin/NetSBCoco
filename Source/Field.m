@@ -7,10 +7,7 @@
 #import "Inventory.h"
 #import "Board.h"
 #import "Block.h"
-#import "Gravity.h"
-#import "ClearSpecial.h"
 #import "SpellFactory.h"
-#import "GameKitHelper.h"
 
 
 @implementation Field {
@@ -21,14 +18,15 @@
 
 }
 
--(void)setName:(NSString *)Name {
+-(void)setName:(NSString *)Name andId:(NSUInteger)id{
     //Not sure why it sends a nil here sometimes
     if (Name == Nil){
         Name = @"";
     }
     _playerName.string = Name;
+    _name = Name;
+    _Idx = id;
 }
-
 
 - (void)didLoadFromCCB {
 
@@ -36,7 +34,7 @@
 
 }
 
--(void)displayGameOver{
+- (void)displayGameOver{
     _gameOver.string = @"GAME OVER";
 }
 
@@ -59,9 +57,6 @@
 
     }
 
-    //TODO: Send the updated board to all players
-    //[[GameCenterHelper sharedInstance] sendAction:_board];
-
     return self.board.moveDownOrCreate;
 }
 
@@ -80,8 +75,7 @@
 
                 Block *block = [Block CreateRandomBlockWithPosition:ccp(i, ((_board.Nby - 1) - j))];
 
-                //id spell = [SpellFactory getSpellFromType:kRandomRemove];
-                id spell = [SpellFactory getSpellUsingFrequency];
+                id spell = [SpellFactory getSpellFromType:kSwitchBoard];
 
                 [block addSpellToBlock:spell];
                 [bArray addObject:block];

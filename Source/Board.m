@@ -7,11 +7,11 @@
 #import "Block.h"
 #import "Tetromino.h"
 #import "SpellFactory.h"
-#import "UITouch+CC.h"
-#import "CCControl.h"
-#import "unzip.h"
+#import "Field.h"
 
-NSString *const TetrominoLanded = @"TetrominoLanded";
+NSString *const BlocksToAdd = @"BlocksToAdd";
+NSString *const BlocksToDelete = @"BlocksToDelete";
+
 @implementation Board {
     NSMutableArray *_array;
     Tetromino *userTetromino;
@@ -25,7 +25,6 @@ NSString *const TetrominoLanded = @"TetrominoLanded";
         self.Nbx = 10;
         self.Nby = 20;
         _array = self.get20x10Array;
-        //self.userInteractionEnabled = YES;
 
     }
 
@@ -63,7 +62,6 @@ NSString *const TetrominoLanded = @"TetrominoLanded";
 
 }
 
-
 - (void)touchMoved:(CCTouch *)touch {
     NSUInteger previousLocation = userTetromino.anchorX;
     CGPoint pos = [touch locationInNode:self];
@@ -80,16 +78,12 @@ NSString *const TetrominoLanded = @"TetrominoLanded";
     isDrag = YES;
 }
 
-
-
 - (void)touchBegan:(CCTouch *)touch {
 
     isDrag = NO;
 
     previousTouch = [touch locationInNode:self];
 }
-
-
 
 - (void)touchEnded:(CCTouch *)touch {
 
@@ -118,8 +112,8 @@ NSString *const TetrominoLanded = @"TetrominoLanded";
 }
 
 - (void)notifyNetwork:(Tetromino *)tosend {
-    NSDictionary* dict = @{@"Tetromino" : tosend};
-    [[NSNotificationCenter defaultCenter] postNotificationName:TetrominoLanded object:nil userInfo:dict];
+    NSDictionary* dict = @{@"Blocks" : tosend.children, @"Target": @(((Field *) self.parent).Idx)};
+    [[NSNotificationCenter defaultCenter] postNotificationName:BlocksToAdd object:nil userInfo:dict];
 }
 
 - (void)touchCancelled:(CCTouch *)touch withEvent:(CCTouchEvent *)event {
@@ -200,11 +194,14 @@ NSString *const TetrominoLanded = @"TetrominoLanded";
 
 }
 
-- (void)DeleteBlockFromBoardAndSprite:(NSMutableArray *)blocks {
+//Used by spells
+- (void)DeleteBlocksFromBoardAndSprite:(NSMutableArray *)blocks {
 
     for (Block *block in blocks) {
         [self removeBlockFromBoardAndSprite:block];
     }
+
+
 
 }
 
@@ -270,6 +267,10 @@ NSString *const TetrominoLanded = @"TetrominoLanded";
 - (void)removeBlockFromBoardAndSprite:(Block *)block {
     [block removeFromParentAndCleanup:YES];
     [_array[block.boardX] replaceObjectAtIndex:block.boardY withObject:@0];
+}
+
+- (void)removeBlockAtPosition:(CGPoint) position{
+    [self removeBlockFromBoardAndSprite:[self getBlockAt:position]];
 }
 
 - (NSMutableArray *)MoveBoardDown:(NSUInteger)y nbRowsToMoveDownTo:(NSUInteger)step {
@@ -616,7 +617,6 @@ NSString *const TetrominoLanded = @"TetrominoLanded";
     }
 }
 
-//TODO: Sometimes when rotating a tetromino it moves up for some reason.
 - (void)rotateTetromino:(RotationDirection)direction {
 
     NSUInteger px = userTetromino.anchorX;

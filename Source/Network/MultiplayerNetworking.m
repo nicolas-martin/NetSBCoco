@@ -24,7 +24,8 @@ typedef NS_ENUM(NSUInteger, MessageType) {
     kMessageTypeRandomNumber = 0,
     kMessageTypeGameBegin,
     kMessageTypeMove,
-    kMessageTypeGameOver
+    kMessageTypeGameOver,
+    kMessageDeleteBlock
 };
 
 typedef struct {
@@ -42,11 +43,19 @@ typedef struct {
 
 typedef struct {
     Message message;
-    uint32_t BlockX;
-    uint32_t BlockY;
-    uint16_t BlockType;
-    uint16_t Spell;
+    uint32_t blockX;
+    uint32_t blockY;
+    uint16_t blockType;
+    uint16_t spell;
+    uint32_t target;
 } MessageMove;
+
+typedef struct {
+    Message message;
+    uint32_t blockX;
+    uint32_t blockY;
+    uint32_t target;
+} MessageDeleteBlock;
 
 typedef struct {
     Message message;
@@ -57,7 +66,6 @@ typedef struct {
     uint32_t _ourRandomNumber;
     GameState _gameState;
     BOOL _isPlayer1, _receivedAllRandomNumbers;
-
     NSMutableArray *_orderOfPlayers;
 }
 
@@ -90,19 +98,32 @@ typedef struct {
 
 }
 
-- (void)sendMove:(Block *)block {
+- (void)sendMove:(Block *)block target:(NSUInteger)target {
     MessageMove messageMove;
     messageMove.message.messageType = kMessageTypeMove;
-    messageMove.BlockX = block.boardX;
-    messageMove.BlockY = block.boardY;
-    messageMove.BlockType = block.type;
-    //messageMove.Spell = [(id <ICastable>)block.spell spellType];
-    messageMove.Spell = nil;
+    messageMove.blockX = block.boardX;
+    messageMove.blockY = block.boardY;
+    messageMove.blockType = block.type;
+    //messageMove.spell = [(id <ICastable>)block.spell spellType];
+    messageMove.spell = nil;
+    messageMove.target = target;
     NSData *data = [NSData dataWithBytes:&messageMove length:sizeof(MessageMove)];
 
     [self sendData:data];
 
     NSLog(@"Move sent");
+}
+
+- (void)sendDelete:(Block *)block targetId:(NSUInteger)id1 {
+    MessageDeleteBlock messageDeleteBlock;
+    messageDeleteBlock.message.messageType = kMessageDeleteBlock;
+    messageDeleteBlock.blockX = block.boardX;
+    messageDeleteBlock.blockY = block.boardY;
+    messageDeleteBlock.target = id1;
+
+    NSData *data = [NSData dataWithBytes:&messageDeleteBlock length:sizeof(messageDeleteBlock)];
+
+    [self sendData:data];
 }
 
 - (void)sendRandomNumber
@@ -289,10 +310,19 @@ typedef struct {
         NSLog(@"Move message received");
         MessageMove *messageMove = (MessageMove*)[data bytes];
         [self.delegate moveFromPlayerAtIndex:[self indexForPlayerWithId:playerID]
-                                      BlockX:messageMove->BlockX
-                                      BlockY:messageMove->BlockY
-                                   BlockType:messageMove->BlockType
-                                       Spell:messageMove->Spell];
+                                      BlockX:messageMove->blockX
+                                      BlockY:messageMove->blockY
+                                   BlockType:messageMove->blockType
+                                       Spell:messageMove->spell
+                                      Target:messageMove->target];
+
+    } else if (message->messageType == kMessageDeleteBlock) {
+
+        MessageDeleteBlock *messageDeleteBlock = (MessageDeleteBlock *) [data bytes];
+        [self.delegate deleteBlock:[self indexForPlayerWithId:playerID]
+                                 X:messageDeleteBlock->blockX
+                                 Y:messageDeleteBlock->blockY
+                            target:messageDeleteBlock->target];
 
 
     } else if(message->messageType == kMessageTypeGameOver) {
@@ -301,4 +331,6 @@ typedef struct {
         [self.delegate gameOver:messageGameOver->player1Won];
     }
 }
+
+
 @end

@@ -8,8 +8,10 @@
 
 #import "CCNode.h"
 #import "MultiplayerNetworking.h"
+#import "CCControl.h"
 
 @interface MainScene : CCScene <MultiplayerNetworkingProtocol>
 @property (nonatomic, strong) MultiplayerNetworking *networkingEngine;
 @property(nonatomic) CFTimeInterval lastSpawnTimeInterval;
+
 @end

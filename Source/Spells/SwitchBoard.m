@@ -37,11 +37,24 @@
     playerBoardBlocks = senderField.board.getAllBlocksInBoard;
     targetBoardBlocks = targetBoard.getAllBlocksInBoard;
 
-    [senderField.board DeleteBlockFromBoardAndSprite:playerBoardBlocks];
-    [targetBoard DeleteBlockFromBoardAndSprite:targetBoardBlocks];
+    [senderField.board DeleteBlocksFromBoardAndSprite:playerBoardBlocks];
+    [targetBoard DeleteBlocksFromBoardAndSprite:targetBoardBlocks];
 
     [senderField.board addBlocks:targetBoardBlocks];
     [targetBoard addBlocks:playerBoardBlocks];
+
+    NSDictionary* dict = @{@"Blocks" : targetBoardBlocks, @"Target": @(((Field *) targetBoard.parent).Idx)};
+    [[NSNotificationCenter defaultCenter] postNotificationName:BlocksToDelete object:nil userInfo:dict];
+
+    NSDictionary* dict2 = @{@"Blocks" : playerBoardBlocks, @"Target": @(senderField.Idx)};
+    [[NSNotificationCenter defaultCenter] postNotificationName:BlocksToDelete object:nil userInfo:dict2];
+
+    NSDictionary* dict3 = @{@"Blocks" : playerBoardBlocks, @"Target": @(((Field *) targetBoard.parent).Idx)};
+    [[NSNotificationCenter defaultCenter] postNotificationName:BlocksToAdd object:nil userInfo:dict3];
+
+    NSDictionary* dict4 = @{@"Blocks" : targetBoardBlocks, @"Target": @(senderField.Idx)};
+    [[NSNotificationCenter defaultCenter] postNotificationName:BlocksToAdd object:nil userInfo:dict4];
+
 
 
 }

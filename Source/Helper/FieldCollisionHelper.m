@@ -4,8 +4,8 @@
 //
 
 #import "FieldCollisionHelper.h"
-#import "Field.h"
 #import "Board.h"
+#import "Field.h"
 
 NSMutableArray *fieldsArray;
 static FieldCollisionHelper *_sharedMySingleton = nil;
@@ -31,16 +31,17 @@ static FieldCollisionHelper *_sharedMySingleton = nil;
     return self;
 }
 
-- (void)AddFieldBox:(Board *)field {
+- (void)AddFieldBox:(Field *)field {
     [fieldsArray addObject:field];
 }
 
-- (Board *)GetFieldFromPosition:(CGPoint)point {
-    Board *found = nil;
-    for (Board *currentField in fieldsArray) {
+//TODO: Find a better way.. with collision detection.
+- (Field *)GetFieldFromPosition:(CGPoint)point {
+    Field *found = nil;
+    for (Field *currentField in fieldsArray) {
         //[node.parent convertToWorldSpace:node.position]
-        CGPoint absolutePosition = [currentField.parent convertToWorldSpace:currentField.position];
-        CGRect rect = CGRectMake(absolutePosition.x, absolutePosition.y, currentField.contentSize.width, currentField.contentSize.height);
+        CGPoint absolutePosition = [currentField.board.parent convertToWorldSpace:currentField.board.position];
+        CGRect rect = CGRectMake(absolutePosition.x, absolutePosition.y, currentField.board.contentSize.width, currentField.board.contentSize.height);
         if (CGRectContainsPoint(rect, point)) {
             found = currentField;
         }

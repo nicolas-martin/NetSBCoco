@@ -7,8 +7,10 @@
 
 @protocol ICastable;
 
+extern NSString *const SpellCasted;
 
 @interface Inventory : CCNode
+
 @property NSUInteger MaxNbSpells;
 - (void)addSpell:(<ICastable>)spell;
 - (void)removeSpell:(<ICastable>)spell;

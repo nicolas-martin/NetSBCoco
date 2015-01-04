@@ -26,7 +26,11 @@
 
 - (void)CastSpell:(Board *)targetBoard Sender:(Field *)senderField {
 
-    [targetBoard DeleteBlockFromBoardAndSprite:[targetBoard getAllBlocksInBoard]];
+    NSMutableArray *blocks = [targetBoard getAllBlocksInBoard];
+    [targetBoard DeleteBlocksFromBoardAndSprite:blocks];
+
+    NSDictionary* dict = @{@"Blocks" : blocks, @"Target": @(((Field *) targetBoard.parent).Idx)};
+    [[NSNotificationCenter defaultCenter] postNotificationName:BlocksToDelete object:nil userInfo:dict];
 
 }
 

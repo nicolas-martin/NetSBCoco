@@ -6,13 +6,14 @@
 #import <Foundation/Foundation.h>
 
 @class Board;
+@class Field;
 
 
 @interface FieldCollisionHelper : NSObject
 + (FieldCollisionHelper *)sharedMySingleton;
 
-- (void)AddFieldBox:(Board *)board;
+- (void)AddFieldBox:(Field *)board;
 
-- (Board *)GetFieldFromPosition:(CGPoint)point;
+- (Field *)GetFieldFromPosition:(CGPoint)point;
 
 @end

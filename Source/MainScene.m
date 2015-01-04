@@ -11,11 +11,7 @@
 #import "FieldCollisionHelper.h"
 #import "Board.h"
 #import "Block.h"
-#import "CCControl.h"
-#import "Tetromino.h"
 
-//Had to use node point size instead of 100% for the touch to work..
-//Might give trouble on other devices.
 @implementation MainScene {
     CCNode *_scene;
     Field *_p1;
@@ -26,6 +22,7 @@
     NSUInteger _currentPlayerIndex;
     NSMutableArray *_playersOut;
 }
+
 - (id)init {
     if (self = [super init]) {
         self.userInteractionEnabled = TRUE;
@@ -38,6 +35,7 @@
 
 
     }
+
     return self;
 }
 
@@ -71,21 +69,34 @@
 
 
     FieldCollisionHelper *fch = [FieldCollisionHelper sharedMySingleton];
-    [fch AddFieldBox:_p1.board];
-    [fch AddFieldBox:_p2.board];
-    [fch AddFieldBox:_p3.board];
-    [[NSNotificationCenter defaultCenter] addObserver:self selector:@selector(TetrominoLanded:) name:TetrominoLanded object:nil];
+    [fch AddFieldBox:_p1];
+    [fch AddFieldBox:_p2];
+    [fch AddFieldBox:_p3];
+    [[NSNotificationCenter defaultCenter] addObserver:self selector:@selector(BlocksToAdd:) name:BlocksToAdd object:nil];
+    [[NSNotificationCenter defaultCenter] addObserver:self selector:@selector(BlocksToDelete:) name:BlocksToDelete object:nil];
+
 }
 
-- (void)TetrominoLanded:(NSNotification *)TetrominoLanded {
-    Tetromino * tetromino = [[TetrominoLanded userInfo] valueForKey:@"Tetromino"];
+- (void)BlocksToDelete:(NSNotification *)notification {
+    NSMutableArray * array = [[notification userInfo] valueForKey:@"Blocks"];
+    NSUInteger targetId = [[[notification userInfo] valueForKey:@"Target"] unsignedIntegerValue];
 
-    for (Block *block in tetromino.children){
-        [_networkingEngine sendMove:block];
+    for (Block *block in array){
+        [_networkingEngine sendDelete:block targetId:targetId];
+    }
+
+
+}
+
+- (void)BlocksToAdd:(NSNotification *)notification {
+    NSMutableArray * blocks = [[notification userInfo] valueForKey:@"Blocks"];
+    NSUInteger target = [[[notification userInfo] valueForKey:@"Target"] unsignedIntegerValue];
+
+    for (Block *block in blocks){
+        [_networkingEngine sendMove:block target:target];
     }
 
 }
-
 
 - (void)onEnter {
 
@@ -93,8 +104,7 @@
 
 }
 
-//TODO: Levels speed for each players
--(void)update:(CFTimeInterval)currentTime {
+- (void)update:(CFTimeInterval)currentTime {
     if (self.paused && _currentPlayerIndex == -1) {
         return;
     }
@@ -113,7 +123,7 @@
 //                [_networkingEngine sendMove:block];
 //            }
 
-            //[self moveFromPlayerAtIndex:1 BlockX:9 BlockY:19 BlockType:2 Spell:nil];
+            //[self moveFromPlayerAtIndex:1 blockX:9 blockY:19 blockType:2 spell:nil];
 
             [_players enumerateObjectsUsingBlock:^(Field *field, NSUInteger idx, BOOL *stop){
                 if (idx != _currentPlayerIndex){
@@ -179,9 +189,6 @@
     }
 }
 
-
-#pragma mark MultiplayerNetworkingProtocol
-
 - (void)matchEnded {
 
 }
@@ -194,14 +201,18 @@
 
 }
 
-//HACK: This is clearly not the most optimal way to do it. But it's easy..
-- (void)moveFromPlayerAtIndex:(NSUInteger)index BlockX:(uint32_t)x BlockY:(uint32_t)y BlockType:(uint16_t)type Spell:(uint16_t)spell {
+- (void)moveFromPlayerAtIndex:(NSUInteger)index BlockX:(uint32_t)x BlockY:(uint32_t)y BlockType:(uint16_t)type Spell:(uint16_t)spell Target:(uint32_t)target{
 
-    Board * targetBoard = [(Field *)_players[index] board];
+    Board * targetBoard = [(Field *)_players[target] board];
     NSMutableArray *blocks = [NSMutableArray array];
     [blocks addObject:[Block Create:x boardY:y spell:(spellsType)spell type:(blockType)type]];
     [targetBoard addBlocks:blocks];
 
+}
+
+- (void)deleteBlock:(NSUInteger)id1 X:(uint32_t)x Y:(uint32_t)y target:(uint32_t)target {
+    Board * board = [(Field *)_players[target] board];
+    [board removeBlockAtPosition:ccp(x,y)];
 }
 
 - (void)gameOver:(BOOL)player1Won {
@@ -215,13 +226,12 @@
 
 }
 
-//FIXME: Not working
 - (void)setPlayerAliases:(NSArray *)playerAliases {
     [playerAliases enumerateObjectsUsingBlock:^(NSString *playerAlias, NSUInteger idx, BOOL *stop) {
-        [(Field *)_players[idx] setName:playerAlias];
+        [(Field *)_players[idx] setName:playerAlias andId:idx];
+
     }];
 }
-
 
 - (void)touchMoved:(CCTouch *)touch withEvent:(CCTouchEvent *)event {
 
