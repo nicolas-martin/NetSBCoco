@@ -11,6 +11,9 @@
 
 NSString *const BlocksToAdd = @"BlocksToAdd";
 NSString *const BlocksToDelete = @"BlocksToDelete";
+NSUInteger const Nbx = 10;
+NSUInteger const Nby = 20;
+
 
 @implementation Board {
     NSMutableArray *_array;
@@ -22,8 +25,6 @@ NSString *const BlocksToDelete = @"BlocksToDelete";
 - (id)init {
     self = [super init];
     if (self) {
-        self.Nbx = 10;
-        self.Nby = 20;
         _array = self.get20x10Array;
 
     }
@@ -99,7 +100,7 @@ NSString *const BlocksToDelete = @"BlocksToDelete";
         float swipeLength = ccpDistance(previousTouch, pos);
 
         if (previousTouch.y > pos.y && swipeLength > 40) {
-            while(userTetromino.lowestPosition.y != _Nby - 1 && [self canMoveTetrominoByYTetrominoOffSetY:1]){
+            while(userTetromino.lowestPosition.y != Nby - 1 && [self canMoveTetrominoByYTetrominoOffSetY:1]){
                 [self moveTetrominoDown];
             }
             Tetromino *tosend = userTetromino;
@@ -131,9 +132,9 @@ NSString *const BlocksToDelete = @"BlocksToDelete";
 
 - (NSMutableArray *)get20x10Array {
     NSMutableArray *arr = [NSMutableArray array];
-    for (int i = 0; i < _Nbx; ++i) {
+    for (int i = 0; i < Nbx; ++i) {
         NSMutableArray *subarr = [NSMutableArray array];
-        for (int j = 0; j < self.Nby; ++j)
+        for (int j = 0; j < Nby; ++j)
             //insert at index??
             [subarr addObject:@0];
         [arr addObject:subarr];
@@ -143,8 +144,8 @@ NSString *const BlocksToDelete = @"BlocksToDelete";
 
 - (BOOL)isBlockAt:(CGPoint)point {
 
-    if (point.x == _Nby) {
-        point.x = _Nby-1;
+    if (point.x == Nby) {
+        point.x = Nby-1;
     }
     NSMutableArray *inner = _array[(NSUInteger) point.x];
 
@@ -153,8 +154,8 @@ NSString *const BlocksToDelete = @"BlocksToDelete";
 
 - (NSMutableArray *)getAllBlocksInBoard {
     NSMutableArray *blocksInBoard = [NSMutableArray array];
-    for (NSUInteger x = 0; x < _Nbx; x++) {
-        for (NSUInteger y = 0; y < _Nby; y++) {
+    for (NSUInteger x = 0; x < Nbx; x++) {
+        for (NSUInteger y = 0; y < Nby; y++) {
             Block *block = [self getBlockAt:ccp(x, y)];
             if (block != nil && block.stuck) {
                 [blocksInBoard addObject:block];
@@ -229,7 +230,7 @@ NSString *const BlocksToDelete = @"BlocksToDelete";
 
 - (BOOL)boardRowFull:(NSUInteger)y {
     BOOL occupied = NO;
-    for (int x = 0; x < _Nbx; x++) {
+    for (int x = 0; x < Nbx; x++) {
 
         if (![self isBlockAt:ccp(x, y)]) {
             occupied = NO;
@@ -248,7 +249,7 @@ NSString *const BlocksToDelete = @"BlocksToDelete";
 - (NSMutableArray *)DeleteRow:(NSUInteger)y {
     NSMutableArray *blocksWithSpell = [NSMutableArray array];
 
-    for (NSUInteger x = 0; x < _Nbx; x++) {
+    for (NSUInteger x = 0; x < Nbx; x++) {
 
         Block *block = [self getBlockAt:ccp(x, y)];
 
@@ -277,7 +278,7 @@ NSString *const BlocksToDelete = @"BlocksToDelete";
     NSMutableArray *blocksToSetPosition = [NSMutableArray array];
 
     for (y; y > 0; y--) {
-        for (NSUInteger x = 0; x < _Nbx; x++) {
+        for (NSUInteger x = 0; x < Nbx; x++) {
             Block *current = [self getBlockAt:ccp(x, y)];
             if (current != nil) {
 
@@ -305,9 +306,9 @@ NSString *const BlocksToDelete = @"BlocksToDelete";
     NSUInteger anchorx = userTetromino.anchorX;
     NSUInteger anchory = userTetromino.anchorY;
     NSLog(@"--------------------------------------------------------------------");
-    for (NSUInteger j = 0; j < _Nby; ++j) {
+    for (NSUInteger j = 0; j < Nby; ++j) {
         NSMutableString *row = [NSMutableString string];
-        for (NSUInteger i = 0; i < _Nbx; ++i) {
+        for (NSUInteger i = 0; i < Nbx; ++i) {
 
             if ([self isBlockAt:ccp(i, j)]) {
                 if (withPosition) {
@@ -387,7 +388,7 @@ NSString *const BlocksToDelete = @"BlocksToDelete";
 - (BOOL)isTetrominoInBounds:(CGPoint)point {
 
 
-    if (point.x < 0 || point.x >= _Nbx|| point.y < 0 || point.y >= _Nby) {
+    if (point.x < 0 || point.x >= Nbx|| point.y < 0 || point.y >= Nby) {
         NSLog(@"DENIED - OUT OF BOUNDS");
         return NO;
 
@@ -449,7 +450,7 @@ NSString *const BlocksToDelete = @"BlocksToDelete";
     if (userTetromino.stuck || userTetromino == NULL) {
         _gameOver = [self createNewTetromino];
     }
-    else if (userTetromino.lowestPosition.y != _Nby - 1 && [self canMoveTetrominoByYTetrominoOffSetY:1]) {
+    else if (userTetromino.lowestPosition.y != Nby - 1 && [self canMoveTetrominoByYTetrominoOffSetY:1]) {
         [self moveTetrominoDown];
         userTetromino.stuck = NO;
         _gameOver = NO;
@@ -487,7 +488,7 @@ NSString *const BlocksToDelete = @"BlocksToDelete";
     BOOL occupied = NO;
 
     NSNumber *deletedRow = (NSNumber *) nil;
-    for (NSUInteger y = 0; y < _Nby; y++) {
+    for (NSUInteger y = 0; y < Nby; y++) {
 
         //Skip row already processed
 
@@ -495,7 +496,7 @@ NSString *const BlocksToDelete = @"BlocksToDelete";
             continue;
         }
 
-        for (int x = 0; x < _Nbx; x++) {
+        for (int x = 0; x < Nbx; x++) {
 
             if (![self isBlockAt:ccp(x, y)]) {
                 occupied = NO;

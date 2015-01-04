@@ -31,8 +31,8 @@
 - (void)CastSpell:(Board *)targetBoard Sender:(Field *)senderField {
     NSMutableArray *blocksToSetPosition = [NSMutableArray array];
 
-    for (NSUInteger y = 0; y < targetBoard.Nby; y++) {
-        for (NSUInteger x = 0; x < targetBoard.Nbx; x++) {
+    for (NSUInteger y = 0; y < Nby; y++) {
+        for (NSUInteger x = 0; x < Nbx; x++) {
 
             Block *current = [targetBoard getBlockAt:ccp(x, y)];
 
@@ -48,28 +48,33 @@
 
     [targetBoard setPositionUsingFieldValue:blocksToSetPosition];
 
-    [self CreateBlockLine:targetBoard];
+    NSMutableArray *line = [self CreateBlockLine:targetBoard];
+    [targetBoard addBlocks:line];
+
+    NSDictionary* dict = @{@"Blocks" : line, @"Target": @(((Field *) targetBoard.parent).Idx)};
+    [[NSNotificationCenter defaultCenter] postNotificationName:BlocksToAdd object:nil userInfo:dict];
 
 }
 
-- (void)CreateBlockLine:(Board *)targetBoard {
+- (NSMutableArray *)CreateBlockLine:(Board *)targetBoard {
     NSMutableArray *bArray = [NSMutableArray array];
 
-    for (NSUInteger x = 0; x < targetBoard.Nbx; x++) {
+    for (NSUInteger x = 0; x < Nbx; x++) {
         NSUInteger random = arc4random();
 
         if ((random % 3) > 0) {
             Block *block = [Block CreateRandomBlock];
             block.stuck = YES;
             [block setBoardX:x];
-            [block setBoardY:targetBoard.Nby-1];
+            [block setBoardY:Nby-1];
 
             [bArray addObject:block];
         }
 
     }
+    return bArray;
 
-    [targetBoard addBlocks:bArray];
+
 
 }
 

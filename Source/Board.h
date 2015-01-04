@@ -9,14 +9,12 @@
 @class Block;
 extern NSString *const BlocksToAdd;
 extern NSString *const BlocksToDelete;
+extern NSUInteger const Nbx;
+extern NSUInteger const Nby;
 
 @interface Board : CCNode
 
 @property int NbBlocks;
-@property NSUInteger Nby;
-@property NSUInteger Nbx;
-
-
 
 - (id)init;
 
