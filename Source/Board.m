@@ -11,7 +11,7 @@
 #import "CCControl.h"
 #import "unzip.h"
 
-
+NSString *const TetrominoLanded = @"TetrominoLanded";
 @implementation Board {
     NSMutableArray *_array;
     Tetromino *userTetromino;
@@ -64,8 +64,6 @@
 }
 
 
-
-
 - (void)touchMoved:(CCTouch *)touch {
     NSUInteger previousLocation = userTetromino.anchorX;
     CGPoint pos = [touch locationInNode:self];
@@ -99,8 +97,6 @@
 
         CGPoint pos = [touch locationInNode:self];
 
-        CGPoint tileCoordForPosition = [self tileCoordForPosition:pos];
-
         [self rotateTetromino:rotateClockwise];
 
 
@@ -112,11 +108,18 @@
             while(userTetromino.lowestPosition.y != _Nby - 1 && [self canMoveTetrominoByYTetrominoOffSetY:1]){
                 [self moveTetrominoDown];
             }
+            Tetromino *tosend = userTetromino;
             userTetromino.stuck = YES;
+            [self notifyNetwork:tosend];
         }
     }
 
     isDrag = NO;
+}
+
+- (void)notifyNetwork:(Tetromino *)tosend {
+    NSDictionary* dict = @{@"Tetromino" : tosend};
+    [[NSNotificationCenter defaultCenter] postNotificationName:TetrominoLanded object:nil userInfo:dict];
 }
 
 - (void)touchCancelled:(CCTouch *)touch withEvent:(CCTouchEvent *)event {
@@ -169,21 +172,6 @@
     return blocksInBoard;
 }
 
-- (NSMutableArray *)getAllBlocksInBoardForUpdate {
-    NSMutableArray *blocksInBoard = [NSMutableArray array];
-    for (NSUInteger x = 0; x < _Nbx; x++) {
-        for (NSUInteger y = 0; y < _Nby; y++) {
-            Block *block = [self getBlockAt:ccp(x, y)];
-            if (block != nil) {
-                [blocksInBoard addObject:block];
-            }
-
-        }
-    }
-
-    return blocksInBoard;
-}
-
 - (Block *)getBlockAt:(CGPoint)point {
 
     NSUInteger x = (NSUInteger) point.x;
@@ -215,8 +203,7 @@
 - (void)DeleteBlockFromBoardAndSprite:(NSMutableArray *)blocks {
 
     for (Block *block in blocks) {
-        [_array[(NSUInteger) block.boardX] replaceObjectAtIndex:(NSUInteger) block.boardY withObject:@0];
-        [block removeFromParentAndCleanup:YES];
+        [self removeBlockFromBoardAndSprite:block];
     }
 
 }
@@ -272,8 +259,7 @@
             [blocksWithSpell addObject:block.spell];
         }
 
-        [block removeFromParentAndCleanup:YES];
-        [_array[x] replaceObjectAtIndex:y withObject:@0];
+        [self removeBlockFromBoardAndSprite:block];
 
     }
 
@@ -281,24 +267,9 @@
 
 }
 
-- (NSMutableArray *)DeleteRowTest:(NSUInteger)y {
-    NSMutableArray *blocksWithSpell = [NSMutableArray array];
-
-    for (NSUInteger x = 0; x < _Nbx; x++) {
-
-        Block *block = [self getBlockAt:ccp(x, y)];
-
-        [block removeFromParentAndCleanup:YES];
-        [self removeFromParentAndCleanup:YES];
-        [_array[x] replaceObjectAtIndex:y withObject:@0];
-
-        [blocksWithSpell addObject:block];
-
-
-    }
-
-    return blocksWithSpell;
-
+- (void)removeBlockFromBoardAndSprite:(Block *)block {
+    [block removeFromParentAndCleanup:YES];
+    [_array[block.boardX] replaceObjectAtIndex:block.boardY withObject:@0];
 }
 
 - (NSMutableArray *)MoveBoardDown:(NSUInteger)y nbRowsToMoveDownTo:(NSUInteger)step {
@@ -484,7 +455,9 @@
     }
     else {
         userTetromino.stuck = YES;
+        Tetromino *tosend = userTetromino;
         _gameOver = [self createNewTetromino];
+        [self notifyNetwork:tosend];
     }
 
     return _gameOver;
@@ -568,24 +541,6 @@
 
     //put it here or else it gets the bocks not yet deleted.
     [self addSpellToField];
-
-    return spellsToAdd;
-}
-
-- (NSMutableArray *)deleteRowsAndReturnSpellsTest:(NSMutableArray *)rowsToDelete {
-    NSMutableArray *spellsToAdd = [[NSMutableArray alloc] init];
-
-    NSNumber *highestRow = @99;
-    for (NSNumber *row in rowsToDelete) {
-        [spellsToAdd addObjectsFromArray:[self DeleteRowTest:[row unsignedIntegerValue]]];
-
-        if (highestRow.integerValue > row.integerValue) {
-            highestRow = row;
-        }
-
-    }
-
-    [self setPositionUsingFieldValue:[self MoveBoardDown:([highestRow unsignedIntegerValue] - 1) nbRowsToMoveDownTo:rowsToDelete.count]];
 
     return spellsToAdd;
 }

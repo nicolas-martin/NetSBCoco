@@ -12,6 +12,7 @@
 #import "Board.h"
 #import "Block.h"
 #import "CCControl.h"
+#import "Tetromino.h"
 
 //Had to use node point size instead of 100% for the touch to work..
 //Might give trouble on other devices.
@@ -73,7 +74,18 @@
     [fch AddFieldBox:_p1.board];
     [fch AddFieldBox:_p2.board];
     [fch AddFieldBox:_p3.board];
+    [[NSNotificationCenter defaultCenter] addObserver:self selector:@selector(TetrominoLanded:) name:TetrominoLanded object:nil];
 }
+
+- (void)TetrominoLanded:(NSNotification *)TetrominoLanded {
+    Tetromino * tetromino = [[TetrominoLanded userInfo] valueForKey:@"Tetromino"];
+
+    for (Block *block in tetromino.children){
+        [_networkingEngine sendMove:block];
+    }
+
+}
+
 
 - (void)onEnter {
 
@@ -88,7 +100,7 @@
     }
 
     self.lastSpawnTimeInterval += currentTime;
-    if (self.lastSpawnTimeInterval > 0.3) {
+    if (self.lastSpawnTimeInterval > 0.5) {
         self.lastSpawnTimeInterval = 0;
 
 
@@ -96,13 +108,16 @@
         BOOL isGameOver = curr.updateStatus;
         if (!isGameOver)
         {
-            for (Block *block in curr.board.getAllBlocksInBoard)
-            {
-                [_networkingEngine sendMove:block];
-            }
-            
+//            for (Block *block in curr.board.getAllBlocksInBoard)
+//            {
+//                [_networkingEngine sendMove:block];
+//            }
+
+            //[self moveFromPlayerAtIndex:1 BlockX:9 BlockY:19 BlockType:2 Spell:nil];
+
             [_players enumerateObjectsUsingBlock:^(Field *field, NSUInteger idx, BOOL *stop){
                 if (idx != _currentPlayerIndex){
+
 
                     NSMutableArray *rowsToDelete = field.board.checkForRowsToClear;
 

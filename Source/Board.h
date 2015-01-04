@@ -7,7 +7,7 @@
 
 @class Tetromino;
 @class Block;
-
+extern NSString *const TetrominoLanded;
 
 @interface Board : CCNode// <NScoder>
 
