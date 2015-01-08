@@ -75,7 +75,7 @@
 
                 Block *block = [Block CreateRandomBlockWithPosition:ccp(i, ((Nby - 1) - j))];
 
-                id spell = [SpellFactory getSpellFromType:kAddLine];
+                id spell = [SpellFactory getSpellFromType:kGravity];
 
                 [block addSpellToBlock:spell];
                 [bArray addObject:block];

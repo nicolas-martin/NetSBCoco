@@ -219,6 +219,7 @@ NSUInteger const Nby = 20;
 
 }
 
+//TODO: Add setblockposition to this method
 - (void)MoveBlock:(Block *)block to:(CGPoint)after {
     NSUInteger x = (NSUInteger) [block boardX];
     NSUInteger y = (NSUInteger) [block boardY];

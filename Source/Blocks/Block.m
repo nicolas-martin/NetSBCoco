@@ -19,8 +19,8 @@
     NSString *key = blocks[random];
 
     Block *block = (Block *) [CCBReader load:[NSString stringWithFormat:@"Blocks/%@",key]];
-
     block.type = (blockType)random;
+    block.stuck = YES;
 
     return block;
 }
@@ -30,9 +30,11 @@
 
     NSString *key = blocks[type];
     Block *block = (Block *) [CCBReader load:[NSString stringWithFormat:@"Blocks/%@",key]];
+
     if (spell != nil){
         [block addSpellToBlock: [SpellFactory getSpellFromType:spell]];
     }
+
     block.boardX = boardX;
     block.boardY = boardY;
     block.type = type;
@@ -46,7 +48,6 @@
     Block *block = [Block CreateRandomBlock];
     block.boardX = (NSUInteger) blockPosition.x;
     block.boardY = (NSUInteger) blockPosition.y;
-    [block setStuck:YES];
 
     return block;
 

@@ -28,18 +28,28 @@
 - (void)CastSpell:(Board *)targetBoard Sender:(Field *)senderField {
     NSEnumerator *enumerator;
     NSMutableArray *blocksToSetPosition = [NSMutableArray array];
+    NSMutableDictionary* blockAndStep = [NSMutableDictionary dictionary];
 
     enumerator = [targetBoard.getAllBlocksInBoard reverseObjectEnumerator];
 
     for (Block *block in enumerator) {
-        while (block.boardY + 1 < Nby && ![targetBoard isBlockAt:ccp(block.boardX, block.boardY + 1)]) {
+        int ySteps = 0;
+        while (block.boardY + ySteps < Nby - 1 && ![targetBoard isBlockAt:ccp(block.boardX, block.boardY + ySteps+1)]) {
 
-            [targetBoard MoveBlock:block to:ccp(0, 1)];
+            ySteps++;
 
         }
 
-        [blocksToSetPosition addObject:block];
+        if(ySteps > 0){
+            [blockAndStep setValue:@(ySteps) forKey:NSStringFromCGPoint(ccp(block.boardX, block.boardY))];
+            [targetBoard MoveBlock:block to:ccp(0, ySteps)];
+            [blocksToSetPosition addObject:block];
+        }
+
     }
+
+    NSDictionary* dict = @{@"Blocks" : blockAndStep, @"Target": @(((Field *) targetBoard.parent).Idx)};
+    [[NSNotificationCenter defaultCenter] postNotificationName:BlocksToMove object:nil userInfo:dict];
 
     [targetBoard setPositionUsingFieldValue:blocksToSetPosition];
 

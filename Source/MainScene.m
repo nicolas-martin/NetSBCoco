@@ -73,6 +73,7 @@
     [fch AddFieldBox:_p1];
     [fch AddFieldBox:_p2];
     [fch AddFieldBox:_p3];
+
     [[NSNotificationCenter defaultCenter] addObserver:self selector:@selector(BlocksToAdd:) name:BlocksToAdd object:nil];
     [[NSNotificationCenter defaultCenter] addObserver:self selector:@selector(BlocksToDelete:) name:BlocksToDelete object:nil];
     [[NSNotificationCenter defaultCenter] addObserver:self selector:@selector(BlocksToMove:) name:BlocksToMove object:nil];
@@ -228,14 +229,24 @@
 }
 
 - (void)moveBlock:(NSUInteger)id1 X:(uint32_t)x Y:(uint32_t)y target:(uint32_t)target step:(int32_t)step {
+    Board * board = [(Field *)_players[target] board];
+    NSMutableArray *blockToSet = [NSMutableArray array];
 
     if (step == -1){
 
-        Board * board = [(Field *)_players[target] board];
 
         for (NSUInteger xx = 0; xx < Nbx; xx++){
             [board moveColumnUp:xx];
         }
+
+    }
+    else
+    {
+
+        [board MoveBlock:[board getBlockAt:ccp(x, y)] to:ccp(0, step)];
+        [blockToSet addObject:[board getBlockAt:ccp(x, y+step)]];
+        [board setPositionUsingFieldValue:blockToSet];
+
     }
 
 }

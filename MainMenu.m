@@ -31,8 +31,8 @@
 }
 
 - (void)play {
-//    MainScene *mainScene = (MainScene *) [[CCBReader loadAsScene:@"MainScene"] children] [0];
-//    [[CCDirector sharedDirector] replaceScene:mainScene];
+    MainScene *mainScene = (MainScene *) [[CCBReader loadAsScene:@"MainScene"] children] [0];
+    [[CCDirector sharedDirector] replaceScene:mainScene];
 }
 
 - (void)dealloc {
