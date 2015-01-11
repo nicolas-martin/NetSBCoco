@@ -196,12 +196,15 @@
 
 - (void)addSpell:(NSUInteger)id1 X:(uint32_t)x Y:(uint32_t)y target:(uint32_t)target spell:(int32_t)spell {
     Board * board = [(Field *)_players[target] board];
-    if (spell != -1){
-        Block * block = [board getBlockAt:ccp(x, y)];
-        [block addSpellToBlock:[SpellFactory getSpellFromType:(spellsType)spell]];
-    }else{
+
+    if (spell == -1){
         Block *block =  [board getBlockAt:ccp(x, y)];
         [block removeSpell];
+
+    }else{
+        Block * block = [board getBlockAt:ccp(x, y)];
+        [block addSpellToBlock:[SpellFactory getSpellFromType:(spellsType)spell]];
+
     }
 
 }

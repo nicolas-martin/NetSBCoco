@@ -20,6 +20,7 @@ NSUInteger const Nby = 20;
     NSMutableArray *_array;
     Tetromino *userTetromino;
     BOOL isDrag;
+    BOOL previousMoveDown;
     CGPoint previousTouch;
 }
 
@@ -27,13 +28,12 @@ NSUInteger const Nby = 20;
     self = [super init];
     if (self) {
         _array = self.get20x10Array;
+        isDrag = NO;
 
     }
 
     return self;
 }
-
-
 
 - (BOOL)randomBoolWithPercentage:(NSUInteger)percentage {
     return (arc4random() % 100) < percentage;
@@ -44,19 +44,46 @@ NSUInteger const Nby = 20;
 }
 
 - (void)touchMoved:(CCTouch *)touch {
-    NSUInteger previousLocation = userTetromino.anchorX;
-    CGPoint pos = [touch locationInNode:self];
-    CGPoint tileCoordForPosition = [self tileCoordForPosition:pos];
+    //NSUInteger previousLocation = userTetromino.anchorX;
+    CGPoint touchPos = [touch locationInNode:self];
+    CGPoint movingTouch = ccpSub(touchPos, previousTouch);
 
-    if(previousLocation > tileCoordForPosition.x){
+    //TODO: This might cause problems on other devices.
+    int TileSize = 12;
+    float treshold = 12;
+
+
+
+    if (movingTouch.x < -treshold && abs(movingTouch.y) < TileSize) {
         [self moveTetrominoLeft];
+        previousTouch = [touch locationInNode:self];
+
+
     }
-    else if (previousLocation < tileCoordForPosition.x)
-    {
+    else if (movingTouch.x > treshold && abs(movingTouch.y) < TileSize) {
         [self moveTetrominoRight];
+        previousTouch = [touch locationInNode:self];
+
+
+    }
+    else if (movingTouch.y < -treshold && abs(movingTouch.x) < TileSize) {
+
+        if (!previousMoveDown) {
+            while (userTetromino.lowestPosition.y != Nby - 1 && [self canMoveTetrominoByYTetrominoOffSetY:1]) {
+                [self moveTetrominoDown];
+            }
+
+            Tetromino *tosend = userTetromino;
+            userTetromino.stuck = YES;
+            [self notifyNetwork:tosend];
+            previousMoveDown = YES;
+        }
+
+
     }
 
     isDrag = YES;
+
 }
 
 - (void)touchBegan:(CCTouch *)touch {
@@ -70,26 +97,12 @@ NSUInteger const Nby = 20;
 
     if (!isDrag){
 
-        CGPoint pos = [touch locationInNode:self];
-
         [self rotateTetromino:rotateClockwise];
 
-
-    }else{
-        CGPoint pos = [touch locationInNode:self];
-        float swipeLength = ccpDistance(previousTouch, pos);
-
-        if (previousTouch.y > pos.y && swipeLength > 40) {
-            while(userTetromino.lowestPosition.y != Nby - 1 && [self canMoveTetrominoByYTetrominoOffSetY:1]){
-                [self moveTetrominoDown];
-            }
-            Tetromino *tosend = userTetromino;
-            userTetromino.stuck = YES;
-            [self notifyNetwork:tosend];
-        }
     }
 
     isDrag = NO;
+    previousMoveDown = NO;
 }
 
 - (void)notifyNetwork:(Tetromino *)tosend {

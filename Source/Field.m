@@ -122,8 +122,7 @@ NSString *const SpellsToAdd = @"SpellsToAdd";
         Block *block = allBlocksInBoard[posOfSpell];
 
         if (block.spell == nil) {
-            //id <ICastable> spell = [SpellFactory getSpellUsingFrequency];
-            id <ICastable> spell = [SpellFactory getSpellFromType:kAddLine];
+            id <ICastable> spell = [SpellFactory getSpellUsingFrequency];
             [block addSpellToBlock:spell];
             [newSpells addObject:block];
         }
@@ -150,7 +149,7 @@ NSString *const SpellsToAdd = @"SpellsToAdd";
 
                 Block *block = [Block CreateRandomBlockWithPosition:ccp(i, ((Nby - 1) - j))];
 
-                id spell = [SpellFactory getSpellFromType:kClearSpecial];
+                id spell = [SpellFactory getSpellFromType:kAddLine];
 
                 [block addSpellToBlock:spell];
                 [bArray addObject:block];
