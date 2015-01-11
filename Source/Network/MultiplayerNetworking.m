@@ -293,12 +293,14 @@ typedef struct {
 - (BOOL)isLocalPlayerPlayer1
 {
     NSDictionary *dictionary = _orderOfPlayers[0];
-    if ([dictionary[playerIdKey]
-            isEqualToString:[GKLocalPlayer localPlayer].playerID]) {
-        NSLog(@"I'm player 1");
-        return YES;
-    }
-    return NO;
+    return [dictionary[playerIdKey]
+        isEqualToString:[GKLocalPlayer localPlayer].playerID];
+    //    if ([dictionary[playerIdKey]
+//            isEqualToString:[GKLocalPlayer localPlayer].playerID]) {
+//        NSLog(@"I'm player 1");
+//        return YES;
+//    }
+//    return NO;
 }
 
 #pragma mark GameKitHelper delegate methods
@@ -335,21 +337,19 @@ typedef struct {
             tie = YES;
             _ourRandomNumber = arc4random();
             [self sendRandomNumber];
-        } else {
-            //3
+        }
+        else {
             NSDictionary *dictionary = @{playerIdKey : playerID,
                     randomNumberKey : @(messageRandomNumber->randomNumber)};
             [self processReceivedRandomNumber:dictionary];
         }
 
-        //4
         if (_receivedAllRandomNumbers) {
             _isPlayer1 = [self isLocalPlayerPlayer1];
 
         }
 
         if (!tie && _receivedAllRandomNumbers) {
-            //5
             if (_gameState == kGameStateWaitingForRandomNumber) {
                 _gameState = kGameStateWaitingForStart;
             }
@@ -357,6 +357,7 @@ typedef struct {
         }
     } else if (message->messageType == kMessageTypeGameBegin) {
         NSLog(@"Begin game message received");
+        NSLog(@"===========================");
         _gameState = kGameStateActive;
         [self.delegate setCurrentPlayerIndex:[self indexForLocalPlayer]];
         [self processPlayerAliases];
@@ -400,7 +401,8 @@ typedef struct {
     } else if(message->messageType == kMessageTypeGameOver) {
         NSLog(@"Game over message received");
         MessageGameOver * messageGameOver = (MessageGameOver *) [data bytes];
-        [self.delegate gameOver:messageGameOver->player1Won];
+        [self.delegate gameOver:[self indexForPlayerWithId:playerID]
+                         didWin:messageGameOver->player1Won];
     }
 }
 

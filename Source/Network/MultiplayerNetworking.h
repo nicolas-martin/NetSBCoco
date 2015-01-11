@@ -21,7 +21,7 @@
 - (void)deleteBlock:(NSUInteger)id X:(uint32_t)x Y:(uint32_t)y target:(uint32_t)target;
 - (void)addSpell:(NSUInteger)id X:(uint32_t)x Y:(uint32_t)y target:(uint32_t)target spell:(int32_t)spell;
 - (void)moveBlock:(NSUInteger)id X:(uint32_t)x Y:(uint32_t)y target:(uint32_t)target step:(int32_t)step;
-- (void)gameOver:(BOOL)player1Won;
+- (void)gameOver:(NSUInteger)player1Won didWin:(BOOL)didwin;
 - (void)setPlayerAliases:(NSArray*)playerAliases;
 
 

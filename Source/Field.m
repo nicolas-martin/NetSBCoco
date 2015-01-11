@@ -35,8 +35,13 @@ NSString *const SpellsToAdd = @"SpellsToAdd";
 
 }
 
-- (void)displayGameOver{
-    _gameOver.string = @"GAME OVER";
+- (void)displayGameOver:(BOOL)win{
+    if (!win){
+        _gameOver.string = @"GAME OVER";
+    }else{
+        _gameOver.string = @"WIN";
+    }
+
 }
 
 - (void)addSpellsToInventory:(NSMutableArray *)spellsToAdd {

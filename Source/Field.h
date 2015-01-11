@@ -19,7 +19,7 @@ extern NSString *const SpellsToAdd;
 
 - (void)setName:(NSString *)Name andId:(NSUInteger)id1;
 
-- (void)displayGameOver;
+- (void)displayGameOver:(BOOL)win;
 
 - (void)addSpellsToInventory:(NSMutableArray *)spellsToAdd;
 

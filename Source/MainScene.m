@@ -12,6 +12,7 @@
 #import "Board.h"
 #import "Block.h"
 #import "SpellFactory.h"
+#import "CCControl.h"
 
 @implementation MainScene {
     CCNode *_scene;
@@ -20,8 +21,9 @@
     Field *_p3;
     NSMutableArray *bg;
     NSMutableArray *_players;
-    NSUInteger _currentPlayerIndex;
-    NSMutableArray *_playersOut;
+    NSInteger _currentPlayerIndex;
+    NSUInteger _playersOut;
+    NSUInteger _playersActive;
 }
 
 - (id)init {
@@ -29,11 +31,10 @@
         self.userInteractionEnabled = TRUE;
         bg = [@[@"Gold", @"Orange", @"Purple", @"Silver", @"Teal"] mutableCopy];
         _players = [[NSMutableArray alloc] init];
-        _playersOut = [[NSMutableArray alloc]init];
-
+        _playersOut = 0;
+        _playersActive = 0;
         [self setUserInteractionEnabled:YES];
         [self setMultipleTouchEnabled:YES];
-
 
     }
 
@@ -136,8 +137,6 @@
     if (self.lastSpawnTimeInterval > 0.5) {
         self.lastSpawnTimeInterval = 0;
 
-        NSMutableArray *playersOut = [NSMutableArray array];
-
         [_players enumerateObjectsUsingBlock:^(Field *field, NSUInteger idx, BOOL *stop){
 
             if (idx == _currentPlayerIndex && !*stop){
@@ -145,20 +144,24 @@
                 *stop = [field updateStatus];
 
                 if(*stop){
-                    NSLog(@"Lost %d", idx);
                     [_networkingEngine sendGameEnd:NO];
-                    [playersOut addObject:@(idx)];
+                    NSLog(@"I'm player %d and I lost", idx);
                     _currentPlayerIndex = -1;
+                    _playersOut++;
+                    *stop = YES;
+                    self.paused = YES;
                 }
 
-
-            }else if (_players.count - 1 == _playersOut.count) {
+            }
+            else if (_playersActive - 1 == _playersOut && !*stop){
                 [_networkingEngine sendGameEnd:YES];
-                NSLog(@"Win %d", idx);
+                NSLog(@"I win and I'm player %d", _currentPlayerIndex);
                 *stop = YES;
                 _currentPlayerIndex = -1;
+                self.paused = YES;
+            }
 
-            }else{
+            else{
                 [field deleteRowAddSpellAndUpdateScore];
 
             }
@@ -174,6 +177,8 @@
 
 - (void)setCurrentPlayerIndex:(NSUInteger)index {
     _currentPlayerIndex = index;
+
+    NSLog(@"I'm playerID %d", _currentPlayerIndex);
 
     //TODO: Put in it's own delegate method
     [[CCDirector sharedDirector] replaceScene:self];
@@ -232,14 +237,11 @@
 
 }
 
-- (void)gameOver:(BOOL)player1Won {
-    BOOL didLocalPlayerWin = YES;
-    if (player1Won) {
-        didLocalPlayerWin = NO;
-    }
-//    if (self.gameOverBlock) {
-//        self.gameOverBlock(didLocalPlayerWin);
-//    }
+
+- (void)gameOver:(NSUInteger)playerIdx didWin:(BOOL)didWin {
+
+    NSLog(@"Did %d win? %@", playerIdx, didWin ? @"YES" : @"NO");
+    _playersOut += 1;
 
 }
 
@@ -248,6 +250,8 @@
         [(Field *)_players[idx] setName:playerAlias andId:idx];
 
     }];
+
+    _playersActive = playerAliases.count;
 }
 
 - (void)touchMoved:(CCTouch *)touch withEvent:(CCTouchEvent *)event {
