@@ -28,7 +28,8 @@ typedef NS_ENUM(NSUInteger, MessageType) {
     kMessageTypeAddBlock,
     kMessageTypeGameOver,
     kMessageTypeDeleteBlock,
-    kMessageTypeMoveBlock
+    kMessageTypeMoveBlock,
+    kMessageTypeSpellAdd
 };
 
 typedef struct {
@@ -59,6 +60,14 @@ typedef struct {
     uint32_t blockY;
     uint32_t target;
 } MessageDeleteBlock;
+
+typedef struct {
+    Message message;
+    uint32_t blockX;
+    uint32_t blockY;
+    uint32_t target;
+    int32_t spell;
+} MessageAddSpell;
 
 typedef struct {
     Message message;
@@ -109,20 +118,42 @@ typedef struct {
 
 }
 
+
+- (void)sendAddSpell:(Block *)block targetId:(NSUInteger)id {
+    MessageAddSpell messageAddSpell;
+    messageAddSpell.message.messageType = kMessageTypeSpellAdd;
+    messageAddSpell.blockX = block.boardX;
+    messageAddSpell.blockY = block.boardY;
+    if(block.spell == nil){
+        messageAddSpell.spell = -1;
+    } else
+    {
+        messageAddSpell.spell = block.spell.spellType;
+    }
+
+    messageAddSpell.target = id;
+
+    NSData *data = [NSData dataWithBytes:&messageAddSpell length:sizeof(MessageAddSpell)];
+
+    [self sendData:data];
+
+}
+
 - (void)sendAdd:(Block *)block target:(NSUInteger)target {
     MessageAddBlock messageAdd;
     messageAdd.message.messageType = kMessageTypeAddBlock;
     messageAdd.blockX = block.boardX;
     messageAdd.blockY = block.boardY;
     messageAdd.blockType = block.type;
-    //messageAdd.spell = [(id <ICastable>)block.spell spellType];
-    messageAdd.spell = nil;
+
+
+    messageAdd.spell = [(id <ICastable>)block.spell spellType];
+
     messageAdd.target = target;
     NSData *data = [NSData dataWithBytes:&messageAdd length:sizeof(MessageAddBlock)];
 
     [self sendData:data];
 
-    NSLog(@"Move sent");
 }
 
 - (void)sendDelete:(Block *)block targetId:(NSUInteger)id1 {
@@ -331,7 +362,7 @@ typedef struct {
         [self processPlayerAliases];
 
     } else if (message->messageType == kMessageTypeAddBlock) {
-        NSLog(@"Add message received");
+
         MessageAddBlock *messageAdd = (MessageAddBlock *)[data bytes];
         [self.delegate addFromPlayerAtIndex:[self indexForPlayerWithId:playerID]
                                      BlockX:messageAdd->blockX
@@ -356,6 +387,15 @@ typedef struct {
                                Y:messageMoveBlock->blockY
                           target:messageMoveBlock->target
                             step:messageMoveBlock->step];
+
+    } else if (message->messageType == kMessageTypeSpellAdd) {
+
+        MessageAddSpell *messageAddSpell = (MessageAddSpell *) [data bytes];
+        [self.delegate addSpell:[self indexForPlayerWithId:playerID]
+                               X:messageAddSpell->blockX
+                               Y:messageAddSpell->blockY
+                          target:messageAddSpell->target
+                            spell:messageAddSpell->spell];
 
     } else if(message->messageType == kMessageTypeGameOver) {
         NSLog(@"Game over message received");

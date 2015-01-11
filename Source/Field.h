@@ -9,6 +9,7 @@
 @class Board;
 @class Tetromino;
 
+extern NSString *const SpellsToAdd;
 
 @interface Field : CCNode
 
@@ -24,4 +25,5 @@
 
 - (BOOL)updateStatus;
 
+- (NSUInteger)deleteRowAddSpellAndUpdateScore;
 @end

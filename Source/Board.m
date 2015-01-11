@@ -33,28 +33,7 @@ NSUInteger const Nby = 20;
     return self;
 }
 
-//TODO: Reduce the %
-- (void)addSpellToField {
 
-    NSMutableArray *allBlocksInBoard = [self getAllBlocksInBoard];
-    NSUInteger nbBlocksInBoard = allBlocksInBoard.count;
-    NSUInteger nbSpellToAdd = 0;
-
-    for (NSUInteger i = 0; i < nbBlocksInBoard; i++) {
-        if ([self randomBoolWithPercentage:10]) {
-            nbSpellToAdd++;
-        }
-    }
-
-    for (NSUInteger i = 0; i < nbSpellToAdd; i++) {
-        NSUInteger posOfSpell = arc4random() % nbBlocksInBoard;
-        Block *block = allBlocksInBoard[posOfSpell];
-        if (block.spell == nil) {
-            id <ICastable> spell = [SpellFactory getSpellUsingFrequency];
-            [block addSpellToBlock:spell];
-        }
-    }
-}
 
 - (BOOL)randomBoolWithPercentage:(NSUInteger)percentage {
     return (arc4random() % 100) < percentage;
@@ -564,7 +543,7 @@ NSUInteger const Nby = 20;
     [self setPositionUsingFieldValue:[self MoveBoardDown:([highestRow unsignedIntegerValue] - 1) nbRowsToMoveDownTo:rowsToDelete.count]];
 
     //put it here or else it gets the bocks not yet deleted.
-    [self addSpellToField];
+
 
     return spellsToAdd;
 }

@@ -19,10 +19,11 @@
 - (void)setCurrentPlayerIndex:(NSUInteger)index;
 - (void)addFromPlayerAtIndex:(NSUInteger)index BlockX:(uint32_t)x BlockY:(uint32_t)y BlockType:(uint16_t)type Spell:(uint16_t)spell Target:(uint32_t)target;
 - (void)deleteBlock:(NSUInteger)id X:(uint32_t)x Y:(uint32_t)y target:(uint32_t)target;
-
+- (void)addSpell:(NSUInteger)id X:(uint32_t)x Y:(uint32_t)y target:(uint32_t)target spell:(int32_t)spell;
 - (void)moveBlock:(NSUInteger)id X:(uint32_t)x Y:(uint32_t)y target:(uint32_t)target step:(int32_t)step;
 - (void)gameOver:(BOOL)player1Won;
 - (void)setPlayerAliases:(NSArray*)playerAliases;
+
 
 @end
 
@@ -35,4 +36,6 @@
 - (void)sendAdd:(Block *)field target:(NSUInteger)target;
 - (void)sendDelete:(Block *)block targetId:(NSUInteger)id1;
 - (void)sendMove:(CGPoint)key by:(NSInteger)by targetId:(NSUInteger)id;
+- (void)sendAddSpell:(Block *)block targetId:(NSUInteger)id;
+
 @end

@@ -11,7 +11,7 @@
 #import "FieldCollisionHelper.h"
 #import "Board.h"
 #import "Block.h"
-#import "CCControl.h"
+#import "SpellFactory.h"
 
 @implementation MainScene {
     CCNode *_scene;
@@ -77,7 +77,17 @@
     [[NSNotificationCenter defaultCenter] addObserver:self selector:@selector(BlocksToAdd:) name:BlocksToAdd object:nil];
     [[NSNotificationCenter defaultCenter] addObserver:self selector:@selector(BlocksToDelete:) name:BlocksToDelete object:nil];
     [[NSNotificationCenter defaultCenter] addObserver:self selector:@selector(BlocksToMove:) name:BlocksToMove object:nil];
+    [[NSNotificationCenter defaultCenter] addObserver:self selector:@selector(SpellsToAdd:) name:SpellsToAdd object:nil];
 
+}
+
+- (void)SpellsToAdd:(NSNotification *)notification {
+    NSMutableDictionary * blocks = [[notification userInfo] valueForKey:@"Blocks"];
+    NSUInteger targetId = [[[notification userInfo] valueForKey:@"Target"] unsignedIntegerValue];
+
+    for (Block *block in blocks){
+        [_networkingEngine sendAddSpell:block targetId:targetId];
+    }
 }
 
 - (void)BlocksToMove:(NSNotification *)notification {
@@ -126,79 +136,35 @@
     if (self.lastSpawnTimeInterval > 0.5) {
         self.lastSpawnTimeInterval = 0;
 
+        NSMutableArray *playersOut = [NSMutableArray array];
 
-        Field *curr = (Field *)_players[_currentPlayerIndex];
-        BOOL isGameOver = curr.updateStatus;
-        if (!isGameOver)
-        {
-//            for (Block *block in curr.board.getAllBlocksInBoard)
-//            {
-//                [_networkingEngine sendMove:block];
-//            }
+        [_players enumerateObjectsUsingBlock:^(Field *field, NSUInteger idx, BOOL *stop){
 
-            //[self moveFromPlayerAtIndex:1 blockX:9 blockY:19 blockType:2 spell:nil];
+            if (idx == _currentPlayerIndex && !*stop){
 
-            [_players enumerateObjectsUsingBlock:^(Field *field, NSUInteger idx, BOOL *stop){
-                if (idx != _currentPlayerIndex){
+                *stop = [field updateStatus];
 
-
-                    NSMutableArray *rowsToDelete = field.board.checkForRowsToClear;
-
-                    if (rowsToDelete.count > 0){
-                        [field.board deleteRowsAndReturnSpells:rowsToDelete];
-
-                    }
+                if(*stop){
+                    NSLog(@"Lost %d", idx);
+                    [_networkingEngine sendGameEnd:NO];
+                    [playersOut addObject:@(idx)];
+                    _currentPlayerIndex = -1;
                 }
 
-            }];
 
-        };
+            }else if (_players.count - 1 == _playersOut.count) {
+                [_networkingEngine sendGameEnd:YES];
+                NSLog(@"Win %d", idx);
+                *stop = YES;
+                _currentPlayerIndex = -1;
 
-        ////Only Player 1 will check for game over condition
-//        if (_currentPlayerIndex == 0) {
-//            [_players enumerateObjectsUsingBlock:^(Field *field, NSUInteger idx, BOOL *stop) {
-//
-//                //Skip the players who are already dead.
-//                if([_playersOut containsObject:field]){
-//                    return;
-//                }
-//
-//
-//                if(!isGameOver) {
-//
-//                    if (_players.count - 1 == _playersOut.count)
-//                    {
-//                        [_networkingEngine sendGameEnd:YES];
-//                        NSLog(@"Win %d", idx);
-//                        *stop = YES;
-//                        _currentPlayerIndex = -1;
-//                    }
-//
-//                    if (idx == _currentPlayerIndex) {
-//                        //TODO: Use this to figure out if the human lost or if it's someone else
-//                        //Do something special
-//                    }
-//
-////                if (self.gameOverBlock) {
-////                    self.gameOverBlock(didWin);
-////                }
-//
-//
-//
-//                }
-//                else{
-//
-//                    [_playersOut addObject:field];
-//                    NSLog(@"Lost %d", idx);
-//
-//                    *stop = YES;
-//                    [_networkingEngine sendGameEnd:NO];
-//
-//                }
-//
-//
-//            }];
-//        }
+            }else{
+                [field deleteRowAddSpellAndUpdateScore];
+
+            }
+
+        }];
+
     }
 }
 
@@ -226,6 +192,18 @@
 - (void)deleteBlock:(NSUInteger)id1 X:(uint32_t)x Y:(uint32_t)y target:(uint32_t)target {
     Board * board = [(Field *)_players[target] board];
     [board removeBlockAtPosition:ccp(x,y)];
+}
+
+- (void)addSpell:(NSUInteger)id1 X:(uint32_t)x Y:(uint32_t)y target:(uint32_t)target spell:(int32_t)spell {
+    Board * board = [(Field *)_players[target] board];
+    if (spell != -1){
+        Block * block = [board getBlockAt:ccp(x, y)];
+        [block addSpellToBlock:[SpellFactory getSpellFromType:(spellsType)spell]];
+    }else{
+        Block *block =  [board getBlockAt:ccp(x, y)];
+        [block removeSpell];
+    }
+
 }
 
 - (void)moveBlock:(NSUInteger)id1 X:(uint32_t)x Y:(uint32_t)y target:(uint32_t)target step:(int32_t)step {
