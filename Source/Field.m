@@ -38,9 +38,12 @@ NSString *const SpellsToAdd = @"SpellsToAdd";
 - (void)displayGameOver:(BOOL)win{
     if (!win){
         _gameOver.string = @"GAME OVER";
+
     }else{
         _gameOver.string = @"WIN";
     }
+
+    _gameOver.zOrder = 99;
 
 }
 

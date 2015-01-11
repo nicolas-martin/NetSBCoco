@@ -21,7 +21,7 @@
     Field *_p3;
     NSMutableArray *bg;
     NSMutableArray *_players;
-    NSInteger _currentPlayerIndex;
+    NSUInteger _currentPlayerIndex;
     NSUInteger _playersOut;
     NSUInteger _playersActive;
 }
@@ -146,6 +146,7 @@
                 if(*stop){
                     [_networkingEngine sendGameEnd:NO];
                     NSLog(@"I'm player %d and I lost", idx);
+                    [((Field *) _players[_currentPlayerIndex]) displayGameOver:NO];
                     _currentPlayerIndex = -1;
                     _playersOut++;
                     *stop = YES;
@@ -156,6 +157,7 @@
             else if (_playersActive - 1 == _playersOut && !*stop){
                 [_networkingEngine sendGameEnd:YES];
                 NSLog(@"I win and I'm player %d", _currentPlayerIndex);
+                [((Field *) _players[_currentPlayerIndex]) displayGameOver:YES];
                 *stop = YES;
                 _currentPlayerIndex = -1;
                 self.paused = YES;
@@ -241,6 +243,7 @@
 - (void)gameOver:(NSUInteger)playerIdx didWin:(BOOL)didWin {
 
     NSLog(@"Did %d win? %@", playerIdx, didWin ? @"YES" : @"NO");
+    [((Field *) _players[playerIdx]) displayGameOver:didWin];
     _playersOut += 1;
 
 }
