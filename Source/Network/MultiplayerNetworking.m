@@ -10,6 +10,7 @@
 #import "Block.h"
 #import "CCControl.h"
 #import "CCBSequenceProperty.h"
+#import "CCEffect_Private.h"
 
 #define playerIdKey @"PlayerId"
 #define randomNumberKey @"randomNumber"
@@ -29,7 +30,8 @@ typedef NS_ENUM(NSUInteger, MessageType) {
     kMessageTypeGameOver,
     kMessageTypeDeleteBlock,
     kMessageTypeMoveBlock,
-    kMessageTypeSpellAdd
+    kMessageTypeSpellAdd,
+    kMessageTypeUpdateInventory
 };
 
 typedef struct {
@@ -68,6 +70,12 @@ typedef struct {
     uint32_t target;
     int32_t spell;
 } MessageAddSpell;
+
+typedef struct {
+    Message message;
+    uint32_t target;
+    int32_t spell;
+} MessageUpdateInventory;
 
 typedef struct {
     Message message;
@@ -118,6 +126,17 @@ typedef struct {
 
 }
 
+- (void)sendUpdateInventory:(spellsType)type targetId:(NSUInteger)id {
+    MessageUpdateInventory messageUpdateInventory;
+    messageUpdateInventory.message.messageType = kMessageTypeUpdateInventory;
+    messageUpdateInventory.spell = type;
+    messageUpdateInventory.target = id;
+
+    NSData *data = [NSData dataWithBytes:&messageUpdateInventory length:sizeof(MessageUpdateInventory)];
+
+    [self sendData:data];
+
+}
 
 - (void)sendAddSpell:(Block *)block targetId:(NSUInteger)id {
     MessageAddSpell messageAddSpell;
@@ -397,6 +416,14 @@ typedef struct {
                                Y:messageAddSpell->blockY
                           target:messageAddSpell->target
                             spell:messageAddSpell->spell];
+
+    } else if (message->messageType == kMessageTypeUpdateInventory) {
+
+        MessageUpdateInventory *messageUpdateInventory = (MessageUpdateInventory *) [data bytes];
+        [self.delegate updateInventory:[self indexForPlayerWithId:playerID]
+                         target:messageUpdateInventory->target
+                          spell:messageUpdateInventory->spell];
+
 
     } else if(message->messageType == kMessageTypeGameOver) {
         NSLog(@"Game over message received");

@@ -13,6 +13,8 @@
 #import "Block.h"
 #import "SpellFactory.h"
 #import "CCControl.h"
+#import "CCRenderer_Private.h"
+#import "CCTMXXMLParser.h"
 
 @implementation MainScene {
     CCNode *_scene;
@@ -79,6 +81,18 @@
     [[NSNotificationCenter defaultCenter] addObserver:self selector:@selector(BlocksToDelete:) name:BlocksToDelete object:nil];
     [[NSNotificationCenter defaultCenter] addObserver:self selector:@selector(BlocksToMove:) name:BlocksToMove object:nil];
     [[NSNotificationCenter defaultCenter] addObserver:self selector:@selector(SpellsToAdd:) name:SpellsToAdd object:nil];
+    [[NSNotificationCenter defaultCenter] addObserver:self selector:@selector(UpdateInventory:) name:UpdateInventory object:nil];
+
+}
+
+- (void)UpdateInventory:(NSNotification *)notification {
+    NSMutableArray *inventory = [[notification userInfo] valueForKey:@"Inventory"];
+    NSUInteger targetId = [[[notification userInfo] valueForKey:@"Target"] unsignedIntegerValue];
+
+    for (id<ICastable> spell in inventory){
+        [_networkingEngine sendUpdateInventory:spell.spellType targetId:targetId];
+    }
+
 
 }
 
@@ -256,6 +270,17 @@
 
     _playersActive = playerAliases.count;
 }
+
+- (void)updateInventory:(NSUInteger)id1 target:(uint32_t)target spell:(int32_t)spell {
+    Field *field = (Field *)_players[target];
+
+    NSMutableArray *spellsToAdd = [NSMutableArray array];
+    [spellsToAdd addObject:[SpellFactory getSpellFromType:(spellsType)spell]];
+
+    [field updateInventory:spellsToAdd];
+
+}
+
 
 - (void)touchMoved:(CCTouch *)touch withEvent:(CCTouchEvent *)event {
 

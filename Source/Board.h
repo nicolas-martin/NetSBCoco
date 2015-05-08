@@ -11,6 +11,7 @@
 extern NSString *const BlocksToAdd;
 extern NSString *const BlocksToDelete;
 extern NSString *const BlocksToMove;
+extern NSString *const UpdateInventory;
 extern NSUInteger const Nbx;
 extern NSUInteger const Nby;
 

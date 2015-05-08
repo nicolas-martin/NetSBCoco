@@ -47,6 +47,13 @@ NSString *const SpellsToAdd = @"SpellsToAdd";
 
 }
 
+- (void)updateInventory:(NSMutableArray *)spellsToAdd {
+    [_inventory removeAllSpells];
+
+    [self addSpellsToInventory:spellsToAdd];
+
+}
+
 - (void)addSpellsToInventory:(NSMutableArray *)spellsToAdd {
     for (id <ICastable> spell in spellsToAdd) {
         [_inventory addSpell:spell];
@@ -58,10 +65,15 @@ NSString *const SpellsToAdd = @"SpellsToAdd";
 }
 
 - (BOOL)updateStatus {
+    NSUInteger rowsCleared = [self deleteRowAddSpellAndUpdateScore];
 
-    if ([self deleteRowAddSpellAndUpdateScore] > 0){
+    if ( rowsCleared > 0){
+        //TODO: Increase the chance to add spells when clearing > 1 line
         [self addSpellToField];
     }
+
+    //TODO: Add 4 row clear bonus to all other players.
+
 
     return self.board.moveDownOrCreate;
 }
@@ -73,33 +85,8 @@ NSString *const SpellsToAdd = @"SpellsToAdd";
 
         if (spellsToAdd.count > 0) {
 
-            //TODO: Bonus AddLine to everybody.
-//            if(spellsToAdd.count == 4){
-//
-//                //TODO: Get number of players another way.
-//                for (int i = 0; i <4; i++){
-//
-//                    NSMutableDictionary* blockAndStep = [NSMutableDictionary dictionary];
-//                    [blockAndStep setValue:@"-1" forKey:NSStringFromCGPoint(ccp(0, 0))];
-//                    NSDictionary* dict2 = @{@"Blocks" : blockAndStep, @"Target": @(i)};
-//                    [[NSNotificationCenter defaultCenter] postNotificationName:BlocksToMove object:nil userInfo:dict2];
-//
-//                    NSMutableArray *line = [self CreateBlockLine];
-//                    [targetBoard addBlocks:line];
-//
-//                    NSDictionary* dict = @{@"Blocks" : line, @"Target": @(i)};
-//                    [[NSNotificationCenter defaultCenter] postNotificationName:BlocksToAdd object:nil userInfo:dict];
-//                }
-//
-//
-//            }else{
-                [self addSpellsToInventory:spellsToAdd];
-            //}
-
-
+            [self addSpellsToInventory:spellsToAdd];
         }
-
-
 
         _nbRowCleared.string = [NSString stringWithFormat:@"%d", (int) _nbRowCleared.string.integerValue + rows.count];
 

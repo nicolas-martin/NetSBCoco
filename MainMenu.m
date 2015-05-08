@@ -15,7 +15,7 @@
 }
 
 - (void)didLoadFromCCB {
-    [[GameKitHelper sharedGameKitHelper] authenticateLocalPlayer];
+    //[[GameKitHelper sharedGameKitHelper] authenticateLocalPlayer];
     [[NSNotificationCenter defaultCenter] addObserver:self selector:@selector(playerAuthenticated) name:LocalPlayerIsAuthenticated object:nil];
 
 }

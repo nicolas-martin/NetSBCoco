@@ -21,6 +21,8 @@ extern NSString *const SpellsToAdd;
 
 - (void)displayGameOver:(BOOL)win;
 
+- (void)updateInventory:(NSMutableArray *)spellsToAdd;
+
 - (void)addSpellsToInventory:(NSMutableArray *)spellsToAdd;
 
 - (BOOL)updateStatus;

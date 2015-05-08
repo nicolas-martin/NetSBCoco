@@ -46,8 +46,6 @@ NSString *const SpellCasted = @"SpellCasted";
 
         [newSpellSprite setPosition:ccp(newSpellSprite.contentSize.width * (inventory.count - 1), 0)];
 
-        //do I really need this?
-        [newSpellSprite setName:@"1"];
         newSpellSprite.userObject = spell;
         newSpellSprite.anchorPoint = ccp(0, 0);
         [movableSprites addObject:newSpellSprite];
@@ -57,6 +55,22 @@ NSString *const SpellCasted = @"SpellCasted";
         [self.parent reorderChild:self z:50];
         [self.parent.parent reorderChild:self.parent z:25];
 
+        [self notifyNetwork];
+
+
+    }
+}
+
+-(void)notifyNetwork{
+
+    NSDictionary* dict = @{@"Inventory" : inventory, @"Target": @(((Field *) self.parent).Idx)};
+    [[NSNotificationCenter defaultCenter] postNotificationName:UpdateInventory object:nil userInfo:dict];
+
+}
+
+-(void)removeAllSpells {
+    for (CCSprite *spell in movableSprites){
+        [self removeSpell:spell.userObject];
 
     }
 }
@@ -70,6 +84,8 @@ NSString *const SpellCasted = @"SpellCasted";
     [selSprite removeFromParentAndCleanup:YES];
 
     [self reorderInventory];
+
+    [self notifyNetwork];
 }
 
 - (void)reorderInventory {
@@ -102,7 +118,7 @@ NSString *const SpellCasted = @"SpellCasted";
 
     Field *targetField = [fch GetFieldFromPosition:touchLocation];
 
-    if (targetField != nil) {
+    if (targetField != nil && selSprite != nil) {
         id <ICastable> obj = selSprite.userObject;
 
         [obj CastSpell:targetField.board Sender:(Field *) self.parent];
@@ -124,17 +140,12 @@ NSString *const SpellCasted = @"SpellCasted";
 
 - (void)selectSpriteForTouch:(CGPoint)touchLocation {
     CCSprite *newSprite = nil;
-    for (CCSprite *sprite in movableSprites) {
-        //why
-        if (sprite.name == @"1") {
 
-            if (CGRectContainsPoint(sprite.boundingBox, touchLocation)) {
-                newSprite = sprite;
-                break;
-            }
-
-        }
+    CCSprite *sprite = movableSprites[0];
+    if (CGRectContainsPoint(sprite.boundingBox, touchLocation)) {
+        newSprite = sprite;
     }
+
     if (newSprite != selSprite) {
 
         selSprite = newSprite;

@@ -10,6 +10,8 @@
 #import "CCControl.h"
 #import "ICastable.h"
 #import "CCBSequenceProperty.h"
+#import "CCRendererBasicTypes_Private.h"
+#import "CCTMXXMLParser.h"
 
 @class Field;
 @class Block;
@@ -23,7 +25,7 @@
 - (void)moveBlock:(NSUInteger)id X:(uint32_t)x Y:(uint32_t)y target:(uint32_t)target step:(int32_t)step;
 - (void)gameOver:(NSUInteger)player1Won didWin:(BOOL)didwin;
 - (void)setPlayerAliases:(NSArray*)playerAliases;
-
+- (void)updateInventory:(NSUInteger)id target:(uint32_t)target spell:(int32_t)spell;
 
 @end
 
@@ -37,5 +39,6 @@
 - (void)sendDelete:(Block *)block targetId:(NSUInteger)id1;
 - (void)sendMove:(CGPoint)key by:(NSInteger)by targetId:(NSUInteger)id;
 - (void)sendAddSpell:(Block *)block targetId:(NSUInteger)id;
+- (void)sendUpdateInventory:(spellsType)type targetId:(NSUInteger)id;
 
 @end

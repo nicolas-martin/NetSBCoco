@@ -13,5 +13,8 @@ extern NSString *const SpellCasted;
 
 @property NSUInteger MaxNbSpells;
 - (void)addSpell:(<ICastable>)spell;
+
+- (void)removeAllSpells;
+
 - (void)removeSpell:(<ICastable>)spell;
 @end
